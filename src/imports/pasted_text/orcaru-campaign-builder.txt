@@ -1,0 +1,99 @@
+Update my existing Orcaru marketing campaign builder Figma prototype with the following exact, client-approved changes. Use auto layout for all new elements, match the existing prototype's brand styling for all components, and build all interactive elements to be fully functional for prototype playback. All text labels, naming, structure, and functionality must align 1:1 with the requirements below, with zero deviations:
+
+1.  Core Layout & Navigation Overhaul
+    - Delete the duplicate "Projects" navigation item entirely; consolidate all project/campaign functionality into a single primary navigation section labeled **Campaigns**
+    - Rebuild the campaign creation flow into a single fixed 2-panel full-page frame:
+      - Left panel: 50% width, scrollable, holds all campaign settings/inputs, background matches the existing dark edit panel styling
+      - Right panel: 50% width, fixed non-scrollable, holds the live calendar preview, background matches the existing light preview panel styling
+      - Add mandatory real-time sync: all adjustments to inputs/sliders in the left panel automatically update the calendar preview and all associated data visualizations in real time during prototype playback
+
+2.  Upfront Campaign Basics Section (add to the TOP of the left scrollable panel, in this exact order)
+    - Section header: **Campaign Basics**
+    - Add these input fields in sequence:
+      1.  Text input field with placeholder label: *Campaign Name*
+      2.  Multi-line text input + file upload component with label: *Brand Guidelines*
+      3.  Multi-select component with label: *Attach Resources* (helper text: Pull in existing assets from your resource library)
+      4.  Text input field with placeholder label: *Reference Link for Analysis* (helper text: Paste a social account link, video URL, or website to auto-analyze content themes, types, and brand style)
+
+3.  Content Type Mix Section (add below Campaign Basics, exact naming and structure)
+    - Section header: **Content Type Mix**
+    - Add a real-time updating pie chart at the top of the section that visually reflects the percentage mix of all selected content types
+    - Rename the existing generic "short video" option to **Clips/Shorts** (add helper text: Clips cut from existing video content)
+    - Consolidate the separate "image" and "carousel" options into a single category labeled **Images & Carousels**
+    - Add these 5 core content type options in this exact order, each with an individual percentage slider, a remove button, and a total percentage lock to 100%:
+      1.  Clips/Shorts
+      2.  AI Text-to-Voice Videos
+      3.  Images & Carousels
+      4.  Long-Form Written Content (Blog Posts)
+      5.  Quote Cards
+    - Add an "Add Custom Content Type" button at the bottom of the list to support new user-added categories
+
+4.  Content Intent Funnel Stages Section (add below Content Type Mix, exact plain-language naming)
+    - Section header: **Content Intent Funnel Stages**
+    - Add a small horizontal funnel-shaped visual icon next to the section header
+    - Add a real-time updating pie chart at the top of the section that visually reflects the percentage mix of the 3 funnel stages
+    - Add 3 core funnel stage options in this exact order, each with an individual percentage slider, a clear definition line, example text, and a total percentage lock to 100%:
+      1.  **Awareness/Educational (Top of Funnel)**
+          - Definition text: Free informational content to build audience knowledge
+          - Example text: e.g., "What is MACD?", how-to guides, tips & tricks
+      2.  **Consideration/Testimonial (Middle of Funnel)**
+          - Definition text: Social proof and relationship-building content
+          - Example text: e.g., user testimonials, case studies, success stories
+      3.  **Conversion/Transactional (Bottom of Funnel)**
+          - Definition text: Promotional content with a clear call to action
+          - Example text: e.g., "Book a demo", "Sign up for a webinar", "Shop now"
+    - NO industry jargon (TOFU/MOFU/BOFU) is allowed anywhere in the front-end UI of this section
+
+5.  Content Topic Controls Section (update existing topics section to this exact structure)
+    - Section header: **Content Topic Mix**
+    - Add a real-time updating pie chart at the top of the section that visually reflects the percentage mix of all topics
+    - Replace static topic tags with individual percentage slider controls for each topic, with a total percentage lock to 100%
+    - Add an "Add New Topic" button at the bottom of the list to support unlimited user-added topics
+    - Add a remove button for each individual topic slider
+
+6.  Campaign Volume & Duration Section (add below Topic Mix, exact presets)
+    - Section header: **Campaign Volume & Duration**
+    - Add a **Total Monthly Content Volume** slider with these exact preset stops in order, with parenthetical average daily post text next to each preset:
+      - 10 posts/month (~0.3 posts/day)
+      - 15 posts/month (~0.5 posts/day)
+      - 30 posts/month (1 post/day)
+      - 45 posts/month (~1.5 posts/day)
+      - 60 posts/month (2 posts/day)
+    - Add a **Campaign Duration** selector component with these exact options: 1 week, 2 weeks, 1 month
+    - Add real-time calculation text below the controls that breaks down the total number of posts per week, by content type, intent stage, and topic, based on the slider selection
+
+7.  Publishing Channels Section (add below Volume & Duration)
+    - Section header: **Publishing Channels**
+    - Add checkbox options for these platforms in this exact order:
+      - TikTok
+      - Instagram
+      - YouTube Shorts
+      - Blog
+      - X (Twitter)
+    - Add helper text below the checkboxes: Content will be auto-formatted for all selected channels
+
+8.  Live Calendar View Overhaul (right fixed panel)
+    - Replace the existing single-content-item-per-day layout with a multi-card grid layout, supporting up to 3+ content items per calendar date
+    - Add visual density cues: more content per day = more densely packed calendar cards
+    - For each calendar content card, display these exact details in order:
+      1.  Content type label
+      2.  Intent stage label
+      3.  Core topic label
+    - Add click functionality to every calendar card: on click, open a modal that lets the user edit the content type, intent stage, or topic for that specific scheduled item
+    - Ensure the calendar auto-updates in real time during prototype playback when any slider, volume, or channel setting is adjusted in the left panel
+
+9.  Preview & Asset Format Features
+    - For every calendar content card modal, add a **Platform Skeleton Preview** tab: a wireframe preview that shows how the content will render natively on the selected publishing platform (e.g., vertical TikTok clip skeleton, square Instagram carousel skeleton)
+    - For every image and video content item, add an **Asset Format Preview** section with previews for these 3 standard dimensions, with exact labels:
+      - Square
+      - Landscape
+      - Portrait
+    - Add helper text next to dimension previews: Auto-formatted for your selected publishing channels
+
+10. Live Credit Usage Calculator
+    - Add a fixed non-scrollable component at the BOTTOM of the left settings panel, spanning the full width of the panel
+    - Header label: **Estimated Total Campaign Credit Usage**
+    - Add real-time updating total credit number that adjusts automatically based on selected content volume, content types, and publishing channels
+    - Add helper text below the total: Credit cost updates live as you adjust your campaign settings
+
+Final requirements: Ensure all interactive components are fully functional for prototype playback, all percentage sliders are linked to their corresponding pie charts, and all text labels match the exact wording provided above with no changes.

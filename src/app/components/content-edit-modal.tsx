@@ -1,0 +1,984 @@
+import { useState, useRef } from "react";
+import { X, ChevronDown, Search, Upload } from "lucide-react";
+import svgPathsShortClip from "@/imports/PostContentContainer-3/svg-ehzova85ar";
+import svgPathsLongForm from "@/imports/PostContentContainer-6/svg-zh0484zckq";
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface ContentEditModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  contentItem: {
+    id: number;
+    contentType: string;
+    intentStage: string;
+    topic: string;
+    date: string;
+    status: "draft" | "approved" | "rejected" | "generating";
+    title?: string;
+  };
+  onUpdate: (updates: any) => void;
+  availableContentTypes: string[];
+  availableIntentStages: string[];
+  availableTopics: string[];
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+type ContentCategory =
+  | "long-form"
+  | "short-video"
+  | "highlight"
+  | "quote-card"
+  | "ai-video"
+  | "other";
+
+function categorize(ct: string): ContentCategory {
+  const s = ct.toLowerCase().replace(/[\s_-]+/g, "-");
+  if (s.includes("long") || s.includes("blog") || s.includes("article")) return "long-form";
+  if (s.includes("short") || s.includes("clip")) return "short-video";
+  if (s.includes("highlight") || s.includes("reel")) return "highlight";
+  if (s.includes("quote")) return "quote-card";
+  if (s.includes("ai") || s.includes("text-to")) return "ai-video";
+  return "other";
+}
+
+const CATEGORY_META: Record<ContentCategory, { sublabel: string; color: string }> = {
+  "long-form":   { sublabel: "Long Form Article",       color: "#60A5FA" },
+  "short-video": { sublabel: "Youtube Shorts Clip",     color: "#10B981" },
+  "highlight":   { sublabel: "Multi-Clip Compilation",  color: "#F59E0B" },
+  "quote-card":  { sublabel: "Template-Based Graphic",  color: "#A78BFA" },
+  "ai-video":    { sublabel: "AI-Generated Video",      color: "#10B981" },
+  "other":       { sublabel: "Social Post",             color: "#60A5FA" },
+};
+
+// ─── Shared icons (from Figma svg paths) ─────────────────────────────────────
+
+function AISparkleIcon({ paths }: { paths: typeof svgPathsShortClip }) {
+  return (
+    <svg fill="none" viewBox="0 0 23.9915 23.9915" className="size-[20px]">
+      <path d={paths.pca4ac40} stroke="#FAFAFA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d={paths.p10059e00} stroke="#FAFAFA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M4.99823 5.99788V9.99646" stroke="#8B5CF6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M18.9933 13.995V17.9936" stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M9.99646 1.99929V3.99929" stroke="#F59E0B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M6.99752 7.99717H2.99894" stroke="#8B5CF6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M20.9926 15.9943H16.994" stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M10.9968 2.99894H8.99681" stroke="#F59E0B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+    </svg>
+  );
+}
+
+function ContentTypeIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 19.998 19.998" className="size-[16px]">
+      <g clipPath="url(#cem-clip)">
+        <path d={svgPathsShortClip.pc7d1a80} stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+        <path d="M16.665 2.49975V5.83275" stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+        <path d="M18.3315 4.16625H14.9985" stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+        <path d="M3.333 14.1652V15.8317" stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+        <path d="M4.16625 14.9985H2.49975" stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+      </g>
+      <defs>
+        <clipPath id="cem-clip"><rect fill="white" height="19.998" width="19.998" /></clipPath>
+      </defs>
+    </svg>
+  );
+}
+
+function UploadIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 23.99 23.99" className="size-[24px]">
+      <path d={svgPathsShortClip.p13773080} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99917" />
+      <path d={svgPathsShortClip.p25535d00} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99917" />
+      <path d="M11.995 2.99875V14.9937" stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99917" />
+    </svg>
+  );
+}
+
+function AIGenerateIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 23.9915 23.9915" className="size-[24px]">
+      <path d={svgPathsShortClip.pca4ac40} stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d={svgPathsShortClip.p10059e00} stroke="#10B981" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M4.99823 5.99788V9.99646" stroke="#8B5CF6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M18.9933 13.995V17.9936" stroke="#60A5FA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M9.99646 1.99929V3.99929" stroke="#F59E0B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M6.99752 7.99717H2.99894" stroke="#8B5CF6" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M20.9926 15.9943H16.994" stroke="#60A5FA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+      <path d="M10.9968 2.99894H8.99681" stroke="#F59E0B" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.99929" />
+    </svg>
+  );
+}
+
+function SettingsIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 19.998 19.998" className="size-[20px]">
+      <path d={svgPathsShortClip.p2cf23000} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+      <path d={svgPathsShortClip.p2f683180} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6665" />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 14 14" className="size-[14px]">
+      <g clipPath="url(#cal-clip)">
+        <path clipRule="evenodd" d={svgPathsShortClip.p165df400} fill="#A1A1AA" fillRule="evenodd" />
+      </g>
+      <defs><clipPath id="cal-clip"><rect fill="white" height="14" width="14" /></clipPath></defs>
+    </svg>
+  );
+}
+
+function ClockIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 14 14" className="size-[14px]">
+      <g clipPath="url(#clk-clip)">
+        <path d={svgPathsShortClip.p1ac1700} fill="#A1A1AA" />
+      </g>
+      <defs><clipPath id="clk-clip"><rect fill="white" height="14" width="14" /></clipPath></defs>
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg fill="none" viewBox="0 0 16 16" className="size-[16px]">
+      <path d={svgPathsShortClip.p107a080} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+      <path d="M14 14L11.1333 11.1333" stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+    </svg>
+  );
+}
+
+// ─── Field primitives ─────────────────────────────────────────────────────────
+
+function FieldLabel({ children, projectDefault }: { children: React.ReactNode; projectDefault?: boolean }) {
+  return (
+    <div className="flex items-center gap-2 h-[24px] relative shrink-0 w-full mb-0">
+      <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">{children}</span>
+      {projectDefault && (
+        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00d492] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
+          <span className="size-[6px] rounded-full bg-[#00d492] inline-block" />
+          Project Default
+        </span>
+      )}
+    </div>
+  );
+}
+
+function ConfigFieldLabel({ children, projectDefault }: { children: React.ReactNode; projectDefault?: boolean }) {
+  return (
+    <div className="flex items-center gap-2 h-[28px] pb-2 w-full">
+      <span className="font-bold text-[#fafafa] text-[14px] leading-5">{children}</span>
+      {projectDefault && (
+        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00d492] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
+          <span className="size-[6px] rounded-full bg-[#00d492] inline-block" />
+          Project Default
+        </span>
+      )}
+    </div>
+  );
+}
+
+// Basic input (dark bg-[#0a0a0a], rounded-[12px])
+function Input({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
+  return (
+    <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] shrink-0 w-full">
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full h-full bg-transparent px-[13px] py-[5px] text-[14px] text-[#fafafa] placeholder-[#a1a1aa] outline-none rounded-[12px]"
+      />
+    </div>
+  );
+}
+
+// Basic textarea (dark bg-[#0a0a0a], rounded-[12px])
+function Textarea({ value, onChange, placeholder, minRows = 4 }: { value: string; onChange: (v: string) => void; placeholder?: string; minRows?: number }) {
+  return (
+    <div className="bg-[#0a0a0a] relative rounded-[12px] shrink-0 w-full" style={{ minHeight: minRows * 28 }}>
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        rows={minRows}
+        className="w-full bg-transparent px-[13px] py-[9px] text-[14px] text-[#fafafa] placeholder-[#a1a1aa] outline-none rounded-[12px] leading-[20px] resize-none"
+      />
+    </div>
+  );
+}
+
+// Config input (pill shaped bg-[#262626], rounded-[24px])
+function ConfigInput({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
+  return (
+    <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[24px]"
+      />
+    </div>
+  );
+}
+
+// Config textarea (pill-ish bg-[#262626], rounded-[24px])
+function ConfigTextarea({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
+  return (
+    <div className="bg-[#262626] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        rows={4}
+        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[24px] leading-[20px] resize-none"
+      />
+    </div>
+  );
+}
+
+// Date + Time row (matching Figma PublishDateTime)
+function PublishDateTimeRow({ date, time, onDate, onTime }: { date: string; time: string; onDate: (v: string) => void; onTime: (v: string) => void }) {
+  return (
+    <div className="flex gap-[16px] h-[76px] items-center shrink-0 w-full">
+      <div className="flex flex-col flex-1 min-w-0 pt-[16px]">
+        <FieldLabel>Publish Date</FieldLabel>
+        <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2">
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => onDate(e.target.value)}
+            className="flex-1 bg-transparent text-[14px] text-[#fafafa] outline-none min-w-0"
+          />
+          <CalendarIcon />
+        </div>
+      </div>
+      <div className="flex flex-col flex-1 min-w-0 pt-[16px]">
+        <FieldLabel>Publish Time</FieldLabel>
+        <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2">
+          <input
+            type="time"
+            value={time}
+            onChange={(e) => onTime(e.target.value)}
+            className="flex-1 bg-transparent text-[14px] text-[#fafafa] outline-none min-w-0"
+          />
+          <ClockIcon />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Tags section
+function TagsSection({ tags, onChange }: { tags: string[]; onChange: (t: string[]) => void }) {
+  const [input, setInput] = useState("");
+  const add = (raw: string) => {
+    const clean = raw.trim().replace(/^#/, "");
+    if (clean && !tags.includes(clean)) onChange([...tags, clean]);
+    setInput("");
+  };
+  return (
+    <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
+      <FieldLabel>Tags</FieldLabel>
+      <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] shrink-0 w-full flex items-center px-[13px] gap-2 mt-0">
+        <SearchIcon />
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(input); } }}
+          placeholder="Search of Tags"
+          className="flex-1 bg-transparent text-[14px] text-[#a1a1aa] placeholder-[#a1a1aa] outline-none"
+        />
+      </div>
+      {tags.length > 0 && (
+        <div className="flex gap-[8px] flex-wrap pt-[8px]">
+          {tags.map((t) => (
+            <button
+              key={t}
+              onClick={() => onChange(tags.filter((x) => x !== t))}
+              className="bg-[rgba(16,185,129,0.2)] border border-[rgba(16,185,129,0.3)] text-[#10b981] text-[12px] font-medium px-[10px] py-[5px] rounded-[8px] whitespace-nowrap hover:bg-[rgba(16,185,129,0.3)] transition-colors"
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Source material / Resources section (matching Figma Resources component)
+function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLinkChange: (v: string) => void }) {
+  const fileRef = useRef<HTMLInputElement>(null);
+  return (
+    <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
+      {/* Section heading */}
+      <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Source material and resources</p>
+      <p className="text-[#a1a1aa] text-[14px] leading-[20px] pt-[4px]">Provide references and assets to guide content generation. This step is optional.</p>
+
+      {/* A — Main Content Source */}
+      <div className="pt-[24px] w-full">
+        <div className="flex gap-[8px] items-center mb-[12px]">
+          <div className="bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] rounded-[12px] size-[24px] flex items-center justify-center shrink-0">
+            <span className="font-black text-[#10b981] text-[12px] leading-4">A</span>
+          </div>
+          <span className="font-bold text-[#fafafa] text-[14px]">Main Content Source</span>
+          <span className="text-[#a1a1aa] text-[12px]">(Optional)</span>
+        </div>
+
+        {/* Upload drop zone */}
+        <button
+          onClick={() => fileRef.current?.click()}
+          className="w-full border-2 border-dashed border-[rgba(255,255,255,0.08)] rounded-[24px] flex flex-col items-center justify-center py-[32px] px-[24px] gap-[12px] hover:border-[rgba(16,185,129,0.3)] transition-colors group"
+        >
+          <input ref={fileRef} type="file" className="hidden" multiple />
+          <div className="bg-[#262626] size-[48px] rounded-full flex items-center justify-center group-hover:bg-[rgba(16,185,129,0.1)] transition-colors">
+            <UploadIcon />
+          </div>
+          <p className="font-semibold text-[#fafafa] text-[14px]">Drag &amp; drop or click to browse</p>
+          <p className="text-[rgba(161,161,170,0.6)] text-[12px]">Upload video, documents, images or audio</p>
+        </button>
+
+        {/* OR divider */}
+        <div className="flex gap-[12px] items-center w-full pt-[12px]">
+          <div className="flex-1 h-px bg-[rgba(255,255,255,0.08)]" />
+          <span className="text-[rgba(161,161,170,0.5)] text-[12px] font-semibold uppercase tracking-[0.6px]">or</span>
+          <div className="flex-1 h-px bg-[rgba(255,255,255,0.08)]" />
+        </div>
+
+        {/* Paste a link */}
+        <div className="pt-[20px] w-full">
+          <div className="h-[24px] relative mb-0">
+            <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">Paste a link</span>
+          </div>
+          <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 mt-0">
+            <SearchIcon />
+            <input
+              value={linkValue}
+              onChange={(e) => onLinkChange(e.target.value)}
+              placeholder="Search content..."
+              className="flex-1 bg-transparent text-[14px] text-[#a1a1aa] placeholder-[#a1a1aa] outline-none"
+            />
+          </div>
+        </div>
+
+        <button className="pt-[12px] text-[#a1a1aa] text-[12px] font-medium w-full text-center">
+          Skip — no main source to provide
+        </button>
+      </div>
+
+      {/* B — Select from Library */}
+      <div className="pt-[24px] w-full">
+        <div className="flex gap-[8px] items-center mb-[12px]">
+          <div className="bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] rounded-[12px] size-[24px] flex items-center justify-center shrink-0">
+            <span className="font-black text-[#10b981] text-[12px] leading-4">B</span>
+          </div>
+          <span className="font-bold text-[#fafafa] text-[14px]">Select from Library</span>
+        </div>
+
+        {/* Library file list */}
+        <div className="rounded-[24px] border border-[rgba(255,255,255,0.08)] overflow-hidden">
+          {[
+            { name: "Brand Logo Pack.zip",        size: "2.4 MB" },
+            { name: "Summer Campaign Video.mp4",  size: "124 MB" },
+            { name: "Product Photography.pdf",    size: "8.1 MB" },
+            { name: "Brand Guidelines 2024.pdf",  size: "3.2 MB" },
+            { name: "Athlete Testimonials.docx",  size: "156 KB" },
+          ].map((f, i, arr) => (
+            <div
+              key={f.name}
+              className={`flex gap-[12px] items-center px-[16px] py-[12px] ${i < arr.length - 1 ? "border-b border-[rgba(255,255,255,0.08)]" : ""}`}
+            >
+              <div className="size-[20px] rounded-[4px] border-2 border-[rgba(255,255,255,0.08)] shrink-0" />
+              <svg fill="none" viewBox="0 0 16 16" className="size-[16px] shrink-0">
+                <path d={svgPathsShortClip.p1f315b00} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+              </svg>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold text-[#fafafa] text-[14px] leading-5 truncate">{f.name}</p>
+                <p className="text-[#a1a1aa] text-[12px] font-medium">{f.size}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Configuration section (shared structure, content-type-specific fields)
+function ConfigurationSection({ category, fields, setField }: {
+  category: ContentCategory;
+  fields: Record<string, any>;
+  setField: (k: string, v: string) => void;
+}) {
+  return (
+    <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
+      <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Configuration</p>
+      <p className="text-[#a1a1aa] text-[14px] leading-[20px] pt-[4px]">
+        Fields marked <span className="text-[#00d492] font-semibold">Project Default</span> are pre-filled from your project settings.
+      </p>
+
+      <div className="w-full space-y-[20px] pt-[20px]">
+        {/* Item Topic — all types */}
+        <div>
+          <ConfigFieldLabel>Item Topic</ConfigFieldLabel>
+          <ConfigInput
+            value={fields.topic ?? ""}
+            onChange={(v) => setField("topic", v)}
+            placeholder="e.g., Summer collection launch and performance innovation"
+          />
+        </div>
+
+        {/* Long form specific */}
+        {category === "long-form" && (
+          <>
+            <div>
+              <ConfigFieldLabel>Word Count Target</ConfigFieldLabel>
+              <ConfigInput value={fields.wordCount ?? ""} onChange={(v) => setField("wordCount", v)} placeholder="e.g., 1500" type="number" />
+            </div>
+            <div>
+              <ConfigFieldLabel>SEO Keywords</ConfigFieldLabel>
+              <ConfigInput value={fields.seoKeywords ?? ""} onChange={(v) => setField("seoKeywords", v)} placeholder="e.g., running tips, summer training" />
+            </div>
+            <div>
+              <ConfigFieldLabel projectDefault>Target Audience</ConfigFieldLabel>
+              <ConfigTextarea value={fields.targetAudience ?? ""} onChange={(v) => setField("targetAudience", v)} placeholder="Describe your target audience..." />
+            </div>
+          </>
+        )}
+
+        {/* Short video specific */}
+        {category === "short-video" && (
+          <>
+            <div>
+              <ConfigFieldLabel>Source Video Reference</ConfigFieldLabel>
+              <ConfigInput value={fields.sourceVideoRef ?? ""} onChange={(v) => setField("sourceVideoRef", v)} placeholder="e.g., Summer Campaign Video - Main Edit" />
+            </div>
+            <div>
+              <ConfigFieldLabel>Clip Duration (seconds)</ConfigFieldLabel>
+              <ConfigInput value={fields.clipDuration ?? "30"} onChange={(v) => setField("clipDuration", v)} placeholder="30" type="number" />
+            </div>
+          </>
+        )}
+
+        {/* Highlight reel specific */}
+        {category === "highlight" && (
+          <>
+            <div>
+              <ConfigFieldLabel>Total Duration (seconds)</ConfigFieldLabel>
+              <ConfigInput value={fields.totalDuration ?? "90"} onChange={(v) => setField("totalDuration", v)} placeholder="90" type="number" />
+            </div>
+            <div>
+              <ConfigFieldLabel>Number of Highlights</ConfigFieldLabel>
+              <ConfigInput value={fields.numHighlights ?? "5"} onChange={(v) => setField("numHighlights", v)} placeholder="5" type="number" />
+            </div>
+          </>
+        )}
+
+        {/* AI video specific */}
+        {category === "ai-video" && (
+          <div>
+            <ConfigFieldLabel>Video Duration (seconds)</ConfigFieldLabel>
+            <ConfigInput value={fields.videoDuration ?? "60"} onChange={(v) => setField("videoDuration", v)} placeholder="60" type="number" />
+          </div>
+        )}
+
+        {/* Brand Guidelines — all types */}
+        <div>
+          <ConfigFieldLabel projectDefault>Brand Guidelines</ConfigFieldLabel>
+          <ConfigTextarea
+            value={fields.brandGuidelines ?? ""}
+            onChange={(v) => setField("brandGuidelines", v)}
+            placeholder="Describe your brand voice, style guidelines, and any dos/don'ts..."
+          />
+        </div>
+
+        {/* Additional Instructions — all types */}
+        <div>
+          <ConfigFieldLabel>Additional Instructions</ConfigFieldLabel>
+          <ConfigTextarea
+            value={fields.additionalInstructions ?? ""}
+            onChange={(v) => setField("additionalInstructions", v)}
+            placeholder="Any additional instructions on how you want the post to be"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Preview panel ─────────────────────────────────────────────────────────────
+
+function PreviewPanel({ category, fields }: {
+  category: ContentCategory;
+  fields: Record<string, any>;
+}) {
+  const title = fields.title || "";
+  const tags: string[] = fields.tags ?? [];
+
+  // Determine the body text to show based on content type
+  const bodyText =
+    category === "long-form" || category === "other"
+      ? fields.content || ""
+      : category === "short-video" || category === "highlight"
+      ? fields.caption || ""
+      : category === "ai-video"
+      ? fields.script || ""
+      : category === "quote-card"
+      ? fields.quoteText || ""
+      : "";
+
+  // Split body into paragraphs for rendering
+  const paragraphs = bodyText
+    .split(/\n+/)
+    .map((p: string) => p.trim())
+    .filter(Boolean);
+
+  // Detect hashtag lines (lines starting with #)
+  const contentParas = paragraphs.filter((p: string) => !p.startsWith("#"));
+  const hashtagLine = paragraphs.find((p: string) => p.startsWith("#")) || "";
+
+  return (
+    <div className="bg-[rgba(10,10,10,0.2)] border-r border-[rgba(255,255,255,0.08)] self-stretch shrink-0 w-[320px] flex flex-col gap-[10px] pl-[24px] pr-[25px] py-[16px]">
+      <p className="font-bold text-[14px] text-white leading-5">Preview</p>
+
+      {/* Preview card */}
+      <div className="bg-[#0a0a0a] h-[392px] w-[271px] rounded-[8px] overflow-hidden shrink-0">
+
+        {/* ── Long form / Social post ── */}
+        {(category === "long-form" || category === "other") && (
+          <div className="size-full p-[16px] flex flex-col gap-[10px] overflow-hidden">
+            {/* Title */}
+            {title ? (
+              <p className="text-[#fafafa] text-[11px] font-bold leading-[15px] line-clamp-2 shrink-0">{title}</p>
+            ) : (
+              <div className="h-[10px] bg-[#222] rounded-full w-3/4 shrink-0" />
+            )}
+
+            {/* Body text */}
+            <div className="flex-1 overflow-hidden">
+              {contentParas.length > 0 ? (
+                <div className="flex flex-col gap-[8px]">
+                  {contentParas.slice(0, 8).map((para: string, i: number) => (
+                    <p
+                      key={i}
+                      className="text-[#a1a1aa] text-[9px] leading-[14px] line-clamp-3"
+                    >
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex flex-col gap-[5px]">
+                  {[100, 90, 85, 70, 95, 60, 80, 75].map((w, i) => (
+                    <div key={i} className="h-[7px] bg-[#1a1a1a] rounded-full" style={{ width: `${w}%` }} />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Hashtags */}
+            {(hashtagLine || tags.length > 0) && (
+              <div className="shrink-0 pt-[4px]">
+                {hashtagLine ? (
+                  <p className="text-[#10b981] text-[9px] leading-[14px] line-clamp-2">{hashtagLine}</p>
+                ) : (
+                  <p className="text-[#10b981] text-[9px] leading-[14px]">
+                    {tags.map((t) => `#${t}`).join(" ")}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Quote card ── */}
+        {category === "quote-card" && (
+          <div className="size-full flex flex-col items-center justify-center p-[20px] bg-[#0f0f0f]">
+            <div className="text-[#10b981] text-[28px] leading-none font-black mb-[8px] self-start">"</div>
+            {bodyText ? (
+              <p className="text-[#fafafa] text-[11px] leading-[16px] italic text-center line-clamp-6">
+                {bodyText}
+              </p>
+            ) : (
+              <div className="flex flex-col gap-[5px] w-full">
+                {[80, 95, 70].map((w, i) => (
+                  <div key={i} className="h-[7px] bg-[#222] rounded-full mx-auto" style={{ width: `${w}%` }} />
+                ))}
+              </div>
+            )}
+            {(fields.author || tags.length > 0) && (
+              <div className="mt-[12px] text-center">
+                {fields.author && (
+                  <p className="text-[#a1a1aa] text-[10px] font-medium">— {fields.author}</p>
+                )}
+                {tags.length > 0 && (
+                  <p className="text-[#10b981] text-[9px] mt-[6px]">
+                    {tags.map((t) => `#${t}`).join(" ")}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Short clip / Highlight / AI Video ── */}
+        {(category === "short-video" || category === "highlight" || category === "ai-video") && (
+          <div className="size-full flex flex-col px-[20px] py-[16px] gap-[12px]">
+            {/* Upload zone (top) */}
+            <div className="flex-1 w-full rounded-[16px] flex flex-col items-center justify-center gap-[8px]">
+              <UploadIcon />
+              <p className="text-[#10b981] text-[12px] font-medium">Upload Video</p>
+              <p className="text-[#a1a1aa] text-[10px] font-medium">Click to browse</p>
+            </div>
+
+            {/* Generate AI Video zone */}
+            <div className="w-full rounded-[16px] border border-dashed border-[#10b981] flex flex-col items-center justify-center gap-[6px] py-[12px] px-[14px] shrink-0">
+              <AIGenerateIcon />
+              <p className="text-[#fafafa] text-[12px] font-medium">Generate AI Video</p>
+              <p className="text-[#a1a1aa] text-[10px] font-medium text-center leading-[14px]">
+                This will create a video using the post details and references
+              </p>
+            </div>
+
+            {/* Caption / script preview */}
+            {bodyText && (
+              <div className="shrink-0">
+                <p className="text-[#a1a1aa] text-[9px] leading-[13px] line-clamp-3">{bodyText}</p>
+                {tags.length > 0 && (
+                  <p className="text-[#10b981] text-[9px] mt-[4px] line-clamp-1">
+                    {tags.map((t) => `#${t}`).join(" ")}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <p className="text-[12px] text-white leading-4 opacity-80">
+        This is an approximation of what your post will look like.
+      </p>
+    </div>
+  );
+}
+
+// ─── Content-type form fields ─────────────────────────────────────────────────
+
+function LongFormFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+  return (
+    <>
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Title*</FieldLabel>
+        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter article title" />
+      </div>
+
+      <PublishDateTimeRow
+        date={fields.date ?? ""} time={fields.time ?? "09:00"}
+        onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+      />
+
+      <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
+        <FieldLabel>Post Content</FieldLabel>
+        <Textarea
+          value={fields.content ?? ""}
+          onChange={(v) => setField("content", v)}
+          placeholder="Write your article content here..."
+          minRows={8}
+        />
+      </div>
+
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
+      <ConfigurationSection category="long-form" fields={fields} setField={setField as any} />
+    </>
+  );
+}
+
+function ShortVideoFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+  return (
+    <>
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Title*</FieldLabel>
+        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter clip title" />
+      </div>
+
+      <PublishDateTimeRow
+        date={fields.date ?? ""} time={fields.time ?? "09:00"}
+        onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+      />
+
+      <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
+        <FieldLabel>Caption / Script</FieldLabel>
+        <Textarea
+          value={fields.caption ?? ""}
+          onChange={(v) => setField("caption", v)}
+          placeholder="Write your video caption or script here..."
+          minRows={5}
+        />
+      </div>
+
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
+      <ConfigurationSection category="short-video" fields={fields} setField={setField as any} />
+    </>
+  );
+}
+
+function HighlightFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+  return (
+    <>
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Title*</FieldLabel>
+        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter highlight reel title" />
+      </div>
+
+      <PublishDateTimeRow
+        date={fields.date ?? ""} time={fields.time ?? "09:00"}
+        onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+      />
+
+      <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
+        <FieldLabel>Description</FieldLabel>
+        <Textarea
+          value={fields.description ?? ""}
+          onChange={(v) => setField("description", v)}
+          placeholder="Describe this highlight reel..."
+          minRows={4}
+        />
+      </div>
+
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
+      <ConfigurationSection category="highlight" fields={fields} setField={setField as any} />
+    </>
+  );
+}
+
+function QuoteCardFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+  return (
+    <>
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Title*</FieldLabel>
+        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter quote card title" />
+      </div>
+
+      <PublishDateTimeRow
+        date={fields.date ?? ""} time={fields.time ?? "09:00"}
+        onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+      />
+
+      <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
+        <FieldLabel>Quote Text</FieldLabel>
+        <Textarea
+          value={fields.quoteText ?? ""}
+          onChange={(v) => setField("quoteText", v)}
+          placeholder="Enter the quote to display on the card..."
+          minRows={4}
+        />
+      </div>
+
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Author Attribution</FieldLabel>
+        <Input value={fields.author ?? ""} onChange={(v) => setField("author", v)} placeholder="e.g., Gurudev Shri Amritji" />
+      </div>
+
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
+      <ConfigurationSection category="quote-card" fields={fields} setField={setField as any} />
+    </>
+  );
+}
+
+function AIVideoFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+  return (
+    <>
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Title*</FieldLabel>
+        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter AI video title" />
+      </div>
+
+      <PublishDateTimeRow
+        date={fields.date ?? ""} time={fields.time ?? "09:00"}
+        onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+      />
+
+      <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
+        <FieldLabel>Script / Prompt</FieldLabel>
+        <Textarea
+          value={fields.script ?? ""}
+          onChange={(v) => setField("script", v)}
+          placeholder="Write the script or prompt for AI video generation..."
+          minRows={5}
+        />
+      </div>
+
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
+      <ConfigurationSection category="ai-video" fields={fields} setField={setField as any} />
+    </>
+  );
+}
+
+function OtherFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+  return (
+    <>
+      <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
+        <FieldLabel>Title*</FieldLabel>
+        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter post title" />
+      </div>
+
+      <PublishDateTimeRow
+        date={fields.date ?? ""} time={fields.time ?? "09:00"}
+        onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+      />
+
+      <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
+        <FieldLabel>Post Content</FieldLabel>
+        <Textarea
+          value={fields.content ?? ""}
+          onChange={(v) => setField("content", v)}
+          placeholder="Write your post content here..."
+          minRows={5}
+        />
+      </div>
+
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
+      <ConfigurationSection category="other" fields={fields} setField={setField as any} />
+    </>
+  );
+}
+
+// ─── Main modal ───────────────────────────────────────────────────────────────
+
+export function ContentEditModal({
+  isOpen,
+  onClose,
+  contentItem,
+  onUpdate,
+}: ContentEditModalProps) {
+  const category = categorize(contentItem.contentType);
+  const meta = CATEGORY_META[category];
+
+  const [fields, setFieldsRaw] = useState<Record<string, any>>({
+    title: contentItem.title || contentItem.topic || "",
+    date: contentItem.date ?? "",
+    time: "09:00",
+    topic: contentItem.topic ?? "",
+    tags: [],
+    content: "",
+    caption: "",
+    quoteText: "",
+    author: "",
+    script: "",
+    brandGuidelines: "",
+    targetAudience: "",
+    additionalInstructions: "",
+    sourceLink: "",
+    wordCount: "",
+    seoKeywords: "",
+    clipDuration: "30",
+    videoDuration: "60",
+    sourceVideoRef: "",
+    totalDuration: "90",
+    numHighlights: "5",
+  });
+
+  const setField = (k: string, v: any) => setFieldsRaw((prev) => ({ ...prev, [k]: v }));
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-50 flex items-center justify-center p-0">
+      <div
+        className="bg-[#0a0a0a] flex flex-col overflow-hidden w-full h-full"
+        style={{ maxWidth: 1200, maxHeight: "100vh" }}
+      >
+        {/* ── Header ── */}
+        <div className="relative shrink-0 h-[84px]">
+          <div className="absolute inset-0 border-b border-[rgba(255,255,255,0.08)] pointer-events-none" />
+          <div className="flex items-center justify-between h-full px-[24px]">
+            {/* Left: content identity */}
+            <div className="flex items-center gap-[12px]">
+              <div className="bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] rounded-full size-[36px] flex items-center justify-center shrink-0">
+                <ContentTypeIcon />
+              </div>
+              <div>
+                <p className="font-bold text-[#fafafa] text-[16px] leading-5 tracking-[-0.16px]">
+                  {fields.title || contentItem.title || contentItem.topic || "Untitled"}
+                </p>
+                <p className="text-[#a1a1aa] text-[12px] leading-4">{meta.sublabel}</p>
+              </div>
+            </div>
+
+            {/* Right: action buttons */}
+            <div className="flex items-center gap-[12px]">
+              {/* Generate button */}
+              <button className="bg-[#262626] flex gap-[8px] h-[36px] items-center justify-center px-[12px] py-[8px] rounded-[12px] shrink-0 hover:bg-[#333] transition-colors">
+                <span className="font-medium text-[#fafafa] text-[14px]">Generate</span>
+                <AISparkleIcon paths={svgPathsShortClip} />
+              </button>
+
+              {/* Draft dropdown */}
+              <div className="bg-[#262626] border border-[rgba(255,255,255,0.08)] flex items-center px-[17px] py-[9px] rounded-[56px] shrink-0 relative">
+                <span className="font-medium text-[#fafafa] text-[14px] mr-[8px]">Draft</span>
+                <div className="w-px h-[20px] bg-[rgba(255,255,255,0.08)] mx-[8px]" />
+                <ChevronDown className="size-[14px] text-[#a1a1aa]" />
+              </div>
+
+              {/* Settings */}
+              <button className="flex items-center justify-center rounded-[16px] size-[36px] hover:bg-[#262626] transition-colors">
+                <SettingsIcon />
+              </button>
+
+              {/* Close */}
+              <button
+                onClick={onClose}
+                className="flex items-center justify-center rounded-[16px] size-[36px] hover:bg-[#262626] transition-colors"
+              >
+                <X className="size-[18px] text-[#a1a1aa]" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Body: Preview + Form ── */}
+        <div className="flex flex-1 min-h-0 overflow-hidden">
+          {/* Preview panel (left, 320px) */}
+          <PreviewPanel category={category} fields={fields} />
+
+          {/* Form panel (right, scrollable) */}
+          <div className="flex-1 min-w-0 overflow-y-auto">
+            <div className="flex flex-col items-start px-[24px] py-[16px] pb-[120px]">
+              {category === "long-form" && <LongFormFields fields={fields} setField={setField} />}
+              {category === "short-video" && <ShortVideoFields fields={fields} setField={setField} />}
+              {category === "highlight" && <HighlightFields fields={fields} setField={setField} />}
+              {category === "quote-card" && <QuoteCardFields fields={fields} setField={setField} />}
+              {category === "ai-video" && <AIVideoFields fields={fields} setField={setField} />}
+              {category === "other" && <OtherFields fields={fields} setField={setField} />}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Sticky footer with Save ── */}
+        <div className="shrink-0 border-t border-[rgba(255,255,255,0.08)] px-[24px] py-[16px] flex justify-end gap-[12px] bg-[#0a0a0a]">
+          <button
+            onClick={onClose}
+            className="px-[24px] py-[10px] rounded-[12px] bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] text-[#a1a1aa] text-[14px] font-medium hover:bg-[#262626] transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => { onUpdate({ ...contentItem, ...fields }); onClose(); }}
+            className="px-[24px] py-[10px] rounded-[12px] bg-[#10b981] text-white text-[14px] font-medium hover:opacity-90 transition-opacity"
+          >
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

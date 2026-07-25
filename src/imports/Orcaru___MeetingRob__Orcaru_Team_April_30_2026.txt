@@ -1,0 +1,4607 @@
+1
+00:00:02,000 --> 00:00:04,380
+This meeting is being recorded.
+
+2
+00:00:09,040 --> 00:00:10,740
+Hey, Tyler, how you doing today?
+
+3
+00:00:19,170 --> 00:00:19,530
+Okay.
+
+4
+00:00:23,950 --> 00:00:27,910
+Still waiting on the road. Oh.
+
+5
+00:00:31,970 --> 00:00:33,990
+Oh, I need a joke with you. No, no,
+
+6
+00:00:34,030 --> 00:00:36,230
+Rob yet. I know yet. No,
+
+7
+00:00:36,290 --> 00:00:40,030
+why don't we watch? Did you watch? I went through that I was still
+
+8
+00:00:40,031 --> 00:00:41,910
+rewatching a little bit of the video. Do you want to look at it
+
+9
+00:00:41,911 --> 00:00:44,870
+more together or do you want watch it? I did,
+
+10
+00:00:45,070 --> 00:00:49,430
+yeah. It was interesting.
+
+11
+00:00:51,470 --> 00:00:55,990
+He had good questions. He had
+
+12
+00:00:55,991 --> 00:01:00,530
+good. to do. He had good questions as
+
+13
+00:01:00,531 --> 00:01:03,710
+far as like, yeah, what is, what are the,
+
+14
+00:01:03,790 --> 00:01:08,130
+how do he phrase it? He's like, what's the, maybe like the one feature
+
+15
+00:01:08,131 --> 00:01:11,350
+that is most important, whether it's like organization?
+
+16
+00:01:12,270 --> 00:01:15,370
+I mean, I don't, at least it appeared like a good question.
+
+17
+00:01:15,371 --> 00:01:18,530
+Maybe it wasn't that relevant because it's like, well, the quality should always be
+
+18
+00:01:18,531 --> 00:01:20,590
+the highest and it should all be organized.
+
+19
+00:01:21,150 --> 00:01:25,730
+So I don't know what we're you're
+
+20
+00:01:25,731 --> 00:01:30,290
+I have some notes I suppose on the specifics but yeah we could walk
+
+21
+00:01:30,291 --> 00:01:33,830
+through it or what we're you're okay.
+
+22
+00:01:45,310 --> 00:01:49,830
+Hey Rob how are you doing today? Excellent
+
+23
+00:01:49,831 --> 00:01:55,430
+thanks for the patience how are you doing doing
+
+24
+00:01:55,431 --> 00:02:00,090
+good doing good thank you for asking It's
+
+25
+00:02:00,091 --> 00:02:02,830
+my internet, okay,
+
+26
+00:02:03,030 --> 00:02:07,830
+or do I sound like the video
+
+27
+00:02:07,831 --> 00:02:10,650
+is not good? No,
+
+28
+00:02:10,730 --> 00:02:14,770
+you sound good. Everything looks good. Great.
+
+29
+00:02:16,350 --> 00:02:20,690
+Yeah, I'm just difficult to find the best location for the VPN.
+
+30
+00:02:21,710 --> 00:02:26,790
+Yeah, no worries. So real quick to address your comments.
+
+31
+00:02:27,710 --> 00:02:33,290
+Yeah, for the contract, definitely, we will absolutely
+
+32
+00:02:33,291 --> 00:02:37,030
+let you know, you know, we wouldn't just terminate it out of nowhere if
+
+33
+00:02:37,031 --> 00:02:40,210
+we were to terminate the contract, we would certainly, I guess you haven't worked
+
+34
+00:02:40,211 --> 00:02:42,850
+this for so far enough. Yeah,
+
+35
+00:02:42,970 --> 00:02:45,430
+we would definitely let you know in advance, you know,
+
+36
+00:02:45,470 --> 00:02:48,210
+any of the pieces, whether it's maybe if we're not liking something,
+
+37
+00:02:48,211 --> 00:02:51,150
+we'll just continue to work with you and you'll kind of figure it.
+
+38
+00:02:51,930 --> 00:02:55,150
+Yeah, we will certainly let you know when things, that was a question Tyler,
+
+39
+00:02:55,230 --> 00:02:57,810
+if we'd terminate the contract, please let them know. Before time,
+
+40
+00:02:57,811 --> 00:03:00,250
+which certainly we would we would do that.
+
+41
+00:03:00,670 --> 00:03:03,210
+Yeah, of course. And then, um, then a mix.
+
+42
+00:03:03,950 --> 00:03:08,510
+Yeah. And then in the contract, it's that regarding the confidentiality of
+
+43
+00:03:08,511 --> 00:03:12,270
+work, we'd love to know what things I can share in when.
+
+44
+00:03:12,910 --> 00:03:17,290
+Sometimes I may upload a video of a prototype and upwork or LinkedIn after
+
+45
+00:03:17,291 --> 00:03:19,890
+a few weeks. That's a great question.
+
+46
+00:03:20,390 --> 00:03:22,950
+Um, I don't know,
+
+47
+00:03:23,050 --> 00:03:26,510
+Tyler, what your thoughts are? Yeah, yeah,
+
+48
+00:03:27,090 --> 00:03:31,730
+probably not immediate
+
+49
+00:03:31,731 --> 00:03:35,030
+like, yeah, because I mean that's the whole point is we're building some proprietary
+
+50
+00:03:35,031 --> 00:03:38,030
+and we just put it publicly out there.
+
+51
+00:03:38,430 --> 00:03:43,070
+I mean it yeah, let's make some progress and if there's
+
+52
+00:03:43,071 --> 00:03:45,950
+like a screenshot or something once it's public and out there and then so
+
+53
+00:03:45,951 --> 00:03:49,770
+you can obviously have it on your portfolio totally get it to say you
+
+54
+00:03:49,771 --> 00:03:52,810
+worked on the project and you're part of birthing it and we want to
+
+55
+00:03:52,811 --> 00:03:55,150
+give you credit wherever we can. So by all means,
+
+56
+00:03:55,370 --> 00:03:58,990
+we'll never strip you of any form of credit. No,
+
+57
+00:03:59,010 --> 00:04:01,070
+no problem. It's not a big deal. I just wanted to,
+
+58
+00:04:01,290 --> 00:04:03,830
+you know, I haven't countered this situation in the past.
+
+59
+00:04:04,170 --> 00:04:07,850
+And I just wanted to know, or at least mention the topic,
+
+60
+00:04:08,310 --> 00:04:10,570
+if I want to share something, probably I'll ask you guys,
+
+61
+00:04:10,690 --> 00:04:15,370
+can I share this? But still, I know that you may be working on
+
+62
+00:04:15,371 --> 00:04:19,830
+a tool that other people may be also working on,
+
+63
+00:04:20,470 --> 00:04:25,630
+maybe with different approach and it's not the best thing to show them without
+
+64
+00:04:25,631 --> 00:04:28,230
+having it released previously.
+
+65
+00:04:28,770 --> 00:04:32,490
+So I usually wait until it's released and people are trying it so therefore
+
+66
+00:04:32,491 --> 00:04:36,530
+if I share something they it's because they can actually go in and then
+
+67
+00:04:36,531 --> 00:04:41,290
+try it. So
+
+68
+00:04:41,291 --> 00:04:46,290
+how
+
+69
+00:04:47,130 --> 00:04:51,890
+would you like, How would you like to to proceed today you so
+
+70
+00:04:51,891 --> 00:04:57,090
+I guess you have that time to yeah So I guess first
+
+71
+00:04:57,091 --> 00:05:00,310
+off some of your main questions about like what are we actually building?
+
+72
+00:05:00,311 --> 00:05:06,790
+I think that was the first one that as a kind of core aspects,
+
+73
+00:05:06,791 --> 00:05:07,270
+right
+
+74
+00:05:12,270 --> 00:05:15,470
+I'm happy to go for 30 seconds, but let's just like time box it
+
+75
+00:05:15,471 --> 00:05:19,070
+so we're not repeating ourselves and then how to kind of keep it concise.
+
+76
+00:05:19,530 --> 00:05:22,310
+So if I, does that sound like a good way to be?
+
+77
+00:05:23,870 --> 00:05:27,010
+So when you say, okay, so I'll go first and like,
+
+78
+00:05:27,090 --> 00:05:29,710
+where you go, and it will take turns here.
+
+79
+00:05:29,790 --> 00:05:34,410
+But basically, I would say we are not trying
+
+80
+00:05:34,411 --> 00:05:41,070
+to go, So it's more on the quality and
+
+81
+00:05:41,071 --> 00:05:46,030
+not a high volume content generation
+
+82
+00:05:46,031 --> 00:05:49,690
+tool. And I'd say yes,
+
+83
+00:05:50,050 --> 00:05:53,670
+the more on the strategy, so the content organization scheduling,
+
+84
+00:05:54,430 --> 00:05:58,450
+we definitely need to support some sort of topics,
+
+85
+00:05:58,910 --> 00:06:03,770
+kind of organization of topics and how that schedules into some schedule
+
+86
+00:06:03,771 --> 00:06:05,890
+right now we do this manually in a Google sheet.
+
+87
+00:06:07,270 --> 00:06:11,810
+The final publishing for the interim will probably just push this
+
+88
+00:06:11,811 --> 00:06:14,670
+and we'll integrate with HubSpot, integrate with Metricle,
+
+89
+00:06:14,790 --> 00:06:18,870
+integrate with Hootsuite to push it out to other tools but we need to
+
+90
+00:06:18,871 --> 00:06:24,930
+organize it, we do need to have some sort of calendar and then so
+
+91
+00:06:24,931 --> 00:06:27,950
+I'd say the primary value prop would be more around the strategy,
+
+92
+00:06:28,110 --> 00:06:33,670
+the consistency, the QA, and that's
+
+93
+00:06:33,671 --> 00:06:38,490
+it, the core persona. I would say it's the director of marketing.
+
+94
+00:06:39,690 --> 00:06:42,270
+We've tried selling agencies, agencies seem to,
+
+95
+00:06:43,030 --> 00:06:46,950
+you know, I don't know. I would say it's the director of marketing within
+
+96
+00:06:46,951 --> 00:06:49,250
+a company that already has a budget 30,
+
+97
+00:06:49,810 --> 00:06:52,730
+the solo creator has no money. However,
+
+98
+00:06:53,070 --> 00:06:55,270
+if they're an author, if they have a podcast,
+
+99
+00:06:55,650 --> 00:06:58,470
+if they have and if they're an influencer, I would say they also fall
+
+100
+00:06:58,471 --> 00:07:00,710
+into their organization with at least,
+
+101
+00:07:01,070 --> 00:07:04,170
+I don't know, a hundred, 200,000 in revenue,
+
+102
+00:07:04,930 --> 00:07:07,350
+not the solo independent person.
+
+103
+00:07:08,870 --> 00:07:12,650
+So that's probably more than 30 seconds, but I don't know about the wedge
+
+104
+00:07:12,651 --> 00:07:15,350
+feature. I'd have to think about that more. Cory,
+
+105
+00:07:15,750 --> 00:07:18,030
+go. Yeah, thank you. Actually, great,
+
+106
+00:07:18,170 --> 00:07:20,830
+great jumping point in Tyler. Yeah,
+
+107
+00:07:21,010 --> 00:07:25,630
+so Rob, to another thing to add onto a Tyler just said is
+
+108
+00:07:25,631 --> 00:07:28,210
+to the quality of content,
+
+109
+00:07:28,930 --> 00:07:33,570
+one of our biggest value props is that
+
+110
+00:07:33,571 --> 00:07:35,870
+it's a Tyler's point, again, we're not,
+
+111
+00:07:36,010 --> 00:07:40,130
+it's not just AI content, like it's the quality,
+
+112
+00:07:40,430 --> 00:07:45,470
+it's definitely the quality of the content. And
+
+113
+00:07:45,471 --> 00:07:49,710
+to get to that quality, we have a lot of inputs in the beginning.
+
+114
+00:07:50,410 --> 00:07:55,010
+So there's a whole resource section which I'm not sure
+
+115
+00:07:55,011 --> 00:07:58,850
+if we kind of showed you that because right now we have a whole
+
+116
+00:07:58,851 --> 00:08:01,810
+resource area where you can, and you kind of,
+
+117
+00:08:01,850 --> 00:08:04,630
+you kind of showed in your video where you can just put in the
+
+118
+00:08:04,631 --> 00:08:09,030
+URL of like an Instagram video that you want to use as a reference.
+
+119
+00:08:09,031 --> 00:08:11,590
+Maybe you want to write an article on a topic,
+
+120
+00:08:11,750 --> 00:08:15,290
+and there's like five Instagram videos about that topic.
+
+121
+00:08:15,770 --> 00:08:18,370
+Well, you can just take the URL of that video,
+
+122
+00:08:18,750 --> 00:08:21,730
+but then to our system, it will download the video,
+
+123
+00:08:22,230 --> 00:08:26,890
+scrape it, take the transcript, and now this transcript is available as written
+
+124
+00:08:26,891 --> 00:08:30,930
+text to be used to write a post to write a blog article.
+
+125
+00:08:32,390 --> 00:08:35,810
+or I guess, I don't know how I'd work in a video,
+
+126
+00:08:36,250 --> 00:08:41,170
+so definitely everything Tyler said and also
+
+127
+00:08:41,171 --> 00:08:43,850
+and then the initial part of the process.
+
+128
+00:08:44,750 --> 00:08:50,050
+There is a lot of input and it's organizing that's
+
+129
+00:08:50,051 --> 00:08:54,730
+been one of our biggest challenges is to organize the beginning
+
+130
+00:08:54,731 --> 00:08:57,950
+of that workflow to make it simple.
+
+131
+00:08:57,951 --> 00:09:00,910
+So it's kind of easy to see where the,
+
+132
+00:09:01,090 --> 00:09:03,210
+where you put the inputs and understand like,
+
+133
+00:09:03,570 --> 00:09:06,030
+okay, you open the start of project,
+
+134
+00:09:06,110 --> 00:09:10,790
+you start an article, it should be pretty straightforward and clear as you move
+
+135
+00:09:10,791 --> 00:09:14,530
+through the steps. Yeah,
+
+136
+00:09:14,630 --> 00:09:17,350
+so that's probably been one of our bigger struggles,
+
+137
+00:09:17,351 --> 00:09:22,550
+I would say, but everything else Tyler said. And
+
+138
+00:09:22,551 --> 00:09:24,790
+then I liked,
+
+139
+00:09:24,890 --> 00:09:28,930
+I liked where your head was at in terms of,
+
+140
+00:09:28,970 --> 00:09:32,670
+because Tyler, that's an interesting pivot a little bit from where,
+
+141
+00:09:32,890 --> 00:09:34,930
+you know, we started, we'd had projects.
+
+142
+00:09:36,690 --> 00:09:39,170
+I, I like some combination of,
+
+143
+00:09:39,370 --> 00:09:41,750
+I think you're on the right track,
+
+144
+00:09:42,010 --> 00:09:44,250
+visually. I liked a lot of what you showed,
+
+145
+00:09:44,251 --> 00:09:47,170
+and I liked the dashboard I'm looking at right now.
+
+146
+00:09:46,890 --> 00:09:51,570
+Now, I think that is one world
+
+147
+00:09:51,571 --> 00:09:55,710
+we could live in, and if I'd like to visually,
+
+148
+00:09:57,190 --> 00:10:02,310
+I think to be able to see, and I think
+
+149
+00:10:02,311 --> 00:10:07,310
+I have a can of a, for example, and I'm wondering if that visual
+
+150
+00:10:07,311 --> 00:10:11,890
+style, like with our projects, so I thought about
+
+151
+00:10:11,891 --> 00:10:14,930
+a Tyler, would it, I mean, and you do want it when you create
+
+152
+00:10:14,931 --> 00:10:17,630
+content, you would probably want to be at right.
+
+153
+00:10:17,770 --> 00:10:21,210
+Actually, I guess the thing is our content,
+
+154
+00:10:21,230 --> 00:10:23,990
+you're kind of pushing it, you're scheduling it, you're organizing it.
+
+155
+00:10:24,570 --> 00:10:28,670
+So I don't think you need to see individual content pieces right away,
+
+156
+00:10:28,830 --> 00:10:32,630
+but I love the visual and I'm wondering if like that's how it,
+
+157
+00:10:32,990 --> 00:10:37,550
+I think it should be more of a canvas style dashboard almost with
+
+158
+00:10:37,551 --> 00:10:41,190
+the projects like that. But I like the visual for like the project can
+
+159
+00:10:41,191 --> 00:10:45,350
+show like the last thing that was created visually like that.
+
+160
+00:10:46,490 --> 00:10:51,010
+I think that makes a little more sense to me because then you could,
+
+161
+00:10:51,230 --> 00:10:54,330
+for example, if you're doing social reposting,
+
+162
+00:10:54,870 --> 00:10:58,890
+you know, there really isn't a, you're not going to show like 50 videos
+
+163
+00:10:58,891 --> 00:11:01,190
+up there that you just came out of your account.
+
+164
+00:11:01,470 --> 00:11:06,130
+But again, to quickly open up that project and hop right into
+
+165
+00:11:06,131 --> 00:11:10,670
+it, I think makes more sense that that makes sense to
+
+166
+00:11:10,671 --> 00:11:13,670
+you. Yeah, I think so. Yeah,
+
+167
+00:11:13,890 --> 00:11:17,050
+I agree with all that. Okay.
+
+168
+00:11:18,030 --> 00:11:23,030
+Well, if we're taking the quality
+
+169
+00:11:23,031 --> 00:11:27,570
+approach, then it's good that you make that comparison because if
+
+170
+00:11:27,571 --> 00:11:30,530
+we compare ourselves to Canva,
+
+171
+00:11:30,790 --> 00:11:33,290
+I think Canva is more on the quality side,
+
+172
+00:11:33,291 --> 00:11:37,930
+Not necessarily on the scheduling of the things that you create over there,
+
+173
+00:11:38,050 --> 00:11:42,970
+but more on the how can I go and select one of the
+
+174
+00:11:42,971 --> 00:11:46,950
+materials that I'm creating and try to customize it until it has the feeling
+
+175
+00:11:46,951 --> 00:11:51,610
+and the design that I like. So I think Followed more into
+
+176
+00:11:51,611 --> 00:11:56,150
+stuff They I remember they encamp are the first thing
+
+177
+00:11:56,151 --> 00:12:00,370
+that you see is like a recent page where you can see the the
+
+178
+00:12:00,371 --> 00:12:04,470
+latest projects that you have opened And so it makes sense.
+
+179
+00:12:04,570 --> 00:12:10,310
+And also I believe that they also have a, they now added a cat
+
+180
+00:12:10,311 --> 00:12:13,030
+option where a place where you can do an input so that you can
+
+181
+00:12:13,031 --> 00:12:15,290
+generate new content in the first screen,
+
+182
+00:12:15,590 --> 00:12:18,090
+because now they have an AI functionally.
+
+183
+00:12:21,770 --> 00:12:24,150
+Then, if we're moving to that path,
+
+184
+00:12:24,950 --> 00:12:29,810
+I'll tell you one of my concern is that I've seen
+
+185
+00:12:29,811 --> 00:12:34,090
+from past projects that generating the exact thing that you want,
+
+186
+00:12:34,350 --> 00:12:39,190
+it's usually a bit difficult. If I'm afraid
+
+187
+00:12:39,191 --> 00:12:43,790
+that if we pass a URL for a post that
+
+188
+00:12:43,791 --> 00:12:48,410
+you want to replicate, it may not be 100%
+
+189
+00:12:48,411 --> 00:12:53,010
+exactly how it is right now that's That's one of
+
+190
+00:12:53,011 --> 00:12:58,210
+the social media posts that I had already in my link
+
+191
+00:12:58,211 --> 00:13:01,610
+it in or my Instagram. It may do,
+
+192
+00:13:02,110 --> 00:13:05,090
+I don't know, 80%, 90%, but not exactly,
+
+193
+00:13:05,390 --> 00:13:08,110
+and you would need to go and maybe modify it somehow.
+
+194
+00:13:10,270 --> 00:13:15,150
+And do you think that's still okay if in our
+
+195
+00:13:15,151 --> 00:13:19,710
+case with that our type of user wouldn't mind to go
+
+196
+00:13:19,711 --> 00:13:25,130
+in and then move text text around or move an image around is
+
+197
+00:13:25,131 --> 00:13:30,170
+this that's usually their particular role or is it more about
+
+198
+00:13:30,171 --> 00:13:33,330
+I don't want to I don't want to be moving things like in the
+
+199
+00:13:33,331 --> 00:13:38,870
+camera where you go in and you can have them functionality of customizing.
+
+200
+00:13:42,510 --> 00:13:45,230
+Yeah, well,
+
+201
+00:13:45,410 --> 00:13:47,670
+uh, yeah, to quickly input there.
+
+202
+00:13:48,150 --> 00:13:50,930
+So Rob, um, a great, great questions because again,
+
+203
+00:13:50,970 --> 00:13:54,470
+you guess you don't know our software and you haven't got to play with
+
+204
+00:13:54,471 --> 00:13:56,710
+it or, or no enough about it yet.
+
+205
+00:13:57,090 --> 00:14:01,970
+So our software is not what you've ever used in
+
+206
+00:14:01,971 --> 00:14:04,030
+terms of a GPT or canva.
+
+207
+00:14:04,270 --> 00:14:06,390
+So you can't think about it like that in a sense.
+
+208
+00:14:07,550 --> 00:14:10,430
+We do use the latest LLMs,
+
+209
+00:14:10,550 --> 00:14:15,470
+but there is a lot of coding and there's a lot of back-end.
+
+210
+00:14:15,910 --> 00:14:19,370
+So that, yes, you can create your very first thing.
+
+211
+00:14:19,770 --> 00:14:24,450
+And it's entirely possible that the very first thing you create is good
+
+212
+00:14:24,451 --> 00:14:27,350
+to go. You might not need to add it at all.
+
+213
+00:14:28,830 --> 00:14:31,270
+So while we do,
+
+214
+00:14:31,310 --> 00:14:34,790
+we do want to make sure it can be editable.
+
+215
+00:14:35,610 --> 00:14:38,150
+And like right now, for example, our final product,
+
+216
+00:14:38,151 --> 00:14:42,810
+it kind of iframes in a Google doc with links to it.
+
+217
+00:14:43,310 --> 00:14:45,410
+So you can see it. If you like it,
+
+218
+00:14:45,730 --> 00:14:48,850
+you can just copy paste it and use it. Or you can hit edit.
+
+219
+00:14:49,050 --> 00:14:51,210
+It opens up the Google doc. You can leave comments.
+
+220
+00:14:51,211 --> 00:14:53,350
+You can make your adjustments. Obviously,
+
+221
+00:14:53,470 --> 00:14:58,110
+it's a little on a rudimentary. I'm sure we'd love maybe
+
+222
+00:14:58,111 --> 00:15:00,530
+we keep that part of the technology going. But the point is,
+
+223
+00:15:00,830 --> 00:15:03,390
+no, you could absolutely hop or didn't create,
+
+224
+00:15:03,910 --> 00:15:07,290
+but I don't think you would,
+
+225
+00:15:07,330 --> 00:15:12,070
+I think everything else about Canva makes sense minus that little bar because I
+
+226
+00:15:12,071 --> 00:15:17,170
+think there's still too many inputs. While our system can create
+
+227
+00:15:17,171 --> 00:15:19,350
+something, you know, right off the,
+
+228
+00:15:19,351 --> 00:15:23,910
+right off the go. I think there's still too many inputs that
+
+229
+00:15:23,911 --> 00:15:26,310
+someone would want. I think,
+
+230
+00:15:26,550 --> 00:15:30,050
+so I don't think it makes sense to just have like a short little,
+
+231
+00:15:30,230 --> 00:15:32,450
+hey, start creating anything.
+
+232
+00:15:32,850 --> 00:15:37,090
+I do like Canva's and you have this on your,
+
+233
+00:15:37,710 --> 00:15:41,850
+you have this in yours where it shows the projects or it shows the
+
+234
+00:15:41,851 --> 00:15:46,510
+different content. And then up above it showed like what you can create.
+
+235
+00:15:46,810 --> 00:15:49,250
+So I like that, like create new this, create new this, create new this,
+
+236
+00:15:49,350 --> 00:15:52,190
+create new this. And then it should open up the normal workflow.
+
+237
+00:15:52,770 --> 00:15:55,970
+So we don't necessarily need the like just type something and start.
+
+238
+00:15:56,350 --> 00:15:59,170
+We're definitely not that. It can,
+
+239
+00:15:59,410 --> 00:16:01,830
+first thing can be ready to go. Just needs more inputs.
+
+240
+00:16:02,110 --> 00:16:06,190
+Sorry, keep repeating that. Another piece to our puzzle.
+
+241
+00:16:07,710 --> 00:16:12,250
+And let me back up for a second. So to get that final
+
+242
+00:16:12,251 --> 00:16:15,990
+output, like I said, that can be ready to go first generation.
+
+243
+00:16:16,450 --> 00:16:19,630
+Don't really have to edit it. To get there,
+
+244
+00:16:20,090 --> 00:16:24,310
+there's not just your simple inputs as far as text,
+
+245
+00:16:24,990 --> 00:16:27,790
+title, keyword. That's all there,
+
+246
+00:16:27,950 --> 00:16:30,030
+too. So you do have your standard inputs.
+
+247
+00:16:30,710 --> 00:16:33,170
+Then you have your resources.
+
+248
+00:16:33,690 --> 00:16:37,650
+So I mentioned that a little bit. We have a whole resource library and
+
+249
+00:16:37,651 --> 00:16:41,510
+adding resources is part of the original flow.
+
+250
+00:16:42,130 --> 00:16:45,690
+But also you might have gone to your resource library.
+
+251
+00:16:45,950 --> 00:16:49,530
+You might have uploaded documents. You might have uploaded all these things.
+
+252
+00:16:49,531 --> 00:16:51,810
+So when you first go to create,
+
+253
+00:16:52,350 --> 00:16:55,370
+you have the option to choose resources.
+
+254
+00:16:55,710 --> 00:16:59,410
+So for this article, I want this resource and this resource,
+
+255
+00:16:59,590 --> 00:17:04,030
+this resource. These are all going to be put in and be used to
+
+256
+00:17:04,031 --> 00:17:08,770
+generate. You should also have the ability to add a new resource in
+
+257
+00:17:08,771 --> 00:17:11,670
+that creation process too.
+
+258
+00:17:11,870 --> 00:17:16,430
+So we can always add resources. But there is
+
+259
+00:17:16,431 --> 00:17:18,790
+a third thing I kind of alluded to,
+
+260
+00:17:18,930 --> 00:17:23,610
+which we call a writer profile, which is kind of the same concept.
+
+261
+00:17:24,950 --> 00:17:30,230
+Yes, it's building a writing avatar for cloning.
+
+262
+00:17:31,130 --> 00:17:33,190
+And so to do that,
+
+263
+00:17:33,191 --> 00:17:36,470
+that is also something you kind of pre-do,
+
+264
+00:17:36,890 --> 00:17:39,750
+you usually will set an avatar up. Well,
+
+265
+00:17:39,850 --> 00:17:42,210
+you could, you could have the option to do both. You can set an
+
+266
+00:17:42,211 --> 00:17:45,330
+avatar up, pre-starting my creation,
+
+267
+00:17:46,630 --> 00:17:49,130
+or you can, like, within the process,
+
+268
+00:17:49,310 --> 00:17:53,130
+you go to pick your avatar, and you can create one if you don't
+
+269
+00:17:53,131 --> 00:17:56,670
+have one. And an avatar is kind of this,
+
+270
+00:17:57,250 --> 00:17:59,310
+it actually seems simple,
+
+271
+00:17:59,390 --> 00:18:02,190
+but it's a different set of coding, and it's used differently.
+
+272
+00:18:02,790 --> 00:18:05,050
+But it's, you know, it's a set of resources.
+
+273
+00:18:05,730 --> 00:18:10,330
+So here's 10 articles written by this person I want to sound
+
+274
+00:18:10,331 --> 00:18:14,930
+like. And then there's also a text field to paste in brand guidelines
+
+275
+00:18:14,931 --> 00:18:17,410
+to just kind of give it direction.
+
+276
+00:18:17,690 --> 00:18:20,090
+You know, it should sound like this. You know,
+
+277
+00:18:20,310 --> 00:18:24,430
+don't use these words. Write in big paragraphs,
+
+278
+00:18:24,950 --> 00:18:28,050
+giving it like a writing tone and a writing style.
+
+279
+00:18:29,610 --> 00:18:32,990
+We actually even have, in Tyler,
+
+280
+00:18:33,170 --> 00:18:35,330
+I'm not sure if we want to keep that part,
+
+281
+00:18:35,730 --> 00:18:38,750
+we used to have a set of default tones and styles.
+
+282
+00:18:38,751 --> 00:18:42,530
+If you didn't want to dive too deep into this profile,
+
+283
+00:18:42,531 --> 00:18:46,130
+if you didn't have a specific person in mind,
+
+284
+00:18:46,370 --> 00:18:50,470
+you wanted your avatar to sound like, you could just choose a set of
+
+285
+00:18:50,471 --> 00:18:54,350
+10 kind of writing tones and writing levels.
+
+286
+00:18:57,670 --> 00:19:01,570
+So between the avatar and the resources,
+
+287
+00:19:02,290 --> 00:19:05,070
+these are kind of things you can either pre build,
+
+288
+00:19:05,290 --> 00:19:08,890
+or you set up, and then again, there's a series of inputs,
+
+289
+00:19:09,350 --> 00:19:13,670
+which is why I don't think just a singular generation thing for the beginning
+
+290
+00:19:13,671 --> 00:19:17,870
+makes sense. You should have an easy way to start them though,
+
+291
+00:19:17,950 --> 00:19:20,810
+so that's why I loved your dashboard where you do have the easy,
+
+292
+00:19:20,950 --> 00:19:23,570
+great discreet discreet discreet disc. Sorry,
+
+293
+00:19:23,730 --> 00:19:26,230
+I'm starting to talk in circles, so if that all makes sense,
+
+294
+00:19:26,390 --> 00:19:29,270
+so there's some extra pieces to the possible.
+
+295
+00:19:31,150 --> 00:19:34,890
+Okay, okay, no worries, just to clarify the avatars,
+
+296
+00:19:35,950 --> 00:19:40,550
+I noticed that in these tools that I've
+
+297
+00:19:40,551 --> 00:19:42,890
+seen when they usually call an avatar,
+
+298
+00:19:42,891 --> 00:19:45,770
+they call it like a visual person or a visual character.
+
+299
+00:19:46,210 --> 00:19:50,130
+But in your case, in our case, it seemed like it's more like the
+
+300
+00:19:50,131 --> 00:19:54,650
+voice that I want to give a specific content that I want to create.
+
+301
+00:19:55,830 --> 00:19:59,650
+I just want to put it like this. So we call it a writer
+
+302
+00:19:59,651 --> 00:20:02,910
+profile right now, but you can think about it again,
+
+303
+00:20:03,030 --> 00:20:06,230
+like as an avatar. So for example, see here again,
+
+304
+00:20:06,290 --> 00:20:10,270
+here's kind of our rudimentary program So projects,
+
+305
+00:20:10,750 --> 00:20:15,130
+resources, writer profile, you had a much better layout again.
+
+306
+00:20:15,290 --> 00:20:18,270
+So we start currently with your projects.
+
+307
+00:20:18,590 --> 00:20:21,410
+Again, I don't like it. Yours was visually much cleaner,
+
+308
+00:20:21,650 --> 00:20:26,230
+easier to see what the last thing was. So you
+
+309
+00:20:26,231 --> 00:20:29,390
+could see here's, you know, your writer profile name style,
+
+310
+00:20:29,670 --> 00:20:34,670
+you know, choose any of your resources. is the
+
+311
+00:20:34,671 --> 00:20:37,750
+same thing here is the kind of resource hub.
+
+312
+00:20:37,890 --> 00:20:41,270
+Looks pretty bad here. We have another version,
+
+313
+00:20:41,390 --> 00:20:45,050
+but you can see here's a video that was uploaded as a URL.
+
+314
+00:20:45,530 --> 00:20:48,370
+Here's the transcription. How many words it has,
+
+315
+00:20:48,410 --> 00:20:50,510
+the size of it, you can play it, if you like.
+
+316
+00:20:52,650 --> 00:20:57,950
+This is kind of the more updated version of that where
+
+317
+00:20:57,951 --> 00:21:01,410
+it's visually a little better. you know, here's the URL uploaded,
+
+318
+00:21:01,930 --> 00:21:05,090
+mostly I was testing URLs,
+
+319
+00:21:05,390 --> 00:21:07,690
+but you can have text, you know,
+
+320
+00:21:07,770 --> 00:21:10,870
+here's some text documents we uploaded as a resource.
+
+321
+00:21:12,270 --> 00:21:14,410
+And then again,
+
+322
+00:21:14,510 --> 00:21:17,350
+yours looked way better. So instead of just kind of,
+
+323
+00:21:17,410 --> 00:21:21,130
+you know, you can create a project, I guess you would need to create
+
+324
+00:21:21,131 --> 00:21:27,850
+a project on the project screen though you I
+
+325
+00:21:27,851 --> 00:21:32,950
+guess actually I like your idea of creating
+
+326
+00:21:32,951 --> 00:21:37,550
+a thing and I'm wondering Tyler if instead of creating project
+
+327
+00:21:37,551 --> 00:21:42,110
+we do just have you you can see create something and then when
+
+328
+00:21:42,111 --> 00:21:47,770
+you opens up hey that thing you just choose your project and
+
+329
+00:21:47,771 --> 00:21:50,650
+then if your project it hasn't been created yet,
+
+330
+00:21:50,810 --> 00:21:55,470
+you can simply just hit create and then they will
+
+331
+00:21:55,471 --> 00:21:58,510
+move you do a new screen. Project inputs,
+
+332
+00:21:59,010 --> 00:22:03,230
+pretty simple. Project we usually would have it,
+
+333
+00:22:03,950 --> 00:22:06,850
+your name, you know,
+
+334
+00:22:07,070 --> 00:22:10,050
+a little bit of context. This is a campaign about this.
+
+335
+00:22:10,530 --> 00:22:12,670
+This is a set of articles for this.
+
+336
+00:22:13,470 --> 00:22:16,170
+Who's your audience? Have any brand guidelines?
+
+337
+00:22:17,190 --> 00:22:19,590
+Again, you have a writing avatar,
+
+338
+00:22:20,030 --> 00:22:24,010
+tone, style, word, count, if applicable,
+
+339
+00:22:24,430 --> 00:22:28,230
+and then it's kind of creates.
+
+340
+00:22:28,510 --> 00:22:31,710
+So there's a decent amount of inputs for each thing you do,
+
+341
+00:22:31,990 --> 00:22:34,010
+which helps come out.
+
+342
+00:22:34,170 --> 00:22:37,090
+So once you first create it,
+
+343
+00:22:37,830 --> 00:22:40,150
+again, it's usually pretty close to ready.
+
+344
+00:22:40,430 --> 00:22:42,730
+You don't really have to do much editing. Then you brought, you may,
+
+345
+00:22:42,990 --> 00:22:45,270
+you might want to put your tag lines on it.
+
+346
+00:22:46,550 --> 00:22:49,450
+Yeah, anything Tyler to add to any of that or.
+
+347
+00:22:50,110 --> 00:22:54,350
+I mean, the only thing I'd add is.
+
+348
+00:22:58,730 --> 00:23:01,410
+No, I think you said it three.
+
+349
+00:23:01,610 --> 00:23:05,530
+Yeah, no, I think it's good that we've covered it. Yeah,
+
+350
+00:23:06,050 --> 00:23:08,330
+I mean, the only other should we go back to any of the other
+
+351
+00:23:08,331 --> 00:23:10,890
+questions from Rob or. Oh,
+
+352
+00:23:11,050 --> 00:23:13,730
+yeah, absolutely. Well, Rob, yeah, what else you got for us?
+
+353
+00:23:14,070 --> 00:23:16,390
+So Rob, is, I guess, you're asking.
+
+354
+00:23:17,410 --> 00:23:20,090
+Is there anything else really at, or I guess are we clear on the
+
+355
+00:23:20,091 --> 00:23:25,570
+wedge feature or no? Yes,
+
+356
+00:23:25,571 --> 00:23:30,210
+but now after this conversation, I have more additional questions
+
+357
+00:23:30,211 --> 00:23:32,850
+that are more related not to the specific feature,
+
+358
+00:23:33,330 --> 00:23:37,370
+but to the. Yeah,
+
+359
+00:23:37,430 --> 00:23:42,490
+how to go from start to start to the final process
+
+360
+00:23:42,491 --> 00:23:44,970
+of whatever you want to create. I mean,
+
+361
+00:23:45,070 --> 00:23:48,730
+what I mean imagining is, okay, what is the task that people are going
+
+362
+00:23:48,731 --> 00:23:50,770
+to come into our platform and do the most,
+
+363
+00:23:51,510 --> 00:23:54,850
+I usually try to focus on that, or at least the three features that
+
+364
+00:23:54,851 --> 00:23:59,510
+people are gonna use the most. And from one to be the which,
+
+365
+00:24:00,010 --> 00:24:04,030
+as you mentioned, but also it seems like the ability to create these,
+
+366
+00:24:04,670 --> 00:24:09,230
+these to customize the way that you want
+
+367
+00:24:09,231 --> 00:24:12,570
+this content to be created. I either if it's a wedge or if it's
+
+368
+00:24:12,571 --> 00:24:15,550
+something else, if you just want to create one post and be able to
+
+369
+00:24:15,551 --> 00:24:19,350
+select these preferences or how do you want it to make to create it
+
+370
+00:24:19,351 --> 00:24:24,790
+then select this writer profile or select the it's
+
+371
+00:24:24,791 --> 00:24:29,090
+going to be I know any settings.
+
+372
+00:24:29,610 --> 00:24:34,170
+So I'm wondering in the dashboard screen where I when
+
+373
+00:24:34,171 --> 00:24:37,650
+I added those shortcuts, I was thinking about the function,
+
+374
+00:24:37,651 --> 00:24:42,390
+it looks like the witch, right, but it seems like from those
+
+375
+00:24:42,391 --> 00:24:46,910
+last comments, you were seeing those shortcuts more of it's the place where
+
+376
+00:24:46,911 --> 00:24:51,010
+I can change the presets where I create the writer profiles.
+
+377
+00:24:51,630 --> 00:24:54,730
+And that's why I'm now thinking,
+
+378
+00:24:54,870 --> 00:24:59,530
+well, it does make sense, but now I'm thinking as
+
+379
+00:24:59,531 --> 00:25:03,550
+well. Let's say that I start a process of doing the wedge,
+
+380
+00:25:04,050 --> 00:25:08,210
+should I be able to go there and select,
+
+381
+00:25:08,350 --> 00:25:11,050
+yes, the right profile or select any other preferences,
+
+382
+00:25:11,051 --> 00:25:18,010
+or should I be able to at least select a preset of already combination
+
+383
+00:25:18,011 --> 00:25:22,730
+of those presets that I usually use in the past and
+
+384
+00:25:22,731 --> 00:25:27,390
+then generate the wedge process.
+
+385
+00:25:27,391 --> 00:25:32,410
+So, that means that I probably should focus on the process
+
+386
+00:25:32,411 --> 00:25:37,130
+of, okay, I think adding a large video and then turning it into clips,
+
+387
+00:25:37,290 --> 00:25:41,590
+that's not a difficult part, a difficult part is before the settings of how
+
+388
+00:25:41,591 --> 00:25:44,490
+do I want the end result to be, because right now I just select
+
+389
+00:25:44,491 --> 00:25:47,890
+a project and select the video that I want to shorten,
+
+390
+00:25:48,010 --> 00:25:53,430
+but I didn't add anything else. And
+
+391
+00:25:53,431 --> 00:25:57,250
+the only thing that I need to do that is that I'm assuming that
+
+392
+00:25:57,251 --> 00:26:01,250
+for every type of content that I'm creating, the things that I can customize
+
+393
+00:26:01,251 --> 00:26:05,870
+are different. So the right profile I'm assuming is for maybe for
+
+394
+00:26:05,871 --> 00:26:10,970
+the blog post, maybe for Instagram posts or for
+
+395
+00:26:10,971 --> 00:26:15,070
+ad posts. So,
+
+396
+00:26:15,071 --> 00:26:18,010
+on the ESOP or the documents that you sent me at the beginning,
+
+397
+00:26:19,190 --> 00:26:22,270
+do we have like the list of all the things that you need for
+
+398
+00:26:22,271 --> 00:26:26,490
+any type of content, like if it's going to be for this media,
+
+399
+00:26:26,630 --> 00:26:31,050
+we're going to need these edX. If it's going to be a writer profile,
+
+400
+00:26:31,950 --> 00:26:35,730
+I will add it there. If it's going to be just a social media
+
+401
+00:26:35,731 --> 00:26:40,270
+post, I will add it there in the initial step when you are
+
+402
+00:26:40,271 --> 00:26:45,170
+creating the wedge. And if we add more functionalities in
+
+403
+00:26:45,171 --> 00:26:47,410
+the prototype later,
+
+404
+00:26:47,930 --> 00:26:50,630
+I will at least know which settings do I need to add for each
+
+405
+00:26:50,631 --> 00:26:52,690
+one. And I will think of,
+
+406
+00:26:52,990 --> 00:26:56,250
+if it makes sense to put them there, or if I probably need to
+
+407
+00:26:56,251 --> 00:26:58,710
+customize it beforehand,
+
+408
+00:26:59,230 --> 00:27:03,690
+because I'm assuming that creating a write-in profile when you are about to make
+
+409
+00:27:03,691 --> 00:27:07,290
+a wedge that maybe it's not the best place to do it,
+
+410
+00:27:07,450 --> 00:27:11,110
+right? then probably I should have already created one hopefully.
+
+411
+00:27:12,110 --> 00:27:15,630
+So those are questions and comments at the same time.
+
+412
+00:27:15,790 --> 00:27:17,830
+So sorry about that and this is great.
+
+413
+00:27:19,910 --> 00:27:24,090
+Okay. Well I heard a number of things here.
+
+414
+00:27:24,310 --> 00:27:28,870
+So first off there's a wedge that's usually kind of a feature,
+
+415
+00:27:29,090 --> 00:27:32,610
+the one feature that brings someone in the door right then he thought like
+
+416
+00:27:32,611 --> 00:27:37,770
+well you know the example of that pitch
+
+417
+00:27:37,771 --> 00:27:42,290
+in China they're kind of onboarding or their
+
+418
+00:27:42,291 --> 00:27:47,450
+wedge was that they could quickly you know
+
+419
+00:27:47,451 --> 00:27:51,970
+scan an existing profile kind of import that and then create
+
+420
+00:27:51,971 --> 00:27:54,090
+more content that already kind of look like that, right?
+
+421
+00:27:55,110 --> 00:27:58,830
+I think that's interesting. So,
+
+422
+00:27:59,750 --> 00:28:03,450
+yeah,
+
+423
+00:28:03,970 --> 00:28:07,750
+can I guess,
+
+424
+00:28:08,530 --> 00:28:11,050
+I mean,
+
+425
+00:28:11,230 --> 00:28:14,130
+what, if we know the, I guess it's,
+
+426
+00:28:14,210 --> 00:28:16,830
+I feel like it's easy to work backwards from the end result.
+
+427
+00:28:16,831 --> 00:28:21,370
+So like the outputs, are you pretty clear on the on
+
+428
+00:28:21,371 --> 00:28:25,930
+the outputs then or? It's just that
+
+429
+00:28:25,931 --> 00:28:30,670
+we're we're focusing on the functionality of taking long videos and turning them into
+
+430
+00:28:30,671 --> 00:28:35,310
+short videos, but in these settings such as assigning a writer profile
+
+431
+00:28:35,311 --> 00:28:40,310
+or assigning the any settings that I want to set
+
+432
+00:28:40,311 --> 00:28:44,130
+up, I just want to know which ones are we going to even for
+
+433
+00:28:44,131 --> 00:28:48,670
+any type of content, not only the shortening or creating the clips from
+
+434
+00:28:48,671 --> 00:28:51,830
+a long video. Well,
+
+435
+00:28:55,110 --> 00:28:58,350
+I mean, I think Rob, why Tyler asked that question is because it would
+
+436
+00:28:58,351 --> 00:29:00,530
+kind of answer your question a little bit too,
+
+437
+00:29:00,570 --> 00:29:02,810
+which is all the things we could output.
+
+438
+00:29:03,370 --> 00:29:07,470
+Like, we don't just do video, again, we can create written a lot.
+
+439
+00:29:07,710 --> 00:29:11,870
+We started with written content. That's mostly what our platform like this video is
+
+440
+00:29:11,871 --> 00:29:14,270
+all new stuff. So historically,
+
+441
+00:29:14,710 --> 00:29:17,870
+we've always been creating a blog article,
+
+442
+00:29:18,170 --> 00:29:21,030
+creating a social media post.
+
+443
+00:29:21,750 --> 00:29:24,250
+So the inputs could be,
+
+444
+00:29:24,670 --> 00:29:29,070
+I mean, it could just be text fields. So just a lot of it
+
+445
+00:29:29,071 --> 00:29:32,910
+could be multiple fields of text. Like you're just pasting in brand guidelines.
+
+446
+00:29:33,690 --> 00:29:38,090
+I mean, I guess you don't need a, you need a couple areas of
+
+447
+00:29:38,091 --> 00:29:40,850
+text. like you could be pasting in brand guidelines,
+
+448
+00:29:41,150 --> 00:29:43,690
+you could be pasting in just a direction.
+
+449
+00:29:44,370 --> 00:29:47,230
+I want this to look like this and sound like this.
+
+450
+00:29:48,210 --> 00:29:50,230
+You could be uploading files.
+
+451
+00:29:51,310 --> 00:29:53,910
+So you could be uploading a video file,
+
+452
+00:29:54,130 --> 00:29:59,270
+an audio file, PDF. Any of that needs
+
+453
+00:29:59,271 --> 00:30:03,250
+to be transcribed because we may need it for written content.
+
+454
+00:30:05,050 --> 00:30:10,050
+and then, but
+
+455
+00:30:10,051 --> 00:30:16,750
+how often is it that you need to create any
+
+456
+00:30:16,751 --> 00:30:21,270
+new of those settings, because I personally feel
+
+457
+00:30:21,271 --> 00:30:27,010
+like, if I already have a certain combination
+
+458
+00:30:27,011 --> 00:30:31,670
+of those, I may keep using it so that every time that I create
+
+459
+00:30:31,671 --> 00:30:34,550
+new content, I don't need to put it again. Yeah,
+
+460
+00:30:34,551 --> 00:30:37,410
+it's a good, yeah,
+
+461
+00:30:37,550 --> 00:30:41,910
+sorry, it's a good, the research is a question. Sorry,
+
+462
+00:30:41,930 --> 00:30:44,070
+sorry, I had a thought. Good,
+
+463
+00:30:44,510 --> 00:30:47,870
+good question. So, and I apologize,
+
+464
+00:30:48,090 --> 00:30:52,570
+that's my OCD brain or ADHD brain not wanting to lose that thought,
+
+465
+00:30:52,810 --> 00:30:55,310
+but you had to spark that one. Good questions.
+
+466
+00:30:55,311 --> 00:30:57,850
+You're right to think that way.
+
+467
+00:30:58,370 --> 00:31:03,030
+The writer profile, you probably are going to upload your
+
+468
+00:31:03,031 --> 00:31:05,510
+resources and give direction to it once.
+
+469
+00:31:06,710 --> 00:31:09,550
+And you're not really going to add stuff to that again.
+
+470
+00:31:11,010 --> 00:31:15,870
+The way we thought about it historically for the actual stuff you're creating.
+
+471
+00:31:16,930 --> 00:31:21,850
+That's why there's a project. Often you dump things into a project.
+
+472
+00:31:22,190 --> 00:31:27,410
+Like you'll put a lot of stuff into it. And then maybe
+
+473
+00:31:27,411 --> 00:31:32,210
+each piece of content only uses part or uses
+
+474
+00:31:32,211 --> 00:31:36,850
+different combinations of those same resources you already have.
+
+475
+00:31:38,950 --> 00:31:42,210
+You, so for a, on a project basis,
+
+476
+00:31:42,910 --> 00:31:47,590
+you'll be adding resources over time likely like you may still need
+
+477
+00:31:47,591 --> 00:31:52,850
+to go back and add some things. But
+
+478
+00:31:52,851 --> 00:31:58,230
+it's entirely possible. You just upload a bunch of files to the project and
+
+479
+00:31:58,231 --> 00:32:01,910
+then because that's a piece to the puzzle is you create your project,
+
+480
+00:32:02,090 --> 00:32:04,830
+you can give it all the resources first if you like.
+
+481
+00:32:05,350 --> 00:32:08,310
+Then when it comes to the exact piece of content,
+
+482
+00:32:08,311 --> 00:32:11,410
+you say, okay, create content.
+
+483
+00:32:11,411 --> 00:32:16,310
+Okay, I want to use these two resources of my 10
+
+484
+00:32:16,311 --> 00:32:18,470
+that I upload in 10 files,
+
+485
+00:32:18,630 --> 00:32:23,490
+I want to take these two, and then here's guidelines
+
+486
+00:32:23,491 --> 00:32:26,330
+for the specific article now.
+
+487
+00:32:26,470 --> 00:32:29,750
+Here's some direction, not just my brand guidelines for the project,
+
+488
+00:32:30,350 --> 00:32:34,590
+specific article directions, so those you're going to enter every time.
+
+489
+00:32:34,591 --> 00:32:37,770
+And there's going to be inputs to create the content.
+
+490
+00:32:38,850 --> 00:32:43,450
+I don't know if that answered your question. Yeah,
+
+491
+00:32:43,630 --> 00:32:48,150
+because I prefer that
+
+492
+00:32:48,151 --> 00:32:52,230
+every time that I'm creating content, I don't have to re-upload things or re-select
+
+493
+00:32:52,231 --> 00:32:54,810
+things that I may have already done that.
+
+494
+00:32:54,811 --> 00:32:57,890
+Oh, sure. If you think about it,
+
+495
+00:32:57,930 --> 00:33:00,930
+I guess, again, from our perspective of, so again,
+
+496
+00:33:01,030 --> 00:33:05,130
+maybe think about it. because I don't think this is going to change.
+
+497
+00:33:05,370 --> 00:33:07,910
+I mean, Tyler, unless you have a different thought, you know,
+
+498
+00:33:08,090 --> 00:33:12,830
+written content is still going to be at least 50% probably
+
+499
+00:33:12,831 --> 00:33:14,990
+of what we do. And,
+
+500
+00:33:15,110 --> 00:33:17,530
+you know, each written,
+
+501
+00:33:18,050 --> 00:33:21,330
+like if you're going to write a blog article, you're going to have new
+
+502
+00:33:21,331 --> 00:33:25,870
+resources every time, especially if you want to write an intelligent piece
+
+503
+00:33:25,871 --> 00:33:28,210
+of content. You're going to upload new,
+
+504
+00:33:28,211 --> 00:33:33,250
+like, I'm going to create the writer profile once so
+
+505
+00:33:33,251 --> 00:33:36,510
+that, like if I'm writing a blog article, writer profile already did it.
+
+506
+00:33:36,770 --> 00:33:39,850
+So it knows how to write like me. I'm not going to edit that,
+
+507
+00:33:39,950 --> 00:33:42,270
+but I will say on this topic,
+
+508
+00:33:42,271 --> 00:33:44,330
+here is three white papers,
+
+509
+00:33:44,890 --> 00:33:48,230
+here is 10, here's three studies,
+
+510
+00:33:48,990 --> 00:33:51,250
+now write on that and go.
+
+511
+00:33:51,510 --> 00:33:54,110
+Okay, next article, this is a different topic,
+
+512
+00:33:54,590 --> 00:33:56,630
+here's two white papers,
+
+513
+00:33:56,631 --> 00:33:59,670
+and one, you know, scientific article.
+
+514
+00:33:59,950 --> 00:34:04,530
+Okay, right on that. So you will likely
+
+515
+00:34:04,531 --> 00:34:09,130
+have upload new inputs for each individual
+
+516
+00:34:09,131 --> 00:34:13,730
+piece of content. When it comes to some of the video
+
+517
+00:34:13,731 --> 00:34:17,750
+stuff, that's a little bit more,
+
+518
+00:34:18,150 --> 00:34:23,090
+it kind of depends because we don't actually generate
+
+519
+00:34:23,091 --> 00:34:25,730
+video right now, but we do,
+
+520
+00:34:26,550 --> 00:34:29,510
+that's interesting,
+
+521
+00:34:29,690 --> 00:34:32,050
+the video part's interesting because we don't really,
+
+522
+00:34:33,110 --> 00:34:36,410
+we have to, we don't have to think about what we wanna do.
+
+523
+00:34:36,970 --> 00:34:40,450
+We do reposting right now, where,
+
+524
+00:34:40,451 --> 00:34:42,850
+Yeah, spec-wise in the design,
+
+525
+00:34:43,790 --> 00:34:46,830
+our code does not generate our manual process.
+
+526
+00:34:47,110 --> 00:34:50,610
+So our product is right now a manual.
+
+527
+00:34:51,030 --> 00:34:53,450
+Some of it's using the code generates, yes,
+
+528
+00:34:53,690 --> 00:34:56,210
+writing. We want to, like,
+
+529
+00:34:56,350 --> 00:34:59,610
+we're taking the SOP, the manual process of the Philippines team,
+
+530
+00:35:00,030 --> 00:35:03,610
+and we're plugging in APIs everywhere we can,
+
+531
+00:35:03,870 --> 00:35:06,270
+any copy and pasting. So, point is,
+
+532
+00:35:06,330 --> 00:35:11,070
+is we do generate video using a victory using
+
+533
+00:35:11,071 --> 00:35:14,730
+opus clips. The clips is the easiest,
+
+534
+00:35:15,050 --> 00:35:17,850
+so it's like, let's just, we start with the clips, but we also generate
+
+535
+00:35:17,851 --> 00:35:21,610
+video using the other tools.
+
+536
+00:35:21,611 --> 00:35:27,910
+So the point would be that we would effectively
+
+537
+00:35:27,911 --> 00:35:31,070
+have these integrations that we can we build the resource library,
+
+538
+00:35:31,210 --> 00:35:35,990
+the source material, and we push that into these other APIs and embed those
+
+539
+00:35:35,991 --> 00:35:40,630
+in our interface when it's supported. Sometimes it might not be and the point
+
+540
+00:35:40,631 --> 00:35:43,410
+is we're not going to build a full rich video editor,
+
+541
+00:35:43,411 --> 00:35:48,030
+probably anytime soon, if we can embed there's great otherwise we have an integration
+
+542
+00:35:48,031 --> 00:35:52,230
+with victory, let's say. right? And we play the kind of integration marketplace game.
+
+543
+00:35:54,290 --> 00:35:57,330
+So we just, yeah, just the inputs for.
+
+544
+00:35:57,910 --> 00:36:01,910
+Yeah, but we should still also be able to like the output,
+
+545
+00:36:01,911 --> 00:36:05,190
+once it's done, then it should also be able to go,
+
+546
+00:36:06,290 --> 00:36:09,490
+we should be able to pull the output video like we should see a
+
+547
+00:36:09,491 --> 00:36:12,930
+final, we start with topics and source material.
+
+548
+00:36:13,670 --> 00:36:16,310
+It runs through this whole little factory than the output.
+
+549
+00:36:16,810 --> 00:36:20,650
+We should also be ingesting the output. So we have the final,
+
+550
+00:36:20,770 --> 00:36:25,070
+like whatever the victory output is, whatever the opus clips were set API,
+
+551
+00:36:25,850 --> 00:36:32,110
+opus competitor is or the Descript
+
+552
+00:36:32,111 --> 00:36:34,870
+is a major podcast editor. So whatever it's done,
+
+553
+00:36:35,550 --> 00:36:38,390
+the exported file should end up back in our system so that we see
+
+554
+00:36:38,391 --> 00:36:43,010
+this comprehensive, of like its strategy process plus like
+
+555
+00:36:43,011 --> 00:36:46,570
+this factory, and then the kind of the,
+
+556
+00:36:46,650 --> 00:36:51,010
+I would say it is a scheduler. And then we then can push those.
+
+557
+00:36:51,570 --> 00:36:53,750
+So rather than you going into Descript,
+
+558
+00:36:53,850 --> 00:36:58,290
+which is a leading kind of podcast that they were into Opus directly,
+
+559
+00:36:59,150 --> 00:37:02,010
+when we download the files or we export them,
+
+560
+00:37:02,190 --> 00:37:06,750
+ideally we can push them back into our system and then they're not having
+
+561
+00:37:06,751 --> 00:37:10,550
+to manually upload to the social media scheduling apps.
+
+562
+00:37:10,730 --> 00:37:13,850
+I don't know, I'm just thinking through it, but it's a little bit clumsy,
+
+563
+00:37:14,050 --> 00:37:17,090
+but I don't know which part of that flow we want to make the
+
+564
+00:37:17,091 --> 00:37:21,050
+easiest. But I understand,
+
+565
+00:37:21,330 --> 00:37:26,750
+at least I can relate to trying to train
+
+566
+00:37:26,751 --> 00:37:30,150
+future results by previous results that you like.
+
+567
+00:37:31,650 --> 00:37:34,470
+And I think that functionality I can add,
+
+568
+00:37:34,471 --> 00:37:39,130
+like after you created anything at least to
+
+569
+00:37:39,131 --> 00:37:41,990
+be able to select, okay, which one of these I will like to add
+
+570
+00:37:41,991 --> 00:37:47,610
+as part of the preset for feature content.
+
+571
+00:37:48,550 --> 00:37:53,170
+But I'm wondering specifically on the on the prototype that I did
+
+572
+00:37:53,171 --> 00:37:57,690
+where you are about to upload a video and you select the
+
+573
+00:37:57,691 --> 00:38:00,850
+project Originally, when I added the project,
+
+574
+00:38:00,990 --> 00:38:05,770
+I was just thinking, okay, this is a customer's clients name,
+
+575
+00:38:06,230 --> 00:38:10,970
+but I'm actually considering that when you select a project,
+
+576
+00:38:10,971 --> 00:38:14,430
+it's more about selecting a set of presets.
+
+577
+00:38:15,810 --> 00:38:20,930
+So, let's say that you already created a set of presets for a client,
+
+578
+00:38:21,290 --> 00:38:28,090
+it could have
+
+579
+00:38:28,091 --> 00:38:33,510
+either maybe, I don't know, it already some resources added and
+
+580
+00:38:33,511 --> 00:38:35,610
+but as soon as you select one,
+
+581
+00:38:36,210 --> 00:38:39,590
+you can see all of those things that it included and add more.
+
+582
+00:38:40,270 --> 00:38:44,350
+So that's what I'm considering I'm doing. So even if already has,
+
+583
+00:38:44,550 --> 00:38:48,190
+I don't know, five resources that I want to include,
+
+584
+00:38:48,710 --> 00:38:52,630
+as soon as I select this profile,
+
+585
+00:38:53,370 --> 00:38:57,930
+it adds all the things that are already included as a act and
+
+586
+00:38:57,931 --> 00:39:01,470
+then just be able to add a few more specifically for the content that
+
+587
+00:39:01,471 --> 00:39:04,270
+I'm creating. So that's what I'm considering when doing.
+
+588
+00:39:04,790 --> 00:39:07,550
+And if I do so,
+
+589
+00:39:07,551 --> 00:39:12,210
+I'm also considering not naming a project because
+
+590
+00:39:12,211 --> 00:39:16,850
+I think projects it's used for or you may
+
+591
+00:39:16,851 --> 00:39:20,950
+have the same preset for the same project a different content.
+
+592
+00:39:21,170 --> 00:39:25,610
+So if you want to generate a content for the specific customer,
+
+593
+00:39:25,611 --> 00:39:30,210
+a customer A, you may want to create a content that is,
+
+594
+00:39:30,530 --> 00:39:32,610
+let's say, with a preset A, or a preset V,
+
+595
+00:39:32,750 --> 00:39:37,310
+or preset C, and then add additional files for every content.
+
+596
+00:39:37,530 --> 00:39:42,050
+So I think I'll probably will name it differently. And that also makes
+
+597
+00:39:42,051 --> 00:39:44,310
+me think, okay, where is it that I create these presets?
+
+598
+00:39:44,311 --> 00:39:49,690
+It's like these combinations of the
+
+599
+00:39:49,691 --> 00:39:51,790
+criteria or the materials that they will,
+
+600
+00:39:51,910 --> 00:39:54,750
+I wanted to use in order to generate new puntets.
+
+601
+00:39:55,290 --> 00:39:58,730
+If I should do it there, you know, if I'm creating something new or
+
+602
+00:39:58,731 --> 00:40:03,090
+if I should do it at the beginning, or somewhere else on the platform
+
+603
+00:40:03,091 --> 00:40:08,790
+where I can select. Yeah,
+
+604
+00:40:08,791 --> 00:40:13,590
+wouldn't make, yeah, wouldn't it make sense saladed to give him a log
+
+605
+00:40:13,591 --> 00:40:16,530
+in to or approved app that or could just let him see what our
+
+606
+00:40:16,531 --> 00:40:19,250
+current flow was has all the screenshots,
+
+607
+00:40:19,251 --> 00:40:23,150
+but that by all means we can we can sure of course.
+
+608
+00:40:23,151 --> 00:40:26,010
+I saw some of them on the mirror,
+
+609
+00:40:26,230 --> 00:40:28,590
+boy. Well, yeah,
+
+610
+00:40:28,610 --> 00:40:31,130
+they are the same. It is.
+
+611
+00:40:31,390 --> 00:40:33,530
+Yeah, I didn't know if that would just be helpful to you,
+
+612
+00:40:33,650 --> 00:40:35,730
+because again, I kind of got to show you the route for sure.
+
+613
+00:40:35,990 --> 00:40:38,030
+I mean, I think it's a great idea. OK,
+
+614
+00:40:38,230 --> 00:40:42,070
+I'll put that on my to-do list today, Rob, probably in the next two
+
+615
+00:40:42,071 --> 00:40:44,610
+or three hours. I will get that sent your way.
+
+616
+00:40:44,611 --> 00:40:47,370
+And you can take a look when I mean, go in and create great,
+
+617
+00:40:47,430 --> 00:40:49,510
+let run stuff if you want, just see what it does.
+
+618
+00:40:50,030 --> 00:40:52,130
+Obviously, we're not saying, you know,
+
+619
+00:40:52,330 --> 00:40:56,830
+recreate exactly what we're doing. That's why we have you to help us redo
+
+620
+00:40:56,831 --> 00:41:01,170
+this flow, but if you kind of wanted to see historically how inputs worked
+
+621
+00:41:01,171 --> 00:41:05,730
+and how we thought about it, that might help you get
+
+622
+00:41:05,731 --> 00:41:09,330
+a better fuller understanding of what we need.
+
+623
+00:41:09,970 --> 00:41:13,470
+Yeah. And at least from some screens that I remember from the mirror board,
+
+624
+00:41:13,630 --> 00:41:16,030
+I remember seeing forums that had a lot of fields,
+
+625
+00:41:16,630 --> 00:41:19,550
+but that's why I was thinking, do you need to put with all the
+
+626
+00:41:19,551 --> 00:41:23,190
+fields every time that you create something new. I'm assuming you don't,
+
+627
+00:41:23,250 --> 00:41:27,150
+something like thinking about it. You just select,
+
+628
+00:41:27,870 --> 00:41:30,510
+I have already this combination of things.
+
+629
+00:41:30,810 --> 00:41:34,590
+So I just want to select that combination, but at least it will display
+
+630
+00:41:34,591 --> 00:41:39,150
+now all the fields, but filled out with the stuff that I use.
+
+631
+00:41:39,190 --> 00:41:41,470
+Yes, some of the things in the project,
+
+632
+00:41:41,690 --> 00:41:46,490
+for example, we, like you would create like
+
+633
+00:41:46,491 --> 00:41:49,010
+a, like a in projects word count.
+
+634
+00:41:49,250 --> 00:41:51,610
+For example, you might say,
+
+635
+00:41:51,890 --> 00:41:56,370
+for every article in this, I want the default word count to be like
+
+636
+00:41:56,371 --> 00:41:58,790
+1200 to 1600 words.
+
+637
+00:41:59,570 --> 00:42:03,870
+So you set that in projects and then when you go to create content,
+
+638
+00:42:03,871 --> 00:42:08,330
+if you choose article, then article pops up and then yes,
+
+639
+00:42:08,490 --> 00:42:13,350
+that is already pre-filled in. Same thing you write or profiles pre-filled
+
+640
+00:42:13,351 --> 00:42:16,350
+in. You could change that if you want,
+
+641
+00:42:16,510 --> 00:42:19,770
+but like you said, you don't have to, you don't have to redo all
+
+642
+00:42:19,771 --> 00:42:22,190
+of the inputs. A lot of it starts,
+
+643
+00:42:22,650 --> 00:42:26,750
+you just put those at the project level and you kind of set it.
+
+644
+00:42:26,930 --> 00:42:30,290
+And those are now defaults for the content.
+
+645
+00:42:30,490 --> 00:42:35,070
+So yeah, as much as that makes sense that you have
+
+646
+00:42:35,071 --> 00:42:38,950
+to only do once, because again, some things you will want to read.
+
+647
+00:42:39,090 --> 00:42:41,150
+You want to add every time. But yes,
+
+648
+00:42:41,290 --> 00:42:44,390
+there is a place at the very beginning project settings to like,
+
+649
+00:42:44,570 --> 00:42:49,110
+here's defaults that you can just set once. So there's a spot for that.
+
+650
+00:42:49,130 --> 00:42:52,630
+Yeah, okay.
+
+651
+00:42:52,910 --> 00:42:57,510
+Yeah, I can work with that. I
+
+652
+00:42:57,511 --> 00:43:00,110
+in my head is more clear. Sorry that I can't share.
+
+653
+00:43:01,150 --> 00:43:04,330
+No, you're good. But this is the way it's going to probably work,
+
+654
+00:43:04,331 --> 00:43:07,890
+right? Like obviously you have to ingest a bunch of stuff.
+
+655
+00:43:08,350 --> 00:43:11,210
+You have your idea. We're going to keep guiding the,
+
+656
+00:43:11,250 --> 00:43:13,650
+you know, the train is obviously you've done this before.
+
+657
+00:43:14,330 --> 00:43:18,770
+So yeah, I liked where you're at was that and I think with more
+
+658
+00:43:18,771 --> 00:43:23,550
+context, I'm curious to see now what your next kind of iteration is.
+
+659
+00:43:23,970 --> 00:43:26,950
+Yeah, I mean, the other, I just kind of, from your,
+
+660
+00:43:27,070 --> 00:43:29,470
+um, loom, no, you had a couple other,
+
+661
+00:43:29,830 --> 00:43:33,450
+uh, I just want to make sure that we've addressed the other outside of
+
+662
+00:43:33,451 --> 00:43:36,470
+questions. So we get on the types of output.
+
+663
+00:43:36,570 --> 00:43:41,210
+We've got, you know, the the short form cut up clips of an existing
+
+664
+00:43:41,211 --> 00:43:47,110
+content. We've got other types of AI
+
+665
+00:43:47,111 --> 00:43:49,470
+rendered video, so it's not a clip.
+
+666
+00:43:49,690 --> 00:43:52,350
+It's a video output, but it's you can look at,
+
+667
+00:43:52,390 --> 00:43:55,790
+if you look at the Omra Yoga, it's the AI voice reading something,
+
+668
+00:43:55,970 --> 00:43:57,890
+right? We've got the blog posts,
+
+669
+00:44:07,270 --> 00:44:10,850
+highlight an image post is kind of close to a blog post except it's
+
+670
+00:44:10,851 --> 00:44:15,670
+obviously for Facebook or Instagram and it's going to be a carousel usually
+
+671
+00:44:15,671 --> 00:44:20,610
+so that's two three four images. The type of input
+
+672
+00:44:20,611 --> 00:44:23,590
+of an image or a carousel post,
+
+673
+00:44:23,970 --> 00:44:27,250
+the types of those could be just like could be an image,
+
+674
+00:44:27,410 --> 00:44:30,330
+it could be just like a heading, it also could be a quote card
+
+675
+00:44:30,331 --> 00:44:32,690
+so I think the templates, that was your other question,
+
+676
+00:44:32,850 --> 00:44:36,150
+we'll come back to that in a sec. So we talked a little bit
+
+677
+00:44:36,151 --> 00:44:38,210
+presets already, the templates,
+
+678
+00:44:38,930 --> 00:44:42,070
+and the control of,
+
+679
+00:44:42,330 --> 00:44:44,810
+you ask about how much control versus automation.
+
+680
+00:44:45,930 --> 00:44:50,450
+The point is that it's doing the heavy lifting of any
+
+681
+00:44:50,451 --> 00:44:52,710
+type of copy and pacing between Canva.
+
+682
+00:44:53,310 --> 00:44:57,210
+The point is that we will create and have a Canva integration so that
+
+683
+00:44:57,211 --> 00:45:02,270
+whatever is in the system, it's able to use the Canva API to
+
+684
+00:45:02,271 --> 00:45:05,290
+use the Canva templates that exist in that user's account.
+
+685
+00:45:05,291 --> 00:45:07,530
+If they exist,
+
+686
+00:45:08,010 --> 00:45:10,430
+most companies do have a Canva account today.
+
+687
+00:45:10,710 --> 00:45:13,290
+That's how they do social, right? And then it's going to,
+
+688
+00:45:13,590 --> 00:45:18,270
+so the designers manage those in Canva and then the social media
+
+689
+00:45:18,271 --> 00:45:21,770
+team uses those templates. So we are the agent that's,
+
+690
+00:45:21,771 --> 00:45:27,550
+it's a social media agent, right? And
+
+691
+00:45:27,551 --> 00:45:30,130
+then, okay, and then a template system,
+
+692
+00:45:30,610 --> 00:45:34,750
+like I think we talked a little bit about this,
+
+693
+00:45:34,751 --> 00:45:37,190
+but like, yeah, I mean, there's the,
+
+694
+00:45:37,730 --> 00:45:40,110
+you know, what is a template exactly you would ask?
+
+695
+00:45:40,690 --> 00:45:42,810
+Um, let's start.
+
+696
+00:45:43,210 --> 00:45:46,630
+I was going to propose, I was going to propose that in the next
+
+697
+00:45:46,631 --> 00:45:51,150
+prototype, I, I specifically use the materials from
+
+698
+00:45:51,151 --> 00:45:54,450
+this profile that you shared that,
+
+699
+00:45:54,490 --> 00:45:56,590
+sorry, I still can't say the name I'm, I'm,
+
+700
+00:45:56,710 --> 00:46:00,630
+I would try to create new content from him.
+
+701
+00:46:00,810 --> 00:46:04,150
+So I would add images like, okay, I'm going to create a new real.
+
+702
+00:46:05,290 --> 00:46:09,850
+and I'm going to take an example of if he has one
+
+703
+00:46:09,851 --> 00:46:12,070
+of those, I will add it into the prototype. Okay,
+
+704
+00:46:12,210 --> 00:46:17,350
+this is the type of template I want to use. And
+
+705
+00:46:17,351 --> 00:46:21,890
+I just have one question in the last
+
+706
+00:46:21,891 --> 00:46:25,810
+prototype that I did. You can create multiple types of content at once.
+
+707
+00:46:26,210 --> 00:46:32,190
+Like, oh, I want to create three of these posts and then two reveals.
+
+708
+00:46:32,191 --> 00:46:36,770
+or one. But do you see that happening where
+
+709
+00:46:36,771 --> 00:46:41,690
+I could say I want to select the pre-set for
+
+710
+00:46:41,691 --> 00:46:44,390
+all of this content that I want to create? Or it's more like,
+
+711
+00:46:44,391 --> 00:46:47,710
+no, I first want to create the reels. And I'm going to select a
+
+712
+00:46:47,711 --> 00:46:49,750
+pre-set of inputs first.
+
+713
+00:46:50,550 --> 00:46:53,190
+And after they're done then I'm going to go and do the process for
+
+714
+00:46:53,191 --> 00:46:57,610
+another type of content, and maybe select another preset of inputs.
+
+715
+00:47:04,550 --> 00:47:09,110
+I don't know. Is it
+
+716
+00:47:09,111 --> 00:47:14,310
+the question that I did that I made it confusing or is
+
+717
+00:47:14,311 --> 00:47:17,350
+it that it's not the right question?
+
+718
+00:47:17,470 --> 00:47:22,090
+Because I was when we were thinking about When I'm selecting
+
+719
+00:47:22,091 --> 00:47:27,350
+the project, I'm imagining that when I'm choosing that
+
+720
+00:47:27,351 --> 00:47:31,950
+option, it's the one that will pre-fill a lot of the inputs
+
+721
+00:47:31,951 --> 00:47:34,910
+that I will need for the content that I am in generating.
+
+722
+00:47:35,570 --> 00:47:40,270
+So I was thinking, would I use the same combination of
+
+723
+00:47:40,271 --> 00:47:44,470
+these inputs to generate multiple types of content at once,
+
+724
+00:47:44,770 --> 00:47:46,950
+or would I go one by one? So,
+
+725
+00:47:47,030 --> 00:47:49,450
+maybe for this profile, for Emirate,
+
+726
+00:47:49,610 --> 00:47:54,270
+I have three different presets or three different combinations of
+
+727
+00:47:54,271 --> 00:47:57,870
+inputs. And then I have one specifically for Reels,
+
+728
+00:47:58,290 --> 00:48:03,250
+for Highlight Reels, or one specifically for creating the posts,
+
+729
+00:48:04,030 --> 00:48:08,570
+that would mean that I cannot create these two types in the
+
+730
+00:48:08,571 --> 00:48:12,130
+same flow. So I would first need to go do one,
+
+731
+00:48:12,930 --> 00:48:19,590
+and then finish and then do the other one and select a different combination
+
+732
+00:48:19,591 --> 00:48:20,590
+of inputs.
+
+733
+00:48:26,410 --> 00:48:31,550
+Honestly, I think the easiest way is we should look at each
+
+734
+00:48:31,551 --> 00:48:36,070
+piece of content on the Omra G profile and look at
+
+735
+00:48:36,071 --> 00:48:39,590
+and we can say how did we create this and what was the workflow
+
+736
+00:48:39,591 --> 00:48:41,950
+and then if you're going to create three of them,
+
+737
+00:48:41,951 --> 00:48:46,470
+like you just said, the nuances are the exact
+
+738
+00:48:46,471 --> 00:48:49,770
+through the right questions. But I would say I think we should,
+
+739
+00:48:50,030 --> 00:48:54,790
+rather than going hypothetical, we should look at how did we create?
+
+740
+00:48:55,270 --> 00:48:57,490
+Because we don't have, we're not doing this for, like, theoretically,
+
+741
+00:48:58,290 --> 00:49:01,270
+we could just reference the life,
+
+742
+00:49:01,630 --> 00:49:07,090
+you know, what's there, right? Yeah,
+
+743
+00:49:08,490 --> 00:49:13,270
+I could let me share the screen so that I can point
+
+744
+00:49:13,271 --> 00:49:16,150
+out to where I'm thinking of adding a few changes.
+
+745
+00:49:16,950 --> 00:49:19,850
+Okay. Are you able to see my screen?
+
+746
+00:49:21,190 --> 00:49:23,350
+Yes. Okay.
+
+747
+00:49:23,351 --> 00:49:28,450
+And so the first change that I'm thinking is here
+
+748
+00:49:28,451 --> 00:49:32,830
+when I'm about to create something new and when I create a product name,
+
+749
+00:49:32,831 --> 00:49:35,170
+basically what I'm trying to select here,
+
+750
+00:49:35,250 --> 00:49:38,130
+it's from a list of presets. So I'm going to,
+
+751
+00:49:38,230 --> 00:49:42,710
+let's say I choose one and this one is going to be a preset
+
+752
+00:49:42,711 --> 00:49:46,230
+A. It's going to be a combination of inputs. And let's imagine that the
+
+753
+00:49:46,231 --> 00:49:49,310
+inputs will be below. So when I select this preset,
+
+754
+00:49:49,430 --> 00:49:53,370
+I will pre-fill the rest of the options so that I at least I
+
+755
+00:49:53,371 --> 00:49:56,670
+can customize them and even add more references.
+
+756
+00:49:56,970 --> 00:50:00,270
+So I will also include, let's say, other videos or other links that I
+
+757
+00:50:00,271 --> 00:50:02,590
+will like to include for this new content.
+
+758
+00:50:03,470 --> 00:50:07,470
+That's one change that I will do. And then here,
+
+759
+00:50:08,890 --> 00:50:11,610
+I mean, that is one option.
+
+760
+00:50:11,830 --> 00:50:16,810
+The other option is here instead where I first select which type
+
+761
+00:50:16,811 --> 00:50:20,170
+of content do I want to create and then in here is where I
+
+762
+00:50:20,171 --> 00:50:24,350
+select you know the preset for this these ones oh I want to create
+
+763
+00:50:24,351 --> 00:50:28,310
+a let's say one highlight reel and I want to be able to use
+
+764
+00:50:28,311 --> 00:50:31,590
+the presets hey I know and I want to create a short video and
+
+765
+00:50:31,591 --> 00:50:36,170
+I wanted to use the preset V so that there
+
+766
+00:50:36,171 --> 00:50:40,810
+are different ways of handling it would I say I
+
+767
+00:50:40,811 --> 00:50:44,630
+want to create 10 short videos but five of them I want to be
+
+768
+00:50:44,631 --> 00:50:49,130
+using using these presets of inputs and then the other five videos that I
+
+769
+00:50:49,131 --> 00:50:52,590
+want to use this other preset. And so that would take a different approach.
+
+770
+00:50:53,290 --> 00:50:58,370
+And also, if I want to be able to customize those presets further,
+
+771
+00:50:58,710 --> 00:51:03,090
+probably then this UI, it's not the best because there's a lot of inputs
+
+772
+00:51:03,091 --> 00:51:07,410
+for each one of those presets. So in that case,
+
+773
+00:51:07,870 --> 00:51:11,290
+it'll be really hard to go and say, if I want to create these
+
+774
+00:51:11,291 --> 00:51:14,690
+type of content at once and each one is going to have a different
+
+775
+00:51:14,691 --> 00:51:19,410
+preset, and I want to be able to customize each preset
+
+776
+00:51:19,411 --> 00:51:24,070
+for each one of these, even if I managed to pre-fill some
+
+777
+00:51:24,071 --> 00:51:27,170
+of those inputs already, but I still want to be able to customize it,
+
+778
+00:51:27,350 --> 00:51:33,430
+then maybe doing multiple content and ones could
+
+779
+00:51:33,431 --> 00:51:36,730
+take a while to do so, maybe I'll do what I want by one.
+
+780
+00:51:37,950 --> 00:51:41,590
+I guess if I just don't know what the presets would be,
+
+781
+00:51:41,591 --> 00:51:46,010
+I get that they're for video. There are more likely to be presets and
+
+782
+00:51:46,011 --> 00:51:49,610
+templates. But honestly, if I think about our current flow,
+
+783
+00:51:50,290 --> 00:51:53,590
+I mean, what it, what even is a,
+
+784
+00:51:54,030 --> 00:51:56,270
+for example,
+
+785
+00:51:56,390 --> 00:51:59,570
+if we're creating an image, if we're doing an image post,
+
+786
+00:51:59,730 --> 00:52:04,550
+like that template lives in Canva and the presets That's
+
+787
+00:52:04,551 --> 00:52:09,890
+our like the fonts, maybe like or
+
+788
+00:52:09,891 --> 00:52:12,830
+I mean, the only priest that I can think of is like the orientation,
+
+789
+00:52:13,970 --> 00:52:18,570
+you know, landscape, portrait, I don't that's what threw
+
+790
+00:52:18,571 --> 00:52:20,930
+me off every time you said like template or presets,
+
+791
+00:52:20,990 --> 00:52:23,010
+like we don't really use that.
+
+792
+00:52:23,150 --> 00:52:27,930
+It's pretty much great from scratch every time like I get
+
+793
+00:52:27,931 --> 00:52:31,370
+where you're coming from like like again, even like a can of it,
+
+794
+00:52:31,510 --> 00:52:34,030
+like, it's your kind of,
+
+795
+00:52:34,050 --> 00:52:37,150
+they just let you pick the dimensions and you're kind of starting from blank,
+
+796
+00:52:37,310 --> 00:52:40,510
+like your only guidelines,
+
+797
+00:52:40,850 --> 00:52:43,610
+there's some brand, like you set in the font, you can set colors like
+
+798
+00:52:43,611 --> 00:52:45,870
+a brand guide, you can sell like a brand guidelines,
+
+799
+00:52:47,170 --> 00:52:51,810
+you know, fonts, yeah, fonts colors. So that just keeps throwing me off
+
+800
+00:52:51,811 --> 00:52:53,910
+every time you say like template or preset, it's like,
+
+801
+00:52:54,050 --> 00:52:57,630
+I don't really have those. I guess we needed an addition of one and
+
+802
+00:52:57,631 --> 00:53:01,210
+why it's needed and I think there's a clear,
+
+803
+00:53:02,570 --> 00:53:06,230
+like the preset, I mean, honestly, we could probably also pull up,
+
+804
+00:53:07,130 --> 00:53:12,090
+maybe even share our logins to Victory and Descript and,
+
+805
+00:53:12,091 --> 00:53:16,670
+and Obis with Rob, because you can look at how they handle the concept
+
+806
+00:53:16,671 --> 00:53:18,710
+of a preset, they don't call it a preset,
+
+807
+00:53:18,830 --> 00:53:23,350
+but like what's the concept of a preset? And how are we using those?
+
+808
+00:53:23,550 --> 00:53:28,630
+Because that is what you're kind of getting at. Yeah,
+
+809
+00:53:28,930 --> 00:53:31,290
+but yeah. But even then,
+
+810
+00:53:31,350 --> 00:53:33,450
+like, again, since I'm the one who uses those,
+
+811
+00:53:33,451 --> 00:53:37,210
+it's like, I don't, there's really no, it's really no presets.
+
+812
+00:53:38,450 --> 00:53:41,310
+There's a brand, like in, in victory, there's a specific,
+
+813
+00:53:41,311 --> 00:53:43,410
+you set up a brand, right?
+
+814
+00:53:43,510 --> 00:53:46,130
+It has a lot of. Well, which is what? Which is getting fonts, colors.
+
+815
+00:53:46,790 --> 00:53:50,010
+That was really it. I mean, yeah, fonts,
+
+816
+00:53:50,210 --> 00:53:53,210
+colors, true. Yeah, that's a kind of foundation.
+
+817
+00:53:53,211 --> 00:53:55,550
+Yeah, I'd say those two. What else is there?
+
+818
+00:53:58,470 --> 00:54:02,530
+That's really good. In that case, I mean, if you don't change much when
+
+819
+00:54:02,531 --> 00:54:05,930
+you're about to creating new things, it's that hard question.
+
+820
+00:54:06,050 --> 00:54:10,190
+But what would prevent someone from just going and doing it another tool?
+
+821
+00:54:11,510 --> 00:54:16,090
+Well, again, it's how well does our, how well it's all about
+
+822
+00:54:16,091 --> 00:54:20,710
+the inputs and our coding. So this is back to what
+
+823
+00:54:20,711 --> 00:54:25,110
+is the resources? What is the original directions you put into the project settings?
+
+824
+00:54:26,130 --> 00:54:29,850
+What are the directions you're putting into the content settings?
+
+825
+00:54:30,310 --> 00:54:34,370
+I want this content to be this. And then it's the way our AI
+
+826
+00:54:34,371 --> 00:54:37,510
+is written. Like the code we wrote,
+
+827
+00:54:37,750 --> 00:54:39,950
+it does a bunch of things. It doesn't,
+
+828
+00:54:40,010 --> 00:54:42,390
+it's not just like talking to GPT is the point.
+
+829
+00:54:43,130 --> 00:54:46,990
+So it, it does more to take your input,
+
+830
+00:54:46,991 --> 00:54:50,310
+to take those resources and to craft it into something,
+
+831
+00:54:50,770 --> 00:54:52,790
+if that makes sense.
+
+832
+00:54:54,350 --> 00:54:56,790
+But that part is not customizable by the user.
+
+833
+00:54:58,910 --> 00:55:01,170
+Or is, Well,
+
+834
+00:55:01,370 --> 00:55:04,910
+no, yeah, none of the code is. That's what it's all about the inputs
+
+835
+00:55:04,911 --> 00:55:07,950
+is the point. And that's why I said,
+
+836
+00:55:08,050 --> 00:55:10,790
+there's really no, there's nothing that's really preset.
+
+837
+00:55:11,250 --> 00:55:13,710
+I mean, you're just kind of entering in a title, a keyword,
+
+838
+00:55:15,550 --> 00:55:18,470
+brand guidelines but like content guidelines.
+
+839
+00:55:18,930 --> 00:55:21,610
+I want this article to look,
+
+840
+00:55:21,790 --> 00:55:25,370
+I want this article to be shorter and to do short paragraph,
+
+841
+00:55:25,750 --> 00:55:30,090
+short sentences. Again, I think about it more from that perspective because historically we've
+
+842
+00:55:30,091 --> 00:55:33,090
+been content like written content.
+
+843
+00:55:33,290 --> 00:55:35,310
+If even it's from a video perspective,
+
+844
+00:55:36,090 --> 00:55:41,750
+I mean, you're just giving it the
+
+845
+00:55:41,751 --> 00:55:44,690
+keep you're creating picture you have to upload an image,
+
+846
+00:55:45,270 --> 00:55:47,650
+I mean,
+
+847
+00:55:48,230 --> 00:55:52,750
+yeah, it's interesting. I'm not sure if
+
+848
+00:55:52,751 --> 00:55:54,390
+I'm answering the question appropriately.
+
+849
+00:55:58,910 --> 00:56:03,470
+First, I think we should clear out what I
+
+850
+00:56:03,471 --> 00:56:07,930
+mean by presets. Everything that you need to pass in order to create new
+
+851
+00:56:07,931 --> 00:56:12,590
+content. So if it's brand guidelines, or if it's a prompt of I
+
+852
+00:56:12,591 --> 00:56:16,490
+wanted to look like this or sound like that, or if it's sending to
+
+853
+00:56:16,491 --> 00:56:19,190
+past topics or anything that I need to pass,
+
+854
+00:56:19,770 --> 00:56:23,790
+and if those things I'm going to use it for multiple content,
+
+855
+00:56:24,470 --> 00:56:27,330
+if I decide to save it so that in the future,
+
+856
+00:56:27,550 --> 00:56:34,390
+I create similar content, I just select the pre-saved
+
+857
+00:56:34,391 --> 00:56:37,490
+combination of those inputs. So that's what I call the preset.
+
+858
+00:56:37,850 --> 00:56:40,270
+It could Yeah, well,
+
+859
+00:56:40,310 --> 00:56:45,010
+that's what I'm saying, like there's really not much you would use over and
+
+860
+00:56:45,011 --> 00:56:47,890
+over or I mean on the video side again,
+
+861
+00:56:47,970 --> 00:56:51,270
+maybe the duration of the video.
+
+862
+00:56:51,750 --> 00:56:53,870
+I mean, what's the which voice are we using?
+
+863
+00:56:56,010 --> 00:56:58,550
+What is the,
+
+864
+00:56:59,070 --> 00:57:01,210
+I'm just thinking about if we look at all the settings,
+
+865
+00:57:01,211 --> 00:57:04,550
+what's the format?
+
+866
+00:57:06,170 --> 00:57:08,270
+So you've seen my nine or is it vertical,
+
+867
+00:57:08,770 --> 00:57:13,410
+I mean they're in the actual projects
+
+868
+00:57:13,411 --> 00:57:15,550
+like in our dashboard,
+
+869
+00:57:16,130 --> 00:57:21,110
+sorry in the mirror, the settings for the project for for
+
+870
+00:57:21,111 --> 00:57:23,790
+our social automator, like it has a lot of those,
+
+871
+00:57:24,010 --> 00:57:26,410
+I mean, we could pull it up here, but it's like, yeah,
+
+872
+00:57:26,430 --> 00:57:28,450
+there's a, yeah, here,
+
+873
+00:57:28,710 --> 00:57:31,170
+that's what that's what I was kind of saying, so if you start a
+
+874
+00:57:31,171 --> 00:57:33,770
+project, you know, you go to create project.
+
+875
+00:57:34,550 --> 00:57:37,130
+you have some of these things you're mentioning,
+
+876
+00:57:37,470 --> 00:57:41,470
+so you're like your word count, for example. So you're setting your presets,
+
+877
+00:57:42,130 --> 00:57:44,670
+you know, you're writing tone, level, choosing your avatar.
+
+878
+00:57:45,970 --> 00:57:50,650
+Again, brand guidelines. Brand guidelines are going to go across every individual piece
+
+879
+00:57:50,651 --> 00:57:52,830
+of content. So you kind of set those things once,
+
+880
+00:57:52,970 --> 00:57:55,810
+target audience. Again,
+
+881
+00:57:55,830 --> 00:57:58,370
+this is why a project could be like a campaign.
+
+882
+00:57:58,950 --> 00:58:01,210
+So, hey, for this, for this month,
+
+883
+00:58:01,430 --> 00:58:03,870
+we want a Valentine's Day campaign.
+
+884
+00:58:04,170 --> 00:58:06,910
+So, our target audience is, you know, people in love.
+
+885
+00:58:07,650 --> 00:58:09,970
+And, uh, and here's the brand, you know,
+
+886
+00:58:09,990 --> 00:58:14,250
+normal brand guidelines. And then you save all that information.
+
+887
+00:58:14,310 --> 00:58:17,890
+And then as you go to actually create now a piece of content,
+
+888
+00:58:18,010 --> 00:58:21,310
+uh, you know, those things prepopulate.
+
+889
+00:58:21,450 --> 00:58:25,790
+So if you had, I guess the guidelines and tone.
+
+890
+00:58:26,750 --> 00:58:29,550
+That's this is an interesting way to think about that actually if we go
+
+891
+00:58:29,551 --> 00:58:34,210
+back to maybe historically pop up project
+
+892
+00:58:34,211 --> 00:58:37,470
+and create an article.
+
+893
+00:58:38,330 --> 00:58:43,090
+It brings in to Tyler's point a lot of you
+
+894
+00:58:43,091 --> 00:58:46,130
+know here like here you go it already had the resource that we tagged.
+
+895
+00:58:46,310 --> 00:58:49,670
+You can add more but it already brought in one of the resources.
+
+896
+00:58:50,250 --> 00:58:54,090
+You know here's the settings I already chose in the project settings.
+
+897
+00:58:54,270 --> 00:58:56,610
+I gave it a profile. I chose a word count.
+
+898
+00:58:57,290 --> 00:58:59,930
+So yeah, like some of those things are presets, but a lot of it
+
+899
+00:58:59,931 --> 00:59:02,370
+you still, I stuff to put a title. I put a keyword.
+
+900
+00:59:03,630 --> 00:59:07,130
+You know, I still want to maybe give it some additional details.
+
+901
+00:59:09,270 --> 00:59:12,690
+I still might want to add in some URLs like,
+
+902
+00:59:12,770 --> 00:59:16,610
+hey, crawl this. That's specific to just this article.
+
+903
+00:59:17,430 --> 00:59:19,690
+Yeah, again, you hear you see the project context,
+
+904
+00:59:19,691 --> 00:59:24,370
+it drags that over. So there are some things that
+
+905
+00:59:24,371 --> 00:59:28,890
+are presets but it's a lot of it though
+
+906
+00:59:28,891 --> 00:59:33,850
+is still just individual inputs for each thing.
+
+907
+00:59:34,230 --> 00:59:36,290
+And this is just on the article side. Yeah,
+
+908
+00:59:36,390 --> 00:59:40,310
+on the, on the, I mean, all the project settings are the presets.
+
+909
+00:59:40,570 --> 00:59:42,930
+So the project settings are the presets.
+
+910
+00:59:44,550 --> 00:59:46,710
+Maybe we just don't need presets,
+
+911
+00:59:46,810 --> 00:59:49,310
+we should get rid of the concept of, but there's the project,
+
+912
+00:59:49,470 --> 00:59:53,790
+they're the project defaults. So when you create a new asset in that project,
+
+913
+00:59:54,470 --> 00:59:56,790
+it's going to inherit all those. Now,
+
+914
+00:59:57,190 --> 00:59:59,370
+if you wanted to, as an additional feature,
+
+915
+00:59:59,371 --> 01:00:01,550
+which is I don't think MVP, if you would be like, well, let's say
+
+916
+01:00:01,551 --> 01:00:04,850
+this, this, it's in a project, so it's going to get the default project
+
+917
+01:00:04,851 --> 01:00:07,630
+settings, but what if I want to change it and use these other presets,
+
+918
+01:00:07,631 --> 01:00:10,970
+that's different brand kit, different brand guidelines.
+
+919
+01:00:12,950 --> 01:00:17,770
+Yeah, so let's say that you're making two
+
+920
+01:00:17,771 --> 01:00:22,350
+campaigns for the same. You probably set them up
+
+921
+01:00:22,351 --> 01:00:26,910
+in two different projects, I'd imagine. Cause that way the
+
+922
+01:00:26,911 --> 01:00:29,630
+project can have all the messages, all the,
+
+923
+01:00:29,730 --> 01:00:32,790
+and you can also then for that project,
+
+924
+01:00:34,090 --> 01:00:38,930
+You'd associate maybe this collection of content with the project.
+
+925
+01:00:39,370 --> 01:00:44,030
+So the resources are the assets that can be used for
+
+926
+01:00:44,031 --> 01:00:48,390
+either training for the context window,
+
+927
+01:00:48,750 --> 01:00:53,530
+you know, for the LLM that it can draw from as well as
+
+928
+01:00:53,531 --> 01:00:58,130
+the videos. It can either go off of the text in the video.
+
+929
+01:00:58,131 --> 01:01:02,750
+it can also use those videos to then create you could just pick
+
+930
+01:01:02,751 --> 01:01:05,650
+from the ones that are available in that collection to be able to generate
+
+931
+01:01:05,651 --> 01:01:07,690
+new assets from.
+
+932
+01:01:09,630 --> 01:01:14,510
+Okay. Yeah. Well,
+
+933
+01:01:15,130 --> 01:01:18,870
+on every call I'm going to ask you what do you expect or what
+
+934
+01:01:18,871 --> 01:01:23,430
+do you like to see for the next time? I just I'm wondering
+
+935
+01:01:23,431 --> 01:01:27,970
+what I would like to hopefully avoid is to come
+
+936
+01:01:27,971 --> 01:01:32,970
+up with something that eventually looks more and more like your version because otherwise
+
+937
+01:01:32,971 --> 01:01:36,210
+this approach seems like,
+
+938
+01:01:36,290 --> 01:01:38,710
+oh, then every time that I need to create a project,
+
+939
+01:01:39,070 --> 01:01:43,030
+I need to go and select those things or I need to fill them
+
+940
+01:01:43,031 --> 01:01:46,290
+out so that I can select them later when I sign a new content
+
+941
+01:01:46,291 --> 01:01:50,550
+to a project so that it inherits those details.
+
+942
+01:01:51,030 --> 01:01:56,390
+But that means that I won't be able to re-use
+
+943
+01:01:56,391 --> 01:01:59,610
+it for a single customer,
+
+944
+01:02:00,250 --> 01:02:04,890
+be able to reuse some of those fields across multiple campaigns.
+
+945
+01:02:05,550 --> 01:02:08,490
+Right, I would need to, basically,
+
+946
+01:02:08,670 --> 01:02:12,910
+but if I had a list of those defaults on one project,
+
+947
+01:02:13,050 --> 01:02:15,830
+but I want to have some in another project that I still need to
+
+948
+01:02:15,831 --> 01:02:20,050
+go in. and add them manually when adding the defaults to each project.
+
+949
+01:02:20,950 --> 01:02:23,670
+But that means having forms that are going to have a lot of fields
+
+950
+01:02:23,671 --> 01:02:27,590
+that I need to fill out, which is what I've seen that's what we
+
+951
+01:02:27,591 --> 01:02:29,650
+have already. And I can do that,
+
+952
+01:02:29,690 --> 01:02:32,830
+of course, and make it look nicer,
+
+953
+01:02:34,110 --> 01:02:36,470
+but eventually, you know,
+
+954
+01:02:36,630 --> 01:02:40,270
+I don't, at least I hope that next time when I show you that,
+
+955
+01:02:40,710 --> 01:02:44,030
+you're not thinking like Rob basically did what we had.
+
+956
+01:02:44,031 --> 01:02:46,670
+Yeah. Yeah. So I don't know,
+
+957
+01:02:46,770 --> 01:02:49,650
+Corey, what would be your, like, so next time we meet next week,
+
+958
+01:02:49,651 --> 01:02:51,770
+look, what would be the, yeah,
+
+959
+01:02:51,970 --> 01:02:56,710
+what would be the most. It's a good question.
+
+960
+01:02:56,890 --> 01:03:01,050
+It's here too. So let's try to bite. Maybe what's the foundation.
+
+961
+01:03:03,750 --> 01:03:08,950
+That's a good question. Well, and
+
+962
+01:03:08,951 --> 01:03:11,050
+this is interesting because we,
+
+963
+01:03:11,510 --> 01:03:14,310
+as you probably have seen over the last hour,
+
+964
+01:03:14,311 --> 01:03:18,890
+two hours, hour and a half, we're kind of mixing two
+
+965
+01:03:18,891 --> 01:03:21,470
+things. We're mixing something we've done historically.
+
+966
+01:03:22,050 --> 01:03:24,610
+So historically, here's what our platform is,
+
+967
+01:03:24,830 --> 01:03:29,470
+and it's written content. We're trying to mix that with this thing that we
+
+968
+01:03:29,471 --> 01:03:34,430
+do manually that we've never seen in in a process before
+
+969
+01:03:34,431 --> 01:03:39,030
+which is this video kind of creation which is going to involve a
+
+970
+01:03:39,031 --> 01:03:43,570
+lot of APIs and a lot of outside things that I don't actually have
+
+971
+01:03:43,571 --> 01:03:48,150
+a visual for yet. And so it's and so what
+
+972
+01:03:48,151 --> 01:03:51,710
+it's interesting is you could say you work in pieces so we could say
+
+973
+01:03:51,711 --> 01:03:56,250
+the thing that would be I mean me
+
+974
+01:03:56,251 --> 01:03:58,430
+just Tyler I don't know do you work backwards?
+
+975
+01:03:59,050 --> 01:04:02,410
+Do you start with like okay you know So here's where you can see
+
+976
+01:04:02,411 --> 01:04:05,970
+everything, I guess that probably doesn't make sense.
+
+977
+01:04:08,450 --> 01:04:11,810
+At the beginning, it would be interesting to see how,
+
+978
+01:04:13,110 --> 01:04:15,510
+I mean, yeah, if you want to create an article,
+
+979
+01:04:15,511 --> 01:04:17,950
+we have a flow for that, but like Tyler, what does it look like
+
+980
+01:04:17,951 --> 01:04:22,590
+if we want to create something in victory? So maybe whatever your
+
+981
+01:04:22,591 --> 01:04:26,030
+version, it'd be interesting to see what you could come up with for that
+
+982
+01:04:26,031 --> 01:04:28,730
+for the video side because we don't have anything for that.
+
+983
+01:04:29,170 --> 01:04:32,830
+Well, how do we come up with the video in Victory first,
+
+984
+01:04:32,970 --> 01:04:35,890
+is we have to pick an article. First we pick a topic,
+
+985
+01:04:36,030 --> 01:04:40,730
+then we pick an article, then we select which voice and the preset,
+
+986
+01:04:41,110 --> 01:04:43,970
+right? So the, what's the, for the project it's going to use,
+
+987
+01:04:44,050 --> 01:04:46,210
+because Victory supports different brands.
+
+988
+01:04:46,610 --> 01:04:48,870
+So that is which brand we're going to use in Victory.
+
+989
+01:04:51,350 --> 01:04:54,450
+We could have different, we had different templates in Victory,
+
+990
+01:04:54,451 --> 01:04:56,610
+meaning different background images, different music,
+
+991
+01:04:57,190 --> 01:04:59,790
+that's going to be a specific, you know,
+
+992
+01:04:59,870 --> 01:05:03,430
+we would be able to say we want to, but yeah,
+
+993
+01:05:03,610 --> 01:05:07,370
+like it's kind of that's the that's the front end to it,
+
+994
+01:05:07,690 --> 01:05:12,430
+to the workflow. Yeah,
+
+995
+01:05:12,431 --> 01:05:14,610
+I think that, I think the front,
+
+996
+01:05:14,611 --> 01:05:19,290
+I think the front end, I think your idea and this is
+
+997
+01:05:19,291 --> 01:05:21,650
+going to be the same thing here, it's going to be,
+
+998
+01:05:21,930 --> 01:05:25,730
+you're going to give us an idea that we're going to mold.
+
+999
+01:05:26,570 --> 01:05:29,710
+And the first one is, again, is your very experience in this area.
+
+1000
+01:05:29,890 --> 01:05:32,210
+It's not going to be perfect, but we'll mold it from there.
+
+1001
+01:05:32,350 --> 01:05:36,630
+So I think I'll give you the I'll give you the victory logins.
+
+1002
+01:05:36,770 --> 01:05:39,890
+I'll give you the, let's see, victory. What do I say?
+
+1003
+01:05:41,010 --> 01:05:43,390
+Victory Descript, I guess Opus.
+
+1004
+01:05:44,290 --> 01:05:48,470
+Victory Descript Opus. I'll also give you a login to
+
+1005
+01:05:52,950 --> 01:05:56,250
+I think Tyler, I think it probably make,
+
+1006
+01:05:56,370 --> 01:05:59,190
+well, I mean, you can actually create with staging.
+
+1007
+01:06:00,090 --> 01:06:02,590
+But I want to give him staging or what I want to give him
+
+1008
+01:06:02,591 --> 01:06:04,870
+just your typical app, probably just app.
+
+1009
+01:06:05,330 --> 01:06:07,650
+It's a little more rudimentary, but I think you can still see.
+
+1010
+01:06:08,390 --> 01:06:11,470
+Yeah, well, staging at least you can access the new front end too.
+
+1011
+01:06:11,590 --> 01:06:14,310
+So I would say staging because then you say it. Yeah,
+
+1012
+01:06:14,330 --> 01:06:17,890
+and then you can also play with like we have the staging app,
+
+1013
+01:06:18,010 --> 01:06:21,790
+which is like the it's the whole blog system But then we have the
+
+1014
+01:06:21,791 --> 01:06:26,010
+new front end that we build and lovable that basically talks via API it
+
+1015
+01:06:26,011 --> 01:06:29,310
+later is on top of staging Okay,
+
+1016
+01:06:29,311 --> 01:06:32,470
+yeah, I so I'll give you a give you the log in to all
+
+1017
+01:06:32,471 --> 01:06:35,510
+these things and why I why I would do that is I think I
+
+1018
+01:06:35,511 --> 01:06:41,530
+would like to see You start to come up with this new
+
+1019
+01:06:41,531 --> 01:06:44,950
+flow that for like the very beginning.
+
+1020
+01:06:45,770 --> 01:06:48,970
+Obviously, we have a, you know, create project flow,
+
+1021
+01:06:49,230 --> 01:06:53,770
+create article flow. But besides the fact that all this needs
+
+1022
+01:06:53,771 --> 01:06:57,110
+to look like prettier and be a little more user-friendly,
+
+1023
+01:06:57,570 --> 01:07:01,250
+we now have to have a beginning to,
+
+1024
+01:07:01,350 --> 01:07:04,130
+again, if someone wants to create something in victory.
+
+1025
+01:07:04,510 --> 01:07:09,210
+What does that look like? Like the create project will be similar,
+
+1026
+01:07:09,450 --> 01:07:11,510
+but there might be and he's gonna be some extra stuff here.
+
+1027
+01:07:12,230 --> 01:07:14,450
+And then when it comes to, you know,
+
+1028
+01:07:14,570 --> 01:07:19,410
+once you're inside your project and you're creating your new set
+
+1029
+01:07:19,411 --> 01:07:24,150
+of article, like new content, what does that look like to click and say,
+
+1030
+01:07:24,210 --> 01:07:26,590
+okay, you know, long form video,
+
+1031
+01:07:27,030 --> 01:07:31,050
+flick. I think getting your,
+
+1032
+01:07:31,350 --> 01:07:33,470
+if it's gonna take us some iterations to get there.
+
+1033
+01:07:33,830 --> 01:07:36,370
+So let's, I'd say that. I'd love to see where you,
+
+1034
+01:07:36,371 --> 01:07:41,790
+how do you think about the beginning of it?
+
+1035
+01:07:44,570 --> 01:07:47,270
+Yeah, like how could you now create everything?
+
+1036
+01:07:47,410 --> 01:07:52,110
+How does this all look organized? Does
+
+1037
+01:07:52,111 --> 01:07:54,170
+that make sense? Is that clear enough direction?
+
+1038
+01:07:54,770 --> 01:07:56,910
+Or let me know about it.
+
+1039
+01:07:57,810 --> 01:08:02,710
+Yeah, so I was thinking that I
+
+1040
+01:08:02,711 --> 01:08:05,910
+could go into these tools and try them and we'll just get some idea.
+
+1041
+01:08:05,911 --> 01:08:11,790
+but I also think that if you want to send
+
+1042
+01:08:11,791 --> 01:08:14,790
+me a video of each one of how you do it there,
+
+1043
+01:08:14,870 --> 01:08:18,190
+because I would use it differently as how you do it. Maybe that's what
+
+1044
+01:08:18,191 --> 01:08:22,750
+you want. So it's fine if you want me to go there and
+
+1045
+01:08:22,751 --> 01:08:27,370
+try what I'm thinking at least is that you were considering
+
+1046
+01:08:27,371 --> 01:08:30,250
+like starting from the end.
+
+1047
+01:08:30,870 --> 01:08:35,630
+So I'm considering like at least the process of When I'm creating this
+
+1048
+01:08:35,631 --> 01:08:40,390
+project and I am signing some defaults at least,
+
+1049
+01:08:40,790 --> 01:08:42,870
+that's where I would start from the end.
+
+1050
+01:08:43,090 --> 01:08:47,670
+I would give it examples of links and references of how it
+
+1051
+01:08:47,671 --> 01:08:52,090
+should look like. So that's where I would pass a link of Instagram or
+
+1052
+01:08:52,091 --> 01:08:56,870
+a link of a video to see if it can take some
+
+1053
+01:08:56,871 --> 01:09:01,750
+of those defaults from those references
+
+1054
+01:09:01,751 --> 01:09:08,010
+so that I don't need to input them. And at least I will
+
+1055
+01:09:08,011 --> 01:09:12,090
+remove that step of doing everything manually from the beginning.
+
+1056
+01:09:13,050 --> 01:09:16,770
+I've seen this in this tool from Cloud Design,
+
+1057
+01:09:16,990 --> 01:09:20,110
+where let's say that you have your own brand,
+
+1058
+01:09:20,590 --> 01:09:24,730
+but setting everything from that brand usually takes a while.
+
+1059
+01:09:24,990 --> 01:09:27,970
+So what they ask you is like, just give me any material that you
+
+1060
+01:09:27,971 --> 01:09:30,110
+have. the links from your website,
+
+1061
+01:09:30,350 --> 01:09:34,230
+the links of PDF, and we will try to take everything that we can
+
+1062
+01:09:34,231 --> 01:09:37,290
+as a brand guidelines so that in every project in the future we use
+
+1063
+01:09:37,291 --> 01:09:41,930
+those things. You just need to approve certain fields that we pre-field
+
+1064
+01:09:41,931 --> 01:09:44,390
+after reviewing the materials that you gave us,
+
+1065
+01:09:44,730 --> 01:09:48,750
+but at least you don't need to fill them out immediately from start.
+
+1066
+01:09:50,370 --> 01:09:54,090
+I think at least that's what I would add. Maybe that's somehow there and
+
+1067
+01:09:54,091 --> 01:09:58,610
+the tools that you mentioned. But I think you're going to see
+
+1068
+01:09:58,611 --> 01:10:03,130
+it's not and that's what's interesting, I can appreciate for sure
+
+1069
+01:10:03,131 --> 01:10:06,470
+that you want to automate as much as possible.
+
+1070
+01:10:08,470 --> 01:10:10,810
+I think what you're going to find again,
+
+1071
+01:10:10,850 --> 01:10:13,950
+especially as you use like Orcaru and our native tool is.
+
+1072
+01:10:14,690 --> 01:10:19,510
+And the same thing, a picture, there's not a lot of pre-setting
+
+1073
+01:10:19,511 --> 01:10:25,190
+or templating you can do. you do really have to craft everything.
+
+1074
+01:10:25,910 --> 01:10:28,390
+There's a decent amount of inputs you have to use.
+
+1075
+01:10:28,610 --> 01:10:31,910
+And I get it, I want to get to where you're at because I
+
+1076
+01:10:31,911 --> 01:10:36,470
+think that's one of the things that have stopped people historically from using.
+
+1077
+01:10:36,770 --> 01:10:40,250
+Our product is there's just so many inputs you have to use.
+
+1078
+01:10:40,690 --> 01:10:43,310
+So as much as you can try to make something a template,
+
+1079
+01:10:44,230 --> 01:10:46,530
+I like a lot of your heads out to try to do that.
+
+1080
+01:10:48,310 --> 01:10:53,090
+So yeah, I don't know if it is helpful
+
+1081
+01:10:53,091 --> 01:10:55,890
+because that's one thing that could be solved,
+
+1082
+01:10:56,170 --> 01:11:00,030
+but perhaps that's not the thing that you like to solve right now.
+
+1083
+01:11:00,750 --> 01:11:03,650
+I think just generating more. Well,
+
+1084
+01:11:03,750 --> 01:11:06,490
+if I had to give tiny bit more,
+
+1085
+01:11:07,090 --> 01:11:11,070
+the two problems I think I think the two problems I've heard from people
+
+1086
+01:11:11,071 --> 01:11:14,370
+historically is one,
+
+1087
+01:11:14,630 --> 01:11:20,070
+there is a lot of inputs that you have to put in and
+
+1088
+01:11:20,071 --> 01:11:24,670
+it would be nice to your point of some of this auto.
+
+1089
+01:11:25,130 --> 01:11:29,150
+I think people don't even understand, they just see all the inputs and they
+
+1090
+01:11:29,151 --> 01:11:32,230
+don't necessarily know that when I put something into project,
+
+1091
+01:11:32,231 --> 01:11:36,630
+it's going to default over. They just keep seeing all these fields.
+
+1092
+01:11:36,870 --> 01:11:41,190
+So I don't. The one part is there's a lot of fields,
+
+1093
+01:11:41,330 --> 01:11:46,710
+people don't love that, but it's kind of a necessary evil.
+
+1094
+01:11:46,990 --> 01:11:51,690
+Unfortunately, you do kind of need all the inputs, but also
+
+1095
+01:11:51,691 --> 01:11:55,650
+then just the workflow. Again, how easy is it to understand all of this?
+
+1096
+01:11:56,310 --> 01:11:58,790
+So yeah, again, sorry,
+
+1097
+01:11:58,890 --> 01:12:02,110
+not to talk in circles. If we can template as much as we can,
+
+1098
+01:12:02,111 --> 01:12:06,770
+that'd be nice. I just think you're going to find it's not as easy
+
+1099
+01:12:06,771 --> 01:12:11,430
+to actually do and practice just because we kind of need
+
+1100
+01:12:11,431 --> 01:12:15,290
+all that stuff to create the best content,
+
+1101
+01:12:15,291 --> 01:12:18,130
+because otherwise you're gonna have to go back and you're gonna have to reprompt
+
+1102
+01:12:18,131 --> 01:12:22,550
+it anyway. So as much as you can give in the beginning is gonna
+
+1103
+01:12:22,551 --> 01:12:27,410
+give you that best output. So that balance of
+
+1104
+01:12:27,411 --> 01:12:32,210
+giving as much as you can while
+
+1105
+01:12:32,211 --> 01:12:36,230
+still making a template to get that best output,
+
+1106
+01:12:36,350 --> 01:12:38,950
+like, well, it's the least amount you can give,
+
+1107
+01:12:38,951 --> 01:12:42,030
+though we're still going to be a lot to get the best output,
+
+1108
+01:12:42,490 --> 01:12:44,730
+if that makes sense.
+
+1109
+01:12:46,370 --> 01:12:50,010
+I know we're definitely over time and I do have to run,
+
+1110
+01:12:50,290 --> 01:12:53,090
+is there a last? I hope that made sense,
+
+1111
+01:12:53,091 --> 01:12:55,670
+is there any last? Obviously, this is all recorded. We can share this.
+
+1112
+01:12:56,110 --> 01:13:00,310
+Is there any last thought I can give you or we can give you
+
+1113
+01:13:00,311 --> 01:13:03,090
+to give you any more direction or Tyler, do you have a last thought
+
+1114
+01:13:03,091 --> 01:13:07,630
+already or I'm going to paste
+
+1115
+01:13:07,631 --> 01:13:12,170
+the other kind of takeaways from the loom in your
+
+1116
+01:13:12,171 --> 01:13:14,650
+comments last time. I don't know. We addressed a lot of these.
+
+1117
+01:13:14,730 --> 01:13:19,470
+I think we saw some more remaining. So maybe I'll put this in a,
+
+1118
+01:13:19,471 --> 01:13:23,670
+I guess, a Google doc real quick and then we'll try to make sure
+
+1119
+01:13:23,671 --> 01:13:26,290
+anything else to kind of clarify in there. We do address.
+
+1120
+01:13:26,570 --> 01:13:30,390
+I think that would be the, so let me show this real fast before
+
+1121
+01:13:30,391 --> 01:13:35,770
+we all hop. Well, because it is kind
+
+1122
+01:13:35,771 --> 01:13:40,230
+of the last other, I feel like there's more questions Robby already asked that
+
+1123
+01:13:40,231 --> 01:13:44,830
+we didn't get a chance to cover. So how
+
+1124
+01:13:44,831 --> 01:13:49,570
+does products work through product E3 of
+
+1125
+01:13:49,571 --> 01:13:55,050
+initial questions? Okay,
+
+1126
+01:13:55,650 --> 01:13:59,230
+this is from April 30th,
+
+1127
+01:13:59,231 --> 01:14:04,870
+okay, okay,
+
+1128
+01:14:05,130 --> 01:14:09,550
+can you guys access this?
+
+1129
+01:14:12,010 --> 01:14:16,650
+this. My need
+
+1130
+01:14:16,651 --> 01:14:20,090
+to, but Rob,
+
+1131
+01:14:20,210 --> 01:14:22,530
+can you click request access to that one? Because I think I,
+
+1132
+01:14:22,810 --> 01:14:26,130
+I don't know if I've put your right email to us.
+
+1133
+01:14:27,490 --> 01:14:30,010
+Yeah, I just put it right now.
+
+1134
+01:14:30,890 --> 01:14:33,690
+Okay. It access this team.
+
+1135
+01:14:35,150 --> 01:14:38,210
+Okay. Yeah.
+
+1136
+01:14:39,230 --> 01:14:40,630
+You should both have access now.
+
+1137
+01:14:45,930 --> 01:14:51,290
+Okay, there we go. Okay,
+
+1138
+01:14:51,430 --> 01:14:54,130
+that's actually perfect. I'll add the logins to that document.
+
+1139
+01:14:55,270 --> 01:14:59,910
+Tyler or yeah, Tyler Robb and I'll I love ping you when
+
+1140
+01:14:59,911 --> 01:15:02,030
+those logins get at it.
+
+1141
+01:15:02,031 --> 01:15:05,510
+I'll get a tab on here called logins. Perfect.
+
+1142
+01:15:09,430 --> 01:15:12,570
+Okay, cool. All right. Sounds good.
+
+1143
+01:15:13,350 --> 01:15:16,250
+Are we good? Yeah,
+
+1144
+01:15:16,390 --> 01:15:19,270
+y'all glad to have that. It's really better, but don't worry.
+
+1145
+01:15:19,390 --> 01:15:22,470
+I'll take all the ideas and show you.
+
+1146
+01:15:22,790 --> 01:15:24,930
+It's easier to choose if I show you some visuals.
+
+1147
+01:15:25,190 --> 01:15:27,750
+And that, oh, no, this is not the way we want it to.
+
+1148
+01:15:27,751 --> 01:15:30,810
+or yeah, kind of. So next time I think it'll be more clear if
+
+1149
+01:15:30,811 --> 01:15:32,970
+we have more options to choose from.
+
+1150
+01:15:33,730 --> 01:15:35,970
+Sounds good. Okay.
+
+1151
+01:15:36,290 --> 01:15:38,470
+Thanks. Thank you, Rob. Okay. Thanks, Talia.
+
+1152
+01:15:38,890 --> 01:15:39,050
+Bye-bye.
