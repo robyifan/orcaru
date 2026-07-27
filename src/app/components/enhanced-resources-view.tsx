@@ -19,8 +19,7 @@ interface Resource {
   resolution?: string;
   thumbnail?: string | null;
   postsCreated?: number;
-  users?: Array<{ name: string; initials: string; color: string }>;
-  posts?: string[];
+  posts?: Array<{ name: string; thumbnail?: string }>;
   transcribed: boolean;
   tags: string[];
   videoUrl?: string;
@@ -39,20 +38,14 @@ const RESOURCES: Resource[] = [
     duration: '45:32',
     thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
     postsCreated: 7,
-    users: [
-      { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
-      { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
-      { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
-      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
-    ],
     posts: [
-      'Instagram Carousel - Wellness Tips',
-      'Instagram Carousel - Wellness Tips',
-      'LinkedIn Post - Yoga Benefits',
-      'LinkedIn Post - Yoga Benefits',
-      'LinkedIn Post - Yoga Benefits',
-      'TikTok Script - Morning Routine',
-      'TikTok Script - Morning Routine',
+      { name: 'Instagram Carousel - Wellness Tips', thumbnail: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=100&h=100&fit=crop' },
+      { name: 'Instagram Carousel - Wellness Tips', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Yoga Benefits', thumbnail: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Yoga Benefits', thumbnail: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Yoga Benefits', thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=100&h=100&fit=crop' },
+      { name: 'TikTok Script - Morning Routine', thumbnail: 'https://images.unsplash.com/photo-1493606374434-5ca153e45924?w=100&h=100&fit=crop' },
+      { name: 'TikTok Script - Morning Routine', thumbnail: 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?w=100&h=100&fit=crop' },
     ],
     transcribed: true,
     tags: ['yoga', 'wellness', 'tutorial'],
@@ -99,20 +92,14 @@ const RESOURCES: Resource[] = [
     resolution: '2400×1600',
     thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=247&h=136&fit=crop',
     postsCreated: 7,
-    users: [
-      { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
-      { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
-      { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
-      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
-    ],
     posts: [
-      'Instagram Post - Product Launch',
-      'Instagram Post - Sneaker Review',
-      'Twitter Thread - Design Process',
-      'LinkedIn Post - Brand Story',
-      'TikTok Script - Unboxing',
-      'YouTube Short - Features',
-      'Pinterest Pin - Style Guide',
+      { name: 'Instagram Post - Product Launch', thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop' },
+      { name: 'Instagram Post - Sneaker Review', thumbnail: 'https://images.unsplash.com/photo-1505503620051-167631057822?w=100&h=100&fit=crop' },
+      { name: 'Twitter Thread - Design Process', thumbnail: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Brand Story', thumbnail: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=100&h=100&fit=crop' },
+      { name: 'TikTok Script - Unboxing', thumbnail: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=100&h=100&fit=crop' },
+      { name: 'YouTube Short - Features', thumbnail: 'https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=100&h=100&fit=crop' },
+      { name: 'Pinterest Pin - Style Guide', thumbnail: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop' },
     ],
     transcribed: false,
     tags: ['social', 'launch'],
@@ -449,14 +436,20 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
             <div className="bg-card border border-border rounded-xl p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  {resource.users?.slice(0, 4).map((user, index) => (
-                    <div key={user.name} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card" style={{ backgroundColor: user.color, marginLeft: index > 0 ? '-8px' : '0' }}>
-                      {user.initials}
+                  {resource.posts?.slice(0, 4).map((post, index) => (
+                    <div key={index} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card overflow-hidden" style={{ marginLeft: index > 0 ? '-8px' : '0' }}>
+                      {post.thumbnail ? (
+                        <img src={post.thumbnail} alt={post.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-[#333333] flex items-center justify-center">
+                          <span className="text-[8px]">{post.name.charAt(0)}</span>
+                        </div>
+                      )}
                     </div>
                   ))}
-                  {resource.users && resource.users.length > 4 && (
+                  {resource.posts && resource.posts.length > 4 && (
                     <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card bg-primary ml-[-8px]">
-                      +{resource.users.length - 4}
+                      +{resource.posts.length - 4}
                     </div>
                   )}
                 </div>
@@ -570,7 +563,7 @@ export function EnhancedResourcesView() {
               <div
                 key={resource.id}
                 onClick={() => setSelectedResource(resource)}
-                className="flex flex-col bg-[#1a1a1a] cursor-pointer group"
+                className="flex flex-col bg-[#1a1a1a] cursor-pointer"
                 style={{ height: '366px' }}
               >
                 <div className="relative flex-shrink-0" style={{ height: '136px' }}>
@@ -614,24 +607,29 @@ export function EnhancedResourcesView() {
                   </div>
                 </div>
 
-                <div className="relative border-t border-[#ffffff14] bg-[#212121]" style={{ height: '52px', padding: '11px 16px 12px' }}>
+                <div className="relative border-t border-[#ffffff14] bg-[#212121] group" style={{ height: '52px', padding: '11px 16px 12px' }}>
                   <div className="flex items-center justify-between w-full">
                     <div className="flex items-center">
-                      {resource.users?.slice(0, 4).map((user, index) => (
+                      {resource.posts?.slice(0, 4).map((post, index) => (
                         <div
-                          key={user.name}
-                          className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a]"
+                          key={index}
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a] overflow-hidden"
                           style={{
-                            backgroundColor: user.color,
                             marginLeft: index > 0 ? '-8px' : '0',
                           }}
                         >
-                          {user.initials}
+                          {post.thumbnail ? (
+                            <img src={post.thumbnail} alt={post.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full bg-[#333333] flex items-center justify-center">
+                              <span className="text-[8px]">{post.name.charAt(0)}</span>
+                            </div>
+                          )}
                         </div>
                       ))}
-                      {resource.users && resource.users.length > 4 && (
+                      {resource.posts && resource.posts.length > 4 && (
                         <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a] bg-primary ml-[-8px]">
-                          +{resource.users.length - 4}
+                          +{resource.posts.length - 4}
                         </div>
                       )}
                     </div>
@@ -647,7 +645,7 @@ export function EnhancedResourcesView() {
                             <div className="px-3 py-2.5 space-y-[6px]">
                               {resource.posts.slice(0, 3).map((post, index) => (
                                 <div key={index} className="text-xs text-white truncate">
-                                  {post}
+                                  {post.name}
                                 </div>
                               ))}
                               {resource.posts.length > 3 && (
