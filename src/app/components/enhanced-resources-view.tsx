@@ -644,16 +644,17 @@ export function EnhancedResourcesView() {
                       {resource.posts && resource.posts.length > 0 && (
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" style={{ width: '246px' }}>
                           <div className="bg-[#262626] rounded-lg shadow-lg overflow-hidden" style={{ boxShadow: '0px 4px 12px 0px #00000033' }}>
-                            <div className="px-4 py-3 border-b border-[#ffffff14]">
-                              <span className="text-xs font-semibold text-[#999999] tracking-[0.55px]">GENERATED SOCIAL POSTS</span>
-                            </div>
-                            <div className="p-3 space-y-2 max-h-[140px] overflow-y-auto">
-                              {resource.posts.map((post, index) => (
-                                <div key={index} className="flex items-center gap-2 text-xs text-white">
-                                  <div className="w-[6px] h-[6px] rounded-full bg-[#66b266] flex-shrink-0" />
-                                  <span className="truncate">{post}</span>
+                            <div className="px-3 py-2.5 space-y-[6px]">
+                              {resource.posts.slice(0, 3).map((post, index) => (
+                                <div key={index} className="text-xs text-white truncate">
+                                  {post}
                                 </div>
                               ))}
+                              {resource.posts.length > 3 && (
+                                <div className="text-xs text-[#999999] pt-1 border-t border-[#ffffff14] mt-[6px]">
+                                  +{resource.posts.length - 3} more posts
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-[#262626]" />
