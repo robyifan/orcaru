@@ -51,7 +51,7 @@ const RESOURCES: Resource[] = [
     tags: ['yoga', 'wellness', 'tutorial'],
     videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
     summary: `This 45-minute yoga session covers foundational poses for beginners and intermediate practitioners.`,
-    transcription: `[00:00] Welcome everyone to today's yoga session.`,
+    transcription: `[00:00] Welcome to today's yoga session. I'm so glad you're here. Before we begin, let's settle.\n[04:15] Take a deep breath in through your nose and exhale slowly, releasing any morning tension.\n[10:10] We'll start today with three rounds of sun salutations to warm up the body.`
   },
   {
     id: '2',
@@ -247,8 +247,22 @@ function CardMenu({ resource }: { resource: Resource }) {
   );
 }
 
+interface Post {
+  name: string;
+  thumbnail?: string;
+  platform: string;
+  type: string;
+  project: string;
+  campaign: string;
+  createdAt: string;
+  publishDate?: string;
+  status: 'Published' | 'In Review' | 'Draft';
+}
+
 function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () => void }) {
-  const [textTab, setTextTab] = useState<'transcription' | 'summary'>('transcription');
+  const [textTab, setTextTab] = useState<'transcript' | 'summary'>('transcript');
+  const [showArchiveDialog, setShowArchiveDialog] = useState(false);
+  const [isArchived, setIsArchived] = useState(false);
 
   const downloadBlob = (filename: string, content: string) => {
     const blob = new Blob([content], { type: 'text/plain' });
@@ -262,212 +276,278 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
     a.href = href; a.download = filename; a.target = '_blank'; a.click();
   };
 
-  const MediaPanel = () => {
-    if (resource.type === 'video') {
-      return (
-        <div className="w-full bg-black rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
-          {resource.videoUrl ? (
-            <video src={resource.videoUrl} controls className="w-full h-full object-contain" poster={resource.thumbnail ?? undefined} />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-3">
-              <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
-                <Play className="w-7 h-7 text-white ml-1" />
-              </div>
-              <span className="text-white/50 text-sm">Preview not available</span>
-            </div>
-          )}
-        </div>
-      );
-    }
+  const handleArchive = () => {
+    setIsArchived(true);
+    setShowArchiveDialog(false);
+  };
 
-    if (resource.type === 'image') {
-      return (
-        <div className="w-full rounded-xl overflow-hidden bg-secondary/30 flex items-center justify-center" style={{ minHeight: '320px' }}>
-          {resource.thumbnail ? (
-            <img src={resource.thumbnail} alt={resource.name} className="w-full h-full object-contain" />
-          ) : (
-            <div className="flex flex-col items-center gap-3 text-muted-foreground py-16">
-              <ImageIcon className="w-16 h-16" />
-              <span className="text-sm">No preview available</span>
-            </div>
-          )}
-        </div>
-      );
-    }
+  const posts: Post[] = resource.posts?.map((post, i) => ({
+    name: post.name,
+    thumbnail: post.thumbnail,
+    platform: ['TikTok', 'Instagram', 'LinkedIn', 'YouTube', 'Twitter', 'Pinterest'][i % 6] ?? 'Instagram',
+    type: ['Short Video', 'Carousel', 'Post', 'Shorts', 'Thread', 'Pin'][i % 6] ?? 'Post',
+    project: ['Wellness Startup', 'Nike', 'Tech Innovations', 'Fashion Brand', 'Food & Beverage Co', 'B2B SaaS'][i % 6] ?? 'Wellness Startup',
+    campaign: ['Summer Launch', 'Brand Campaign', 'Retreat Promo', 'Wellness Series'][i % 4] ?? 'Summer Launch',
+    createdAt: ['3 hours ago', '5 hours ago', '1 day ago', '2 days ago', '1 week ago'][i % 5] ?? '3 hours ago',
+    publishDate: ['Jun 15', 'Jun 18', 'Jul 5', 'Jul 10'][i % 4] ?? 'Jun 15',
+    status: ['Published', 'Published', 'In Review', 'Draft', 'Published'][i % 5] as 'Published' | 'In Review' | 'Draft',
+  })) ?? [];
 
-    return (
-      <div className="w-full h-full rounded-xl border border-border bg-[#0D0D0D] overflow-hidden flex flex-col">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/30 flex-shrink-0">
-          <FileText className="w-4 h-4 text-muted-foreground" />
-          <span className="text-xs text-muted-foreground font-medium truncate">{resource.name}</span>
-        </div>
-        <div className="flex-1 overflow-y-auto p-6">
-          <pre className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap font-sans">{resource.fullText}</pre>
-        </div>
-      </div>
-    );
+  const statusStyles = {
+    Published: 'bg-[#10B981]',
+    'In Review': 'bg-[#F59E0B]',
+    Draft: 'bg-[#6B7280]',
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden p-8">
-      <button onClick={onBack} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 flex-shrink-0 w-fit">
+    <div className="flex-1 overflow-y-auto">
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 px-8 py-4 text-sm text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 w-fit"
+      >
         <ArrowLeft className="w-4 h-4" />
-        Back to Resources
+        <span>Back to Resources</span>
       </button>
 
-      <div className="flex gap-6 flex-1 min-h-0">
-        <div className="flex-[3] flex flex-col min-h-0 gap-4">
-          <MediaPanel />
-          {resource.summary && (resource.type === 'video' || resource.type === 'image') && (
-            <div className="bg-card border border-border rounded-xl p-5 flex-shrink-0">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Summary</p>
-              <p className="text-sm text-foreground leading-relaxed">{resource.summary}</p>
-            </div>
-          )}
-        </div>
-
-        <div className="flex-[2] flex flex-col min-h-0 overflow-y-auto gap-5 pr-1">
-          <div className="flex-shrink-0">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2.5 py-0.5 rounded-md border text-xs font-medium bg-blue-500/10 text-blue-400 border-blue-500/20">
-                {resource.type}
+      <div className="flex gap-8 p-8 pb-16">
+        <div className="flex-[3]">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="px-3 py-1 rounded-lg bg-[#1a1a1a] border border-[#ffffff14] text-xs font-semibold text-[#51a2ff] uppercase">
+              {resource.type}
+            </span>
+            {resource.transcribed && (
+              <span className="px-3 py-1 rounded-lg bg-[#1a1a1a] border border-[#ffffff14] text-xs font-semibold text-[#66b266] uppercase">
+                transcribed
               </span>
-              {resource.transcribed && (
-                <span className="px-2.5 py-0.5 rounded-md border text-xs font-medium bg-success/10 text-success border-success/20">
-                  Transcribed
-                </span>
-              )}
-            </div>
-            <h1 className="text-xl font-bold text-foreground leading-tight">{resource.name}</h1>
+            )}
+            {isArchived && (
+              <span className="px-3 py-1 rounded-lg bg-[#1a1a1a] border border-[#ffffff14] text-xs font-semibold text-[#F59E0B] uppercase">
+                archived
+              </span>
+            )}
           </div>
 
-          <div className="flex-shrink-0">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Downloads</p>
-            <div className="flex flex-col gap-2">
-              {resource.transcribed && (resource.transcription || resource.fullText) && (
-                <button onClick={() => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? '')} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
-                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                  Download Transcription
-                </button>
-              )}
-              {resource.type === 'video' && (
-                <>
-                  <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3'))} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
-                    <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                    Download Audio
-                  </button>
-                  <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name)} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
-                    <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                    Download Video
-                  </button>
-                </>
-              )}
-              {resource.type === 'image' && resource.thumbnail && (
-                <button onClick={() => downloadHref(resource.thumbnail!, resource.name)} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
-                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                  Download Image
-                </button>
-              )}
-              {(resource.type === 'document' || resource.type === 'text') && (
-                <button onClick={() => downloadBlob(resource.name, resource.fullText ?? '')} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
-                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                  Download Document
-                </button>
-              )}
-            </div>
-          </div>
+          <h1 className="text-2xl font-bold text-foreground mb-6">{resource.name}</h1>
 
-          {(resource.transcription || resource.fullText) && (
-            <div className="flex-shrink-0">
-              {resource.summary && (
-                <div className="flex gap-1 p-1 bg-secondary rounded-lg mb-3 w-fit">
-                  {([
-                    { key: 'transcription' as const, label: resource.type === 'video' ? 'Transcription' : 'Content', icon: Mic },
-                    { key: 'summary' as const, label: 'Summary', icon: BookOpen },
-                  ]).map(({ key, label, icon: Icon }) => (
-                    <button key={key} onClick={() => setTextTab(key)} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${textTab === key ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
-                      <Icon className="w-3 h-3" />
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <div className="bg-[#0D0D0D] border border-border rounded-xl p-4 max-h-72 overflow-y-auto">
-                <pre className="text-xs text-foreground/80 leading-relaxed whitespace-pre-wrap font-sans">
-                  {textTab === 'summary' && resource.summary ? resource.summary : (resource.transcription ?? resource.fullText)}
-                </pre>
+          <div className="w-full rounded-xl overflow-hidden bg-black mb-8" style={{ aspectRatio: '16/9' }}>
+            {resource.type === 'video' && (
+              <video
+                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                poster={resource.thumbnail}
+                controls
+                className="w-full h-full object-cover"
+              />
+            )}
+            {resource.type === 'image' && resource.thumbnail && (
+              <img src={resource.thumbnail} alt={resource.name} className="w-full h-full object-cover" />
+            )}
+            {resource.type === 'document' && (
+              <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
+                <FileText className="w-16 h-16 text-muted-foreground" />
               </div>
-            </div>
-          )}
+            )}
+            {resource.type === 'text' && (
+              <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
+                <FileText className="w-16 h-16 text-muted-foreground" />
+              </div>
+            )}
+          </div>
 
-          <div className="flex-shrink-0">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Details</p>
-            <div className="bg-card border border-border rounded-xl divide-y divide-border">
-              {[
-                { label: 'File size', value: resource.size },
-                { label: 'Uploaded', value: resource.uploadedDate },
-                ...(resource.duration ? [{ label: 'Duration', value: resource.duration }] : []),
-                ...(resource.pageCount ? [{ label: 'Pages', value: `${resource.pageCount} pages` }] : []),
-                ...(resource.wordCount ? [{ label: 'Word count', value: resource.wordCount.toLocaleString() }] : []),
-                ...(resource.resolution ? [{ label: 'Resolution', value: resource.resolution }] : []),
-                { label: 'Type', value: resource.type.charAt(0).toUpperCase() + resource.type.slice(1) },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between px-4 py-2.5 text-sm">
-                  <span className="text-muted-foreground">{label}</span>
-                  <span className="text-foreground font-medium">{value}</span>
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-foreground">Content Created ({posts.length})</h2>
+              <p className="text-xs text-muted-foreground">Social media content generated using this resource</p>
+            </div>
+
+            <div className="space-y-3">
+              {posts.map((post, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 bg-[#1a1a1a] rounded-xl hover:bg-[#212121] transition-colors">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                    {post.thumbnail ? (
+                      <img src={post.thumbnail} alt={post.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full bg-[#262626] flex items-center justify-center">
+                        <span className="text-[10px] text-muted-foreground">{post.name.charAt(0)}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-semibold text-foreground truncate">{post.name}</h3>
+                    <div className="flex items-center gap-3 mt-1 flex-wrap">
+                      <span className="text-xs text-muted-foreground">{post.platform} · {post.type}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-[#262626] text-[10px] text-muted-foreground">{post.project}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-[#262626] text-[10px] text-muted-foreground">{post.campaign}</span>
+                    </div>
+                    <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                      <span>{post.createdAt}</span>
+                      {post.status === 'Published' && <span>Published {post.publishDate}</span>}
+                      {post.status === 'In Review' && <span>Scheduled {post.publishDate}</span>}
+                      {post.status === 'Draft' && <span>Draft</span>}
+                    </div>
+                  </div>
+
+                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-semibold text-white flex-shrink-0 ${statusStyles[post.status]}`}>
+                    {post.status}
+                  </span>
                 </div>
               ))}
+              {posts.length === 0 && (
+                <div className="p-8 bg-[#1a1a1a] rounded-xl text-center">
+                  <p className="text-sm text-muted-foreground">No content created</p>
+                </div>
+              )}
             </div>
           </div>
+        </div>
 
-          {resource.tags.length > 0 && (
-            <div className="flex-shrink-0">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Tags</p>
-              <div className="flex flex-wrap gap-1.5">
-                {resource.tags.map(tag => (
-                  <span key={tag} className="px-2.5 py-1 bg-secondary rounded-lg text-xs text-muted-foreground">#{tag}</span>
-                ))}
-              </div>
-            </div>
-          )}
+        <div className="flex-[1.3] sticky top-8">
+          <div className="bg-[#1a1a1a] rounded-xl p-5">
+            {(resource.type === 'video' || resource.type === 'document') && resource.transcribed && (
+              <div className="mb-5">
+                <div className="flex bg-[#0D0D0D] rounded-lg mb-3">
+                  <button
+                    onClick={() => setTextTab('transcript')}
+                    className={`flex-1 py-2.5 text-xs font-semibold uppercase transition-colors ${textTab === 'transcript' ? 'bg-[#262626] text-foreground rounded-lg' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    Transcript
+                  </button>
+                  <button
+                    onClick={() => setTextTab('summary')}
+                    className={`flex-1 py-2.5 text-xs font-semibold uppercase transition-colors ${textTab === 'summary' ? 'bg-[#262626] text-foreground rounded-lg' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    Summary
+                  </button>
+                </div>
 
-          <div className="flex-shrink-0 pb-6">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Content Created</p>
-            <div className="bg-card border border-border rounded-xl p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  {resource.posts?.slice(0, 4).map((post, index) => (
-                    <div key={index} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card overflow-hidden" style={{ marginLeft: index > 0 ? '-8px' : '0' }}>
-                      {post.thumbnail ? (
-                        <img src={post.thumbnail} alt={post.name} className="w-full h-full object-cover" />
-                      ) : (
-                        <div className="w-full h-full bg-[#333333] flex items-center justify-center">
-                          <span className="text-[8px]">{post.name.charAt(0)}</span>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  {resource.posts && resource.posts.length > 4 && (
-                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card bg-primary ml-[-8px]">
-                      +{resource.posts.length - 4}
+                <div className="bg-[#0D0D0D] rounded-lg p-4 max-h-52 overflow-y-auto">
+                  {textTab === 'transcript' && resource.transcription && (
+                    <div className="space-y-3">
+                      {resource.transcription.split('\n').map((line, i) => (
+                        <p key={i} className="text-xs text-white/80 leading-relaxed">
+                          {line}
+                        </p>
+                      ))}
                     </div>
                   )}
+                  {textTab === 'summary' && resource.summary && (
+                    <p className="text-xs text-white/80 leading-relaxed">
+                      {resource.summary}
+                    </p>
+                  )}
                 </div>
-                <span className="text-sm text-foreground font-medium">
-                  {resource.postsCreated && resource.postsCreated > 0 ? `${resource.postsCreated} posts created` : 'No content created'}
-                </span>
+              </div>
+            )}
+
+            <div className="mb-5 pt-5 border-t border-[#ffffff14]">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-400">File size</span>
+                  <span className="text-white font-medium">{resource.size}</span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-400">Uploaded</span>
+                  <span className="text-white font-medium">{resource.uploadedDate}</span>
+                </div>
+                {resource.duration && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Duration</span>
+                    <span className="text-white font-medium">{resource.duration}</span>
+                  </div>
+                )}
+                {resource.pageCount && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Pages</span>
+                    <span className="text-white font-medium">{resource.pageCount} pages</span>
+                  </div>
+                )}
+                {resource.wordCount && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Words</span>
+                    <span className="text-white font-medium">{resource.wordCount.toLocaleString()} words</span>
+                  </div>
+                )}
+                {resource.resolution && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Resolution</span>
+                    <span className="text-white font-medium">{resource.resolution}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="pt-5 border-t border-[#ffffff14]">
+              <div className="flex flex-col gap-2">
+                {resource.transcribed && (resource.transcription || resource.fullText) && (
+                  <button onClick={() => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? '')} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                    <FileText className="w-4 h-4 text-gray-400" />
+                    Download Transcription
+                  </button>
+                )}
+                {resource.type === 'video' && (
+                  <>
+                    <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3'))} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                      <Mic className="w-4 h-4 text-gray-400" />
+                      Download Audio
+                    </button>
+                    <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name)} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                      <Video className="w-4 h-4 text-gray-400" />
+                      Download Video
+                    </button>
+                  </>
+                )}
+                {resource.type === 'image' && resource.thumbnail && (
+                  <button onClick={() => downloadHref(resource.thumbnail!, resource.name)} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                    <ImageIcon className="w-4 h-4 text-gray-400" />
+                    Download Image
+                  </button>
+                )}
+                {(resource.type === 'document' || resource.type === 'text') && (
+                  <button onClick={() => downloadBlob(resource.name, resource.fullText ?? '')} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                    <FileText className="w-4 h-4 text-gray-400" />
+                    Download Document
+                  </button>
+                )}
+
+                {!isArchived && (
+                  <button
+                    onClick={() => setShowArchiveDialog(true)}
+                    className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left mt-2"
+                  >
+                    <Trash2 className="w-4 h-4 text-gray-400" />
+                    Archive Resource
+                  </button>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex-shrink-0 pt-4 flex justify-end border-t border-border mt-4">
-        <button className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
-          <Trash2 className="w-3.5 h-3.5" />
-          Delete resource
-        </button>
-      </div>
+      {showArchiveDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-[#1a1a1a] rounded-xl p-6 max-w-md w-full mx-4 border border-[#ffffff14]">
+            <h3 className="text-lg font-semibold text-white mb-2">Archive Resource</h3>
+            <p className="text-sm text-gray-400 mb-6">
+              This action will archive this resource. It will no longer appear in the main resources list but can be restored later. This is not a permanent deletion.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowArchiveDialog(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleArchive}
+                className="px-4 py-2 bg-[#F59E0B] hover:bg-[#D97706] text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
