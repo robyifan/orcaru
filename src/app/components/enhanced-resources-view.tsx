@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import {
   Plus, Upload, Link as LinkIcon, FileText, Video, Image as ImageIcon,
   Search, Download, Trash2, Clock, ArrowLeft, Play,
-  BookOpen, Mic, MoreHorizontal, RefreshCw,
+  BookOpen, Mic, MoreHorizontal,
 } from 'lucide-react';
 
 type ResourceType = 'video' | 'document' | 'text' | 'image';
@@ -20,6 +20,7 @@ interface Resource {
   thumbnail?: string | null;
   postsCreated?: number;
   users?: Array<{ name: string; initials: string; color: string }>;
+  posts?: string[];
   transcribed: boolean;
   tags: string[];
   videoUrl?: string;
@@ -31,23 +32,33 @@ interface Resource {
 const RESOURCES: Resource[] = [
   {
     id: '1',
-    name: 'Yoga Session Recording...',
+    name: 'Yoga Session Recording.mp4',
     type: 'video',
     size: '245 MB',
     uploadedDate: '2 hours ago',
     duration: '45:32',
-    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
     postsCreated: 7,
     users: [
       { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
       { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
       { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
+      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
+    ],
+    posts: [
+      'Instagram Carousel - Wellness Tips',
+      'Instagram Carousel - Wellness Tips',
+      'LinkedIn Post - Yoga Benefits',
+      'LinkedIn Post - Yoga Benefits',
+      'LinkedIn Post - Yoga Benefits',
+      'TikTok Script - Morning Routine',
+      'TikTok Script - Morning Routine',
     ],
     transcribed: true,
     tags: ['yoga', 'wellness', 'tutorial'],
     videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    summary: `This 45-minute yoga session covers foundational poses for beginners and intermediate practitioners. The instructor guides through a complete flow starting with breathing exercises.`,
-    transcription: `[00:00] Welcome everyone to today's yoga session. I'm so glad you're here with me. Before we begin, let's take a moment to find our comfortable seated position.`,
+    summary: `This 45-minute yoga session covers foundational poses for beginners and intermediate practitioners.`,
+    transcription: `[00:00] Welcome everyone to today's yoga session.`,
   },
   {
     id: '2',
@@ -61,8 +72,8 @@ const RESOURCES: Resource[] = [
     users: [],
     transcribed: true,
     tags: ['brand', 'guidelines'],
-    summary: `The Brand Guidelines 2026 document establishes the visual and verbal identity standards for all company communications.`,
-    fullText: `BRAND GUIDELINES 2026\nOfficial Brand Identity Standards\n\nSECTION 1 — OUR BRAND STORY\n\nOur brand was founded on the belief that exceptional design and authentic storytelling can move people.`,
+    summary: `The Brand Guidelines 2026 document establishes visual and verbal identity standards.`,
+    fullText: `BRAND GUIDELINES 2026\nOfficial Brand Identity Standards\n\nSECTION 1 — OUR BRAND STORY`,
   },
   {
     id: '3',
@@ -76,8 +87,8 @@ const RESOURCES: Resource[] = [
     users: [],
     transcribed: true,
     tags: ['blog', 'reference'],
-    summary: `A curated collection of 24 high-performing blog posts from the past 18 months. Topics span product launches, athlete spotlights, training methodology.`,
-    fullText: `BLOG POSTS COLLECTION — REFERENCE ARCHIVE\n24 Posts · 18 Months · 12,500 Words\n\nPOST #1 — Published Jan 12, 2025\n"Why Your Morning Run Sets the Tone for Everything"\nCategory: Training · Words: 480`,
+    summary: `A curated collection of 24 high-performing blog posts from the past 18 months.`,
+    fullText: `BLOG POSTS COLLECTION — REFERENCE ARCHIVE\n24 Posts · 18 Months · 12,500 Words`,
   },
   {
     id: '4',
@@ -86,70 +97,88 @@ const RESOURCES: Resource[] = [
     size: '1.8 MB',
     uploadedDate: '3 weeks ago',
     resolution: '2400×1600',
-    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=247&h=136&fit=crop',
     postsCreated: 7,
     users: [
       { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
       { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
       { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
+      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
+    ],
+    posts: [
+      'Instagram Post - Product Launch',
+      'Instagram Post - Sneaker Review',
+      'Twitter Thread - Design Process',
+      'LinkedIn Post - Brand Story',
+      'TikTok Script - Unboxing',
+      'YouTube Short - Features',
+      'Pinterest Pin - Style Guide',
     ],
     transcribed: false,
     tags: ['social', 'launch'],
   },
   {
     id: '5',
-    name: 'Product Demo Video',
+    name: 'Yoga Session Recording.mp4',
     type: 'video',
-    size: '180 MB',
-    uploadedDate: '1 week ago',
-    duration: '28:15',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
-    postsCreated: 0,
-    users: [],
+    size: '245 MB',
+    uploadedDate: '2 hours ago',
+    duration: '45:32',
+    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
+    postsCreated: 7,
+    users: [
+      { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
+      { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
+      { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
+      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
+    ],
     transcribed: true,
-    tags: ['product', 'demo'],
+    tags: ['yoga', 'wellness'],
     videoUrl: 'https://www.w3schools.com/html/movie.mp4',
-    summary: `A 28-minute walkthrough of the platform's core features aimed at enterprise decision-makers.`,
-    transcription: `[00:00] Thanks for joining this product demo. Today I'm going to show you how our platform can transform your content operation.`,
   },
   {
     id: '6',
-    name: 'Instagram Post - Feb Campaign',
-    type: 'image',
-    size: '1.2 MB',
-    uploadedDate: '2 weeks ago',
-    resolution: '1080×1080',
-    thumbnail: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=300&fit=crop',
+    name: 'Blog Posts Collection',
+    type: 'text',
+    size: '840 KB',
+    uploadedDate: '1 week ago',
+    wordCount: 12500,
+    thumbnail: null,
     postsCreated: 0,
     users: [],
-    transcribed: false,
-    tags: ['social', 'campaign'],
+    transcribed: true,
+    tags: ['blog', 'reference'],
   },
   {
     id: '7',
-    name: 'Athlete Portrait - Studio Cut',
-    type: 'image',
-    size: '2.2 MB',
-    uploadedDate: '1 month ago',
-    resolution: '3000×4000',
-    thumbnail: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop',
+    name: 'Blog Posts Collection',
+    type: 'text',
+    size: '840 KB',
+    uploadedDate: '1 week ago',
+    wordCount: 12500,
+    thumbnail: null,
     postsCreated: 0,
     users: [],
-    transcribed: false,
-    tags: ['athlete', 'portrait'],
+    transcribed: true,
+    tags: ['blog', 'reference'],
   },
   {
     id: '8',
-    name: 'Summer Drop - Quote Card',
-    type: 'image',
-    size: '620 KB',
-    uploadedDate: '1 month ago',
-    resolution: '1080×1350',
-    thumbnail: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=400&h=300&fit=crop',
-    postsCreated: 0,
-    users: [],
-    transcribed: false,
-    tags: ['quote', 'social'],
+    name: 'Yoga Session Recording.mp4',
+    type: 'video',
+    size: '245 MB',
+    uploadedDate: '2 hours ago',
+    duration: '45:32',
+    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
+    postsCreated: 7,
+    users: [
+      { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
+      { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
+      { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
+      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
+    ],
+    transcribed: true,
+    tags: ['yoga'],
   },
 ];
 
@@ -170,19 +199,13 @@ function CardMenu({ resource }: { resource: Resource }) {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
     setOpen(false);
   };
 
   const downloadHref = (href: string, filename: string) => {
     const a = document.createElement('a');
-    a.href = href;
-    a.download = filename;
-    a.target = '_blank';
-    a.click();
+    a.href = href; a.download = filename; a.target = '_blank'; a.click();
     setOpen(false);
   };
 
@@ -192,64 +215,40 @@ function CardMenu({ resource }: { resource: Resource }) {
   if (resource.transcribed && (resource.transcription || resource.fullText)) {
     items.push({
       label: 'Download Transcription',
-      action: () => downloadBlob(
-        resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt',
-        resource.transcription ?? resource.fullText ?? ''
-      ),
+      action: () => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? ''),
     });
   }
 
   if (resource.type === 'video') {
-    items.push({
-      label: 'Download Audio',
-      action: () => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3')),
-    });
-    items.push({
-      label: 'Download Video',
-      action: () => downloadHref(resource.videoUrl ?? '#', resource.name),
-    });
+    items.push({ label: 'Download Audio', action: () => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3')) });
+    items.push({ label: 'Download Video', action: () => downloadHref(resource.videoUrl ?? '#', resource.name) });
   }
 
   if (resource.type === 'image' && resource.thumbnail) {
-    items.push({
-      label: 'Download Image',
-      action: () => downloadHref(resource.thumbnail!, resource.name),
-    });
+    items.push({ label: 'Download Image', action: () => downloadHref(resource.thumbnail!, resource.name) });
   }
 
   if (resource.type === 'document' || resource.type === 'text') {
-    items.push({
-      label: 'Download Document',
-      action: () => downloadBlob(resource.name, resource.fullText ?? ''),
-    });
+    items.push({ label: 'Download Document', action: () => downloadBlob(resource.name, resource.fullText ?? '') });
   }
 
   return (
     <div ref={ref} className="relative flex-shrink-0">
       <button
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
-        className={`
-          w-7 h-7 flex items-center justify-center rounded-md transition-colors
-          ${open
-            ? 'bg-secondary text-foreground'
-            : 'text-muted-foreground hover:bg-secondary hover:text-foreground opacity-0 group-hover:opacity-100'}
-        `}
+        className="flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground transition-colors"
         aria-label="Download options"
       >
         <MoreHorizontal className="w-4 h-4" />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-8 z-30 bg-popover border border-border rounded-xl shadow-2xl min-w-[11rem] py-1.5 overflow-hidden">
+        <div className="absolute right-0 top-6 z-30 bg-popover border border-border rounded-xl shadow-2xl min-w-[11rem] py-1.5 overflow-hidden">
           {items.length === 0 ? (
             <p className="px-3 py-2 text-xs text-muted-foreground">No downloads available</p>
           ) : (
             items.map(item => (
-              <button
-                key={item.label}
-                onClick={e => { e.stopPropagation(); item.action(); }}
-                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-foreground hover:bg-secondary transition-colors text-left"
-              >
+              <button key={item.label} onClick={e => { e.stopPropagation(); item.action(); }} className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-foreground hover:bg-secondary transition-colors text-left">
                 <Download className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
                 {item.label}
               </button>
@@ -264,19 +263,11 @@ function CardMenu({ resource }: { resource: Resource }) {
 function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () => void }) {
   const [textTab, setTextTab] = useState<'transcription' | 'summary'>('transcription');
 
-  const typeColor = {
-    video: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    document: 'bg-green-500/10 text-green-400 border-green-500/20',
-    text: 'bg-green-500/10 text-green-400 border-green-500/20',
-    image: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  }[resource.type] ?? 'bg-gray-500/10 text-gray-400 border-gray-500/20';
-
   const downloadBlob = (filename: string, content: string) => {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = filename; a.click();
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
   };
 
   const downloadHref = (href: string, filename: string) => {
@@ -324,9 +315,7 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
           <span className="text-xs text-muted-foreground font-medium truncate">{resource.name}</span>
         </div>
         <div className="flex-1 overflow-y-auto p-6">
-          <pre className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap font-sans">
-            {resource.fullText}
-          </pre>
+          <pre className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap font-sans">{resource.fullText}</pre>
         </div>
       </div>
     );
@@ -334,10 +323,7 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden p-8">
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 flex-shrink-0 w-fit"
-      >
+      <button onClick={onBack} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 flex-shrink-0 w-fit">
         <ArrowLeft className="w-4 h-4" />
         Back to Resources
       </button>
@@ -345,7 +331,6 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
       <div className="flex gap-6 flex-1 min-h-0">
         <div className="flex-[3] flex flex-col min-h-0 gap-4">
           <MediaPanel />
-
           {resource.summary && (resource.type === 'video' || resource.type === 'image') && (
             <div className="bg-card border border-border rounded-xl p-5 flex-shrink-0">
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Summary</p>
@@ -357,7 +342,7 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
         <div className="flex-[2] flex flex-col min-h-0 overflow-y-auto gap-5 pr-1">
           <div className="flex-shrink-0">
             <div className="flex items-center gap-2 mb-2">
-              <span className={`px-2.5 py-0.5 rounded-md border text-xs font-medium ${typeColor}`}>
+              <span className="px-2.5 py-0.5 rounded-md border text-xs font-medium bg-blue-500/10 text-blue-400 border-blue-500/20">
                 {resource.type}
               </span>
               {resource.transcribed && (
@@ -373,46 +358,31 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Downloads</p>
             <div className="flex flex-col gap-2">
               {resource.transcribed && (resource.transcription || resource.fullText) && (
-                <button
-                  onClick={() => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? '')}
-                  className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                >
+                <button onClick={() => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? '')} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
                   <Download className="w-3.5 h-3.5 text-muted-foreground" />
                   Download Transcription
                 </button>
               )}
               {resource.type === 'video' && (
                 <>
-                  <button
-                    onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3'))}
-                    className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                  >
+                  <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3'))} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
                     <Download className="w-3.5 h-3.5 text-muted-foreground" />
                     Download Audio
                   </button>
-                  <button
-                    onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                  >
+                  <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name)} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
                     <Download className="w-3.5 h-3.5 text-muted-foreground" />
                     Download Video
                   </button>
                 </>
               )}
               {resource.type === 'image' && resource.thumbnail && (
-                <button
-                  onClick={() => downloadHref(resource.thumbnail!, resource.name)}
-                  className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                >
+                <button onClick={() => downloadHref(resource.thumbnail!, resource.name)} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
                   <Download className="w-3.5 h-3.5 text-muted-foreground" />
                   Download Image
                 </button>
               )}
               {(resource.type === 'document' || resource.type === 'text') && (
-                <button
-                  onClick={() => downloadBlob(resource.name, resource.fullText ?? '')}
-                  className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                >
+                <button onClick={() => downloadBlob(resource.name, resource.fullText ?? '')} className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left">
                   <Download className="w-3.5 h-3.5 text-muted-foreground" />
                   Download Document
                 </button>
@@ -428,29 +398,16 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
                     { key: 'transcription' as const, label: resource.type === 'video' ? 'Transcription' : 'Content', icon: Mic },
                     { key: 'summary' as const, label: 'Summary', icon: BookOpen },
                   ]).map(({ key, label, icon: Icon }) => (
-                    <button
-                      key={key}
-                      onClick={() => setTextTab(key)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                        textTab === key ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
+                    <button key={key} onClick={() => setTextTab(key)} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${textTab === key ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}>
                       <Icon className="w-3 h-3" />
                       {label}
                     </button>
                   ))}
                 </div>
               )}
-              {!resource.summary && (
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">
-                  {resource.type === 'video' ? 'Transcription' : 'Content'}
-                </p>
-              )}
               <div className="bg-[#0D0D0D] border border-border rounded-xl p-4 max-h-72 overflow-y-auto">
                 <pre className="text-xs text-foreground/80 leading-relaxed whitespace-pre-wrap font-sans">
-                  {textTab === 'summary' && resource.summary
-                    ? resource.summary
-                    : (resource.transcription ?? resource.fullText)}
+                  {textTab === 'summary' && resource.summary ? resource.summary : (resource.transcription ?? resource.fullText)}
                 </pre>
               </div>
             </div>
@@ -481,9 +438,7 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
               <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Tags</p>
               <div className="flex flex-wrap gap-1.5">
                 {resource.tags.map(tag => (
-                  <span key={tag} className="px-2.5 py-1 bg-secondary rounded-lg text-xs text-muted-foreground">
-                    #{tag}
-                  </span>
+                  <span key={tag} className="px-2.5 py-1 bg-secondary rounded-lg text-xs text-muted-foreground">#{tag}</span>
                 ))}
               </div>
             </div>
@@ -493,34 +448,24 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Content Created</p>
             <div className="bg-card border border-border rounded-xl p-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-1">
-                  {resource.users?.slice(0, 3).map((user, index) => (
-                    <div
-                      key={user.name}
-                      className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card"
-                      style={{
-                        backgroundColor: user.color,
-                        marginLeft: index > 0 ? '-4px' : '0',
-                      }}
-                    >
+                <div className="flex items-center">
+                  {resource.users?.slice(0, 4).map((user, index) => (
+                    <div key={user.name} className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card" style={{ backgroundColor: user.color, marginLeft: index > 0 ? '-8px' : '0' }}>
                       {user.initials}
                     </div>
                   ))}
-                  {resource.users && resource.users.length > 3 && (
-                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card bg-primary">
-                      +{resource.users.length - 3}
+                  {resource.users && resource.users.length > 4 && (
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card bg-primary ml-[-8px]">
+                      +{resource.users.length - 4}
                     </div>
                   )}
                 </div>
                 <span className="text-sm text-foreground font-medium">
-                  {resource.postsCreated && resource.postsCreated > 0
-                    ? `${resource.postsCreated} posts created`
-                    : 'No content created'}
+                  {resource.postsCreated && resource.postsCreated > 0 ? `${resource.postsCreated} posts created` : 'No content created'}
                 </span>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -541,26 +486,6 @@ const getTypeIcon = (type: string) => {
     case 'text': return FileText;
     case 'image': return ImageIcon;
     default: return FileText;
-  }
-};
-
-const getTypeColor = (type: string) => {
-  switch (type) {
-    case 'video': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-    case 'document':
-    case 'text': return 'bg-green-500/20 text-green-400 border-green-500/30';
-    case 'image': return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
-    default: return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
-  }
-};
-
-const getTypeLabel = (type: string) => {
-  switch (type) {
-    case 'video': return 'video';
-    case 'document': return 'document';
-    case 'text': return 'text';
-    case 'image': return 'image';
-    default: return type;
   }
 };
 
@@ -590,18 +515,15 @@ export function EnhancedResourcesView() {
   return (
     <div className="flex-1 overflow-y-auto bg-background">
       <div className="border-b border-border bg-gradient-to-b from-background to-card/30">
-        <div className="max-w-7xl mx-auto px-8 py-8">
+        <div className="px-8 py-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-foreground mb-1">Resource Library</h1>
+              <h1 className="text-3xl font-bold text-foreground mb-1">Resource Library</h1>
               <p className="text-sm text-muted-foreground">
                 Upload files and URLs that can be used as reference for content generation
               </p>
             </div>
-            <button
-              onClick={() => setShowUploadModal(true)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
-            >
+            <button onClick={() => setShowUploadModal(true)} className="flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors font-medium">
               <Plus className="w-4 h-4" />
               Add Resources
             </button>
@@ -609,14 +531,14 @@ export function EnhancedResourcesView() {
 
           <div className="flex items-center gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
                 placeholder="Search resources..."
-                className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground text-sm"
+                className="w-full pl-11 pr-5 py-2.5 bg-[#1a1a1a] border border-[#ffffff14] rounded-xl text-foreground placeholder:text-muted-foreground text-sm"
               />
             </div>
-            <div className="flex items-center gap-2 p-1 bg-card rounded-lg border border-border">
+            <div className="flex items-center gap-2 p-1 bg-[#1a1a1a] rounded-xl border border-[#ffffff14]">
               {[
                 { value: 'all', label: 'All' },
                 { value: 'video', label: 'Videos' },
@@ -626,7 +548,7 @@ export function EnhancedResourcesView() {
                 <button
                   key={filter.value}
                   onClick={() => setActiveFilter(filter.value)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                     activeFilter === filter.value
                       ? 'bg-primary text-primary-foreground'
                       : 'text-muted-foreground hover:text-foreground'
@@ -637,94 +559,107 @@ export function EnhancedResourcesView() {
               ))}
             </div>
           </div>
-
-          <div className="relative mt-3">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search resources..."
-              className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground text-sm"
-            />
-          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-8 py-8">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="px-8 py-8">
+        <div className="grid gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, 247px)' }}>
           {filteredResources.map((resource) => {
             const TypeIcon = getTypeIcon(resource.type);
             return (
               <div
                 key={resource.id}
                 onClick={() => setSelectedResource(resource)}
-                className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg hover:shadow-primary/10 transition-all group cursor-pointer hover:border-primary/30"
+                className="flex flex-col bg-[#1a1a1a] cursor-pointer group"
+                style={{ height: '366px' }}
               >
-                <div className="relative h-36 bg-secondary overflow-hidden">
+                <div className="relative flex-shrink-0" style={{ height: '136px' }}>
                   {resource.thumbnail ? (
-                    <img
-                      src={resource.thumbnail}
-                      alt={resource.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
+                    <img src={resource.thumbnail} alt={resource.name} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full bg-[#262626] flex items-center justify-center">
                       <TypeIcon className="w-10 h-10 text-muted-foreground" />
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {(resource.type === 'image' || resource.type === 'video') && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  )}
+                  <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-xl border border-[#2b7fff33] bg-[#2b7fff1a] text-[#51a2ff] text-xs font-medium">
+                    {resource.type}
+                  </span>
                 </div>
 
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <span className={`px-2 py-0.5 rounded-md border text-[10px] font-medium ${getTypeColor(resource.type)}`}>
-                      {getTypeLabel(resource.type)}
-                    </span>
+                <div className="flex flex-col flex-grow p-4" style={{ rowGap: '12px' }}>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-foreground truncate max-w-[210px] leading-5">
+                      {resource.name}
+                    </h3>
                     <CardMenu resource={resource} />
                   </div>
 
-                  <h3 className="font-semibold text-foreground text-sm mb-3 line-clamp-2 leading-snug">
-                    {resource.name}
-                  </h3>
-
-                  <div className="flex items-center justify-between text-xs text-muted-foreground mb-2">
-                    <span>Size: {resource.size}</span>
-                    <span>
-                      {resource.duration ??
-                        resource.pageCount ? `${resource.pageCount} pages` :
-                        resource.wordCount ? `${resource.wordCount.toLocaleString()} words` :
-                        resource.resolution ?? ''}
-                    </span>
+                  <div className="flex flex-col" style={{ rowGap: '4px' }}>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
+                      <span>Size: {resource.size}</span>
+                      <span>
+                        {resource.duration ??
+                          (resource.pageCount ? `${resource.pageCount} pages` : '') ??
+                          (resource.wordCount ? `${resource.wordCount.toLocaleString()} words` : '') ??
+                          resource.resolution ?? ''}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="w-2.5 h-2.5" />
+                      <span>Uploaded {resource.uploadedDate}</span>
+                    </div>
                   </div>
+                </div>
 
-                  <div className="text-xs text-muted-foreground/60 mb-4">
-                    Uploaded {resource.uploadedDate}
-                  </div>
-
-                  <div className="border-t border-border pt-3 flex items-center justify-between">
-                    <div className="flex items-center gap-1">
-                      {resource.users?.slice(0, 3).map((user, index) => (
+                <div className="relative border-t border-[#ffffff14] bg-[#212121]" style={{ height: '52px', padding: '11px 16px 12px' }}>
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center">
+                      {resource.users?.slice(0, 4).map((user, index) => (
                         <div
                           key={user.name}
-                          className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card"
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a]"
                           style={{
                             backgroundColor: user.color,
-                            marginLeft: index > 0 ? '-4px' : '0',
+                            marginLeft: index > 0 ? '-8px' : '0',
                           }}
                         >
                           {user.initials}
                         </div>
                       ))}
-                      {resource.users && resource.users.length > 3 && (
-                        <div className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-card bg-primary">
-                          +{resource.users.length - 3}
+                      {resource.users && resource.users.length > 4 && (
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a] bg-primary ml-[-8px]">
+                          +{resource.users.length - 4}
                         </div>
                       )}
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      {resource.postsCreated && resource.postsCreated > 0
-                        ? `${resource.postsCreated} posts created`
-                        : 'No content created'}
-                    </span>
+                    <div className="relative">
+                      <span className={`text-xs font-medium ${resource.postsCreated && resource.postsCreated > 0 ? 'text-primary cursor-pointer hover:text-primary/80' : 'text-muted-foreground'}`}>
+                        {resource.postsCreated && resource.postsCreated > 0
+                          ? `${resource.postsCreated} posts created`
+                          : 'No content created'}
+                      </span>
+                      {resource.posts && resource.posts.length > 0 && (
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" style={{ width: '246px' }}>
+                          <div className="bg-[#262626] rounded-lg shadow-lg overflow-hidden" style={{ boxShadow: '0px 4px 12px 0px #00000033' }}>
+                            <div className="px-4 py-3 border-b border-[#ffffff14]">
+                              <span className="text-xs font-semibold text-[#999999] tracking-[0.55px]">GENERATED SOCIAL POSTS</span>
+                            </div>
+                            <div className="p-3 space-y-2 max-h-[140px] overflow-y-auto">
+                              {resource.posts.map((post, index) => (
+                                <div key={index} className="flex items-center gap-2 text-xs text-white">
+                                  <div className="w-[6px] h-[6px] rounded-full bg-[#66b266] flex-shrink-0" />
+                                  <span className="truncate">{post}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-[#262626]" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -738,9 +673,7 @@ export function EnhancedResourcesView() {
           <div className="bg-card w-full max-w-2xl rounded-2xl shadow-2xl border border-border">
             <div className="p-6 border-b border-border">
               <h2 className="text-xl font-semibold text-foreground">Add Resources</h2>
-              <p className="text-sm text-muted-foreground mt-1">
-                Upload files or paste URLs to add to your library
-              </p>
+              <p className="text-sm text-muted-foreground mt-1">Upload files or paste URLs to add to your library</p>
             </div>
             <div className="p-6 space-y-6">
               <div>
@@ -761,27 +694,13 @@ export function EnhancedResourcesView() {
                 <label className="block mb-3 text-sm font-medium text-foreground">Paste URL</label>
                 <div className="relative">
                   <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                  <input
-                    type="url"
-                    placeholder="https://youtube.com/... or https://your-site.com/..."
-                    className="w-full pl-10 pr-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground"
-                  />
+                  <input type="url" placeholder="https://youtube.com/... or https://your-site.com/..." className="w-full pl-10 pr-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground" />
                 </div>
               </div>
             </div>
             <div className="p-6 border-t border-border flex items-center justify-between">
-              <button
-                onClick={() => setShowUploadModal(false)}
-                className="px-6 py-2.5 text-foreground hover:bg-secondary rounded-lg transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setShowUploadModal(false)}
-                className="px-8 py-2.5 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-              >
-                Upload
-              </button>
+              <button onClick={() => setShowUploadModal(false)} className="px-6 py-2.5 text-foreground hover:bg-secondary rounded-lg transition-colors">Cancel</button>
+              <button onClick={() => setShowUploadModal(false)} className="px-8 py-2.5 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity">Upload</button>
             </div>
           </div>
         </div>
