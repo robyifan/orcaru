@@ -7,26 +7,26 @@ const Component = () => {
     <div className={styles.createContentStep3}>
       <div className={styles.createContentModal}>
         <div className={styles.container}>
-          <img src="../image/ms7h1wyg-36cb7en.svg" className={styles.icon} />
+          <img src="../image/ms7jvh2b-6gykwti.svg" className={styles.icon} />
         </div>
         <div className={styles.container2}>
           <p className={styles.modalTitle}>Create Content</p>
           <p className={styles.modalSubtitle}>How to Create</p>
         </div>
         <div className={styles.button}>
-          <img src="../image/ms7h1wyg-88njo01.svg" className={styles.icon} />
+          <img src="../image/ms7jvh2b-egz3tzl.svg" className={styles.icon} />
         </div>
       </div>
       <div className={styles.frame50}>
         <div className={styles.container4}>
           <div className={styles.container3}>
-            <img src="../image/ms7h1wyg-pes5ng7.svg" className={styles.icon2} />
+            <img src="../image/ms7jvh2b-kdcv2q2.svg" className={styles.icon2} />
           </div>
           <p className={styles.howToCreate}>How to Create</p>
         </div>
         <div className={styles.container4}>
           <div className={styles.container3}>
-            <img src="../image/ms7h1wyg-qy0axp8.svg" className={styles.icon2} />
+            <img src="../image/ms7jvh2b-q6imcux.svg" className={styles.icon2} />
           </div>
           <p className={styles.howToCreate}>Sources & Assets</p>
         </div>
@@ -58,13 +58,13 @@ const Component = () => {
         </div>
         <div className={styles.batchListContainer}>
           <div className={styles.frame2}>
-            <img src="../image/ms7h1wyg-7p4ezjh.svg" className={styles.layers} />
+            <img src="../image/ms7jvh2b-rkjyicg.svg" className={styles.layers} />
             <p className={styles.batch12Items}>Batch — 12 items</p>
           </div>
           <div className={styles.topArea}>
             <div className={styles.leftGroup}>
               <div className={styles.iconBg}>
-                <img src="../image/ms7h1wyh-n4jp8iu.svg" className={styles.file} />
+                <img src="../image/ms7jvh2b-1bzdtyp.svg" className={styles.file} />
               </div>
               <div className={styles.infoGroup}>
                 <div className={styles.titleLine}>
@@ -82,14 +82,14 @@ const Component = () => {
               <div className={styles.stepper}>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-nji82n2.svg"
+                    src="../image/ms7jvh2b-fcn3sq1.svg"
                     className={styles.minus}
                   />
                 </div>
                 <p className={styles.longForm}>4</p>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-4t1coa5.svg"
+                    src="../image/ms7jvh2b-rxppgrh.svg"
                     className={styles.minus}
                   />
                 </div>
@@ -114,14 +114,14 @@ const Component = () => {
                 <div className={styles.stepper}>
                   <div className={styles.frame4}>
                     <img
-                      src="../image/ms7h1wyh-nji82n2.svg"
+                      src="../image/ms7jvh2b-fcn3sq1.svg"
                       className={styles.minus}
                     />
                   </div>
                   <p className={styles.longForm}>1</p>
                   <div className={styles.frame4}>
                     <img
-                      src="../image/ms7h1wyh-4t1coa5.svg"
+                      src="../image/ms7jvh2b-rxppgrh.svg"
                       className={styles.minus}
                     />
                   </div>
@@ -159,7 +159,7 @@ const Component = () => {
           <div className={styles.topArea3}>
             <div className={styles.leftGroup3}>
               <div className={styles.iconBg2}>
-                <img src="../image/ms7h1wyh-fbegh07.svg" className={styles.file} />
+                <img src="../image/ms7jvh2c-0ffix6z.svg" className={styles.file} />
               </div>
               <div className={styles.infoGroup2}>
                 <p className={styles.longForm}>Highlight Reel</p>
@@ -172,14 +172,14 @@ const Component = () => {
               <div className={styles.stepper2}>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-f9st4wy.svg"
+                    src="../image/ms7jvh2c-qko3i05.svg"
                     className={styles.minus}
                   />
                 </div>
                 <p className={styles.a0}>0</p>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-4t1coa5.svg"
+                    src="../image/ms7jvh2b-rxppgrh.svg"
                     className={styles.minus}
                   />
                 </div>
@@ -190,7 +190,7 @@ const Component = () => {
           <div className={styles.topArea4}>
             <div className={styles.leftGroup4}>
               <div className={styles.iconBg3}>
-                <img src="../image/ms7h1wyh-vw8op98.svg" className={styles.file} />
+                <img src="../image/ms7jvh2c-wceefq1.svg" className={styles.file} />
               </div>
               <div className={styles.infoGroup2}>
                 <p className={styles.longForm}>Quote Card</p>
@@ -201,14 +201,14 @@ const Component = () => {
               <div className={styles.stepper2}>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-f9st4wy.svg"
+                    src="../image/ms7jvh2c-qko3i05.svg"
                     className={styles.minus}
                   />
                 </div>
                 <p className={styles.a0}>0</p>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-4t1coa5.svg"
+                    src="../image/ms7jvh2b-rxppgrh.svg"
                     className={styles.minus}
                   />
                 </div>
@@ -219,7 +219,7 @@ const Component = () => {
           <div className={styles.topArea5}>
             <div className={styles.leftGroup5}>
               <div className={styles.iconBg4}>
-                <img src="../image/ms7h1wyh-z9gnbnr.svg" className={styles.file} />
+                <img src="../image/ms7jvh2c-wj5ift6.svg" className={styles.file} />
               </div>
               <div className={styles.infoGroup2}>
                 <p className={styles.longForm}>Text to AI Video</p>
@@ -232,14 +232,14 @@ const Component = () => {
               <div className={styles.stepper2}>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-f9st4wy.svg"
+                    src="../image/ms7jvh2c-qko3i05.svg"
                     className={styles.minus}
                   />
                 </div>
                 <p className={styles.a0}>0</p>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-4t1coa5.svg"
+                    src="../image/ms7jvh2b-rxppgrh.svg"
                     className={styles.minus}
                   />
                 </div>
@@ -252,7 +252,7 @@ const Component = () => {
               <div className={styles.leftGroup6}>
                 <div className={styles.iconBg5}>
                   <img
-                    src="../image/ms7h1wyh-k9lu3u7.svg"
+                    src="../image/ms7jvh2c-voolsgd.svg"
                     className={styles.file}
                   />
                 </div>
@@ -267,14 +267,14 @@ const Component = () => {
                 <div className={styles.stepper}>
                   <div className={styles.frame4}>
                     <img
-                      src="../image/ms7h1wyh-nji82n2.svg"
+                      src="../image/ms7jvh2b-fcn3sq1.svg"
                       className={styles.minus}
                     />
                   </div>
                   <p className={styles.longForm}>3</p>
                   <div className={styles.frame4}>
                     <img
-                      src="../image/ms7h1wyh-4t1coa5.svg"
+                      src="../image/ms7jvh2b-rxppgrh.svg"
                       className={styles.minus}
                     />
                   </div>
@@ -312,7 +312,7 @@ const Component = () => {
           <div className={styles.topArea7}>
             <div className={styles.leftGroup7}>
               <div className={styles.iconBg4}>
-                <img src="../image/ms7h1wyh-cvosbe0.svg" className={styles.file} />
+                <img src="../image/ms7jvh2c-lspl1as.svg" className={styles.file} />
               </div>
               <div className={styles.infoGroup3}>
                 <div className={styles.titleLine2}>
@@ -330,14 +330,14 @@ const Component = () => {
               <div className={styles.stepper2}>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-f9st4wy.svg"
+                    src="../image/ms7jvh2c-qko3i05.svg"
                     className={styles.minus}
                   />
                 </div>
                 <p className={styles.a0}>0</p>
                 <div className={styles.frame4}>
                   <img
-                    src="../image/ms7h1wyh-4t1coa5.svg"
+                    src="../image/ms7jvh2b-rxppgrh.svg"
                     className={styles.minus}
                   />
                 </div>
@@ -358,7 +358,7 @@ const Component = () => {
       </div>
       <div className={styles.container13}>
         <div className={styles.button2}>
-          <img src="../image/ms7h1wyh-7szads4.svg" className={styles.file} />
+          <img src="../image/ms7jvh2c-d6ktahx.svg" className={styles.file} />
           <p className={styles.back}>Back</p>
         </div>
         <div className={styles.container12}>
@@ -370,7 +370,7 @@ const Component = () => {
         </div>
         <div className={styles.button3}>
           <p className={styles.continue}>Continue</p>
-          <img src="../image/ms7h1wyh-tn5l8b1.svg" className={styles.file} />
+          <img src="../image/ms7jvh2c-nigrw38.svg" className={styles.file} />
         </div>
       </div>
     </div>
