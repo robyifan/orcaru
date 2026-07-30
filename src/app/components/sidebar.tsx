@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   Library,
   LayoutTemplate,
+  BarChart3,
 } from "lucide-react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { clsx } from "clsx";
@@ -20,6 +21,7 @@ interface SidebarProps {
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", icon: Home },
   { id: "projects", label: "Projects", icon: FolderOpen },
+  { id: "audits", label: "Audits", icon: BarChart3 },
   { id: "brand-kit", label: "Brand Kit", icon: Palette },
   { id: "writer-profiles", label: "Writer Profiles", icon: UserCircle },
   { id: "resources", label: "Resources", icon: Library },
