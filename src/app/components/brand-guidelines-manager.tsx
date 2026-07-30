@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Plus, Upload, Trash2, Edit2, Copy, MoreVertical, Star,
   Link as LinkIcon, Type, Palette, Image as ImageIcon, X,
@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useAuditAssets } from '../data/audit-asset-store';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -525,11 +526,35 @@ function GuidelineFormModal({ isOpen, mode, guideline, onClose, onSave }: Guidel
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function BrandGuidelinesManager() {
+  const { brandKits } = useAuditAssets();
   const [guidelines, setGuidelines] = useState<BrandGuideline[]>(MOCK_GUIDELINES);
   const [modalMode, setModalMode] = useState<ModalMode>(null);
   const [selectedGuideline, setSelectedGuideline] = useState<BrandGuideline | null>(null);
   const [showEditWarning, setShowEditWarning] = useState(false);
   const [showRegeneratePrompt, setShowRegeneratePrompt] = useState(false);
+
+  useEffect(() => {
+    if (brandKits.length === 0) return;
+    const auditGuidelines: BrandGuideline[] = brandKits.map((kit, i) => ({
+      id: -1 - i,
+      name: kit.name,
+      description: kit.description,
+      logo: null,
+      primaryColor: kit.primaryColor,
+      secondaryColor: kit.secondaryColor,
+      headingFont: kit.headingFont,
+      bodyFont: kit.bodyFont,
+      referenceLinks: [],
+      isDefault: false,
+      lastModified: new Date(kit.createdAt).toISOString().split('T')[0],
+      usedByContentCount: 0,
+    }));
+    setGuidelines((prev) => {
+      const existingNames = new Set(prev.map((g) => g.name));
+      const newOnes = auditGuidelines.filter((g) => !existingNames.has(g.name));
+      return [...newOnes, ...prev];
+    });
+  }, [brandKits]);
 
   const handleCreateNew = () => {
     setSelectedGuideline(null);

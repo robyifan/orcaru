@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, User, Trash2, Edit2, Check, FileText, Eye, Star, Sparkles } from 'lucide-react';
 import * as Dialog from '@radix-ui/react-dialog';
+import { useAuditAssets } from '../data/audit-asset-store';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -327,9 +328,29 @@ function ProfileFormModal({ isOpen, profile, onClose, onSave }: ProfileFormModal
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function WriterProfilesView() {
+  const { writerProfiles: auditWriterProfiles } = useAuditAssets();
   const [profiles, setProfiles] = useState<WriterProfile[]>(MOCK_PROFILES);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<WriterProfile | null>(null);
+
+  useEffect(() => {
+    if (auditWriterProfiles.length === 0) return;
+    const auditProfiles: WriterProfile[] = auditWriterProfiles.map((p, i) => ({
+      id: -1 - i,
+      name: p.name,
+      tone: p.tone as any,
+      level: p.level as any,
+      description: p.description,
+      isDefault: false,
+      createdDate: new Date(p.createdAt).toISOString().split('T')[0],
+      usedByContentCount: 0,
+    }));
+    setProfiles((prev) => {
+      const existingNames = new Set(prev.map((p) => p.name));
+      const newOnes = auditProfiles.filter((p) => !existingNames.has(p.name));
+      return [...newOnes, ...prev];
+    });
+  }, [auditWriterProfiles]);
 
   const handleCreateNew = () => {
     setSelectedProfile(null);

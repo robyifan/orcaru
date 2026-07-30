@@ -15,6 +15,12 @@ import { ProjectCreationModal } from './components/project-creation-modal';
 import { ContentReview } from './components/content-review';
 import { BrandGuidelinesManager } from './components/brand-guidelines-manager';
 import { CalendarView } from './components/calendar-view';
+import { AuditsView } from './components/audits-view';
+import { AuditWizard } from './components/audit-wizard';
+import { AuditResults } from './components/audit-results';
+import { ActionHub } from './components/action-hub';
+import { AuditAssetProvider } from './data/audit-asset-store';
+import type { Platform } from './data/audit-data';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -24,6 +30,8 @@ export default function App() {
   const [showReview, setShowReview] = useState(false);
   const [contentConfig, setContentConfig] = useState<any>(null);
   const [selectedContentType, setSelectedContentType] = useState<'long-form' | 'short-clip' | 'highlight-reel' | 'ai-video'>('short-clip');
+  const [auditView, setAuditView] = useState<'list' | 'wizard' | 'results' | 'action-hub'>('list');
+  const [auditProfiles, setAuditProfiles] = useState<Platform[]>([]);
 
   const projects = [
     { id: 1, name: 'Nike Athletic Project' },
@@ -50,6 +58,7 @@ export default function App() {
 
   const handleTabChange = (tab: string) => {
     if (tab === 'projects') setSelectedProjectId(null);
+    if (tab === 'audits') setAuditView('list');
     setActiveTab(tab);
   };
 
@@ -183,6 +192,49 @@ export default function App() {
             <ProfileView />
           </>
         );
+      case 'audits':
+        return (
+          <>
+            <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
+            {auditView === 'list' && (
+              <AuditsView
+                onStartNewAudit={() => setAuditView('wizard')}
+                onOpenAudit={() => setAuditView('results')}
+              />
+            )}
+            {auditView === 'wizard' && (
+              <AuditWizard
+                onComplete={(profiles) => {
+                  setAuditProfiles(profiles)
+                  setAuditView('results')
+                }}
+                onBack={() => setAuditView('list')}
+              />
+            )}
+            {auditView === 'results' && (
+              <AuditResults
+                auditProfiles={auditProfiles}
+                onBack={() => setAuditView('list')}
+                onGoToActionHub={() => setAuditView('action-hub')}
+              />
+            )}
+            {auditView === 'action-hub' && (
+              <ActionHub
+                onBack={() => setAuditView('results')}
+                onCreateCampaign={() => {
+                  setAuditView('results')
+                  setIsContentModalOpen(true)
+                  setSelectedContentType('short-clip')
+                }}
+                onEmulatePost={() => {
+                  setAuditView('results')
+                  setIsContentModalOpen(true)
+                  setSelectedContentType('short-clip')
+                }}
+              />
+            )}
+          </>
+        );
       default:
         return (
           <>
@@ -197,23 +249,25 @@ export default function App() {
   };
 
   return (
-    <div className="size-full flex bg-background text-foreground">
-      {renderContent()}
+    <AuditAssetProvider>
+      <div className="size-full flex bg-background text-foreground">
+        {renderContent()}
 
-      <Toaster position="bottom-right" theme="dark" />
+        <Toaster position="bottom-right" theme="dark" />
 
-      <SmartContentCreationModal
-        isOpen={isContentModalOpen}
-        onClose={handleContentModalClose}
-        onComplete={handleContentModalComplete}
-        contentType={selectedContentType}
-      />
+        <SmartContentCreationModal
+          isOpen={isContentModalOpen}
+          onClose={handleContentModalClose}
+          onComplete={handleContentModalComplete}
+          contentType={selectedContentType}
+        />
 
-      <ProjectCreationModal
-        isOpen={isProjectModalOpen}
-        onClose={handleProjectModalClose}
-        onComplete={handleProjectModalComplete}
-      />
-    </div>
+        <ProjectCreationModal
+          isOpen={isProjectModalOpen}
+          onClose={handleProjectModalClose}
+          onComplete={handleProjectModalComplete}
+        />
+      </div>
+    </AuditAssetProvider>
   );
 }
