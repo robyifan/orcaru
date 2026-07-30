@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import {
   Plus, Upload, Link as LinkIcon, FileText, Video, Image as ImageIcon,
   Search, Download, Trash2, Clock, ArrowLeft, Play,
-  BookOpen, Mic, MoreHorizontal, RefreshCw,
+  BookOpen, Mic, MoreHorizontal, Cloud, Archive, FolderOpen,
 } from 'lucide-react';
 
 type ResourceType = 'video' | 'document' | 'text' | 'image';
@@ -13,16 +13,19 @@ interface Resource {
   type: ResourceType;
   size: string;
   uploadedDate: string;
-  transcribed: boolean;
-  wordCount?: number;
   duration?: string;
+  pageCount?: number;
+  wordCount?: number;
+  resolution?: string;
   thumbnail?: string | null;
+  postsCreated?: number;
+  posts?: Array<{ name: string; thumbnail?: string }>;
+  transcribed: boolean;
   tags: string[];
   videoUrl?: string;
   fullText?: string;
   transcription?: string;
   summary?: string;
-  usedCount?: number;
 }
 
 const RESOURCES: Resource[] = [
@@ -32,38 +35,23 @@ const RESOURCES: Resource[] = [
     type: 'video',
     size: '245 MB',
     uploadedDate: '2 hours ago',
-    transcribed: true,
-    wordCount: 3420,
     duration: '45:32',
-    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=800&h=450&fit=crop',
+    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
+    postsCreated: 7,
+    posts: [
+      { name: 'Instagram Carousel - Wellness Tips', thumbnail: 'https://images.unsplash.com/photo-1464207687429-7505649dae38?w=100&h=100&fit=crop' },
+      { name: 'Instagram Carousel - Wellness Tips', thumbnail: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Yoga Benefits', thumbnail: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Yoga Benefits', thumbnail: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Yoga Benefits', thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=100&h=100&fit=crop' },
+      { name: 'TikTok Script - Morning Routine', thumbnail: 'https://images.unsplash.com/photo-1493606374434-5ca153e45924?w=100&h=100&fit=crop' },
+      { name: 'TikTok Script - Morning Routine', thumbnail: 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?w=100&h=100&fit=crop' },
+    ],
+    transcribed: true,
     tags: ['yoga', 'wellness', 'tutorial'],
     videoUrl: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    summary: `This 45-minute yoga session covers foundational poses for beginners and intermediate practitioners. The instructor guides through a complete flow starting with breathing exercises, progressing through sun salutations, warrior sequences, and closing with restorative poses and meditation. Key themes include breath-body connection, alignment principles, and mindfulness throughout movement. The session is suitable for all levels with modifications offered throughout.`,
-    transcription: `[00:00] Welcome everyone to today's yoga session. I'm so glad you're here with me. Before we begin, let's take a moment to find our comfortable seated position.
-
-[00:45] Take a deep breath in through the nose... and exhale slowly through the mouth. Feel your spine lengthen with each inhale, and release any tension with each exhale.
-
-[02:10] We'll start today with three rounds of sun salutations to warm up the body. Begin in mountain pose — feet hip-width apart, arms at your sides, gaze forward.
-
-[05:30] Inhale, sweep your arms overhead into upward salute. Exhale, forward fold — bend the knees if needed. Inhale, halfway lift, hands to shins. Exhale, step or hop back to plank.
-
-[08:15] From plank, lower to chaturanga, keeping elbows close to the body. Inhale into upward-facing dog. Exhale into downward-facing dog. Hold here for five breaths.
-
-[12:00] Let's move into our warrior sequence. Step your right foot forward between your hands. Rise up into Warrior One. Feel the strength in your legs, the openness in your chest.
-
-[15:45] Transition to Warrior Two — open your hips to the side, arms extended, gaze over your front fingertips. Hold for five breaths. Feel the power in this pose.
-
-[20:30] Beautiful. Now let's flow into triangle pose. Straighten your front leg, reach your front arm long, then hinge at the hip and lower your hand to your shin or the floor.
-
-[28:00] We'll now move into our floor sequence. Come down to hands and knees for cat-cow. Inhale, drop the belly, lift the gaze — cow pose. Exhale, round the spine to the sky — cat pose.
-
-[35:20] Slowly come to lie on your back. We'll close with a supported bridge pose. Place your feet flat on the mat, hip-width apart. Inhale, press into your feet and lift your hips.
-
-[41:00] Finally, we arrive at savasana — the most important pose of our practice. Allow your body to fully relax into the mat. Let go of any effort. Simply be.
-
-[44:30] Begin to deepen your breath. Gently wiggle your fingers and toes. When you're ready, roll to your right side. Take a moment here before pressing up to seated.
-
-[45:32] Namaste. Thank you for sharing your practice with me today. I'll see you next time.`,
+    summary: `This 45-minute yoga session covers foundational poses for beginners and intermediate practitioners.`,
+    transcription: `[00:00] Welcome to today's yoga session. I'm so glad you're here. Before we begin, let's settle.\n[04:15] Take a deep breath in through your nose and exhale slowly, releasing any morning tension.\n[10:10] We'll start today with three rounds of sun salutations to warm up the body.`
   },
   {
     id: '2',
@@ -71,226 +59,113 @@ const RESOURCES: Resource[] = [
     type: 'document',
     size: '2.1 MB',
     uploadedDate: '3 days ago',
-    transcribed: true,
-    wordCount: 5200,
+    pageCount: 32,
     thumbnail: null,
+    postsCreated: 0,
+    users: [],
+    transcribed: true,
     tags: ['brand', 'guidelines'],
-    summary: `The Brand Guidelines 2026 document establishes the visual and verbal identity standards for all company communications. It covers logo usage rules, color palette with exact hex values, typography hierarchy using Inter and Playfair Display, photography style, tone of voice principles, and do's and don'ts for brand application across digital and print media. The guidelines emphasize authenticity, inclusivity, and a premium yet accessible aesthetic.`,
-    fullText: `BRAND GUIDELINES 2026
-Official Brand Identity Standards
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-SECTION 1 — OUR BRAND STORY
-
-Our brand was founded on the belief that exceptional design and authentic storytelling can move people. Every touchpoint — from a social post to a product package — is an opportunity to reinforce who we are and what we stand for.
-
-We exist to empower creators, athletes, and thinkers to reach their fullest potential. Our visual identity reflects this ambition: bold, clean, and purposeful.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-SECTION 2 — LOGO USAGE
-
-The primary logo consists of the wordmark accompanied by the emblem. It must always appear in one of three approved configurations:
-  • Full lockup (emblem + wordmark) — preferred for most uses
-  • Wordmark only — for text-heavy contexts
-  • Emblem only — for small-format or icon applications
-
-Minimum size: 24px height for digital, 8mm for print.
-
-Clear space: Maintain a minimum clear space equal to the height of the letter "O" in the wordmark on all sides.
-
-PROHIBITED USES:
-  ✗ Do not stretch or distort the logo
-  ✗ Do not apply drop shadows or effects
-  ✗ Do not use unapproved color variations
-  ✗ Do not place on low-contrast backgrounds
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-SECTION 3 — COLOR PALETTE
-
-PRIMARY COLORS:
-  Brand Green    #10B981    RGB(16, 185, 129)
-  Off-Black      #0A0A0A    RGB(10, 10, 10)
-  White          #FAFAFA    RGB(250, 250, 250)
-
-SECONDARY COLORS:
-  Warm Amber     #F59E0B    RGB(245, 158, 11)
-  Electric Blue  #3B82F6    RGB(59, 130, 246)
-  Coral Red      #EF4444    RGB(239, 68, 68)
-
-USAGE RATIOS:
-  Brand Green and Off-Black should comprise 70% of any composition.
-  Secondary colors should be used as accents, never as primary backgrounds.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-SECTION 4 — TYPOGRAPHY
-
-PRIMARY TYPEFACE: Inter
-  Used for all body copy, UI elements, captions, and functional text.
-  Weights in use: 400 (Regular), 500 (Medium), 600 (SemiBold), 700 (Bold)
-
-DISPLAY TYPEFACE: Playfair Display
-  Reserved for headlines, pull quotes, and premium editorial contexts.
-  Weights in use: 700 (Bold), 900 (Black)
-
-SCALE:
-  Display XL   —  72px / Line height 1.1 / Letter spacing -0.03em
-  Display      —  48px / Line height 1.2 / Letter spacing -0.02em
-  H1           —  36px / Line height 1.3 / Letter spacing -0.01em
-  H2           —  28px / Line height 1.4
-  H3           —  22px / Line height 1.5
-  Body Large   —  18px / Line height 1.7
-  Body         —  16px / Line height 1.6
-  Caption      —  12px / Line height 1.5
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-SECTION 5 — TONE OF VOICE
-
-Our brand voice is: Confident · Human · Purposeful · Inclusive
-
-CONFIDENT but not arrogant. We speak with authority because we know our craft. We don't hedge or over-qualify.
-
-HUMAN but not casual. We sound like a knowledgeable friend, not a corporate brochure — but we maintain professionalism.
-
-PURPOSEFUL but not preachy. Every word earns its place. We have a point of view and express it clearly without lecturing.
-
-INCLUSIVE but not generic. We celebrate diversity and speak to everyone without becoming bland or non-committal.
-
-WRITING PRINCIPLES:
-  • Lead with the benefit, not the feature
-  • Use active voice
-  • Avoid jargon unless writing for a technical audience
-  • Short sentences outperform long ones
-  • End with a clear call to action when appropriate`,
+    summary: `The Brand Guidelines 2026 document establishes visual and verbal identity standards.`,
+    fullText: `BRAND GUIDELINES 2026\nOfficial Brand Identity Standards\n\nSECTION 1 — OUR BRAND STORY`,
   },
   {
     id: '3',
-    name: 'Previous Blog Posts Collection',
+    name: 'Blog Posts Collection',
     type: 'text',
     size: '840 KB',
     uploadedDate: '1 week ago',
-    transcribed: true,
     wordCount: 12500,
     thumbnail: null,
+    postsCreated: 0,
+    users: [],
+    transcribed: true,
     tags: ['blog', 'reference'],
-    summary: `A curated collection of 24 high-performing blog posts from the past 18 months. Topics span product launches, athlete spotlights, training methodology, nutrition science, and brand culture pieces. The collection reveals consistent themes: personal transformation stories drive the highest engagement, technical content performs best when anchored with real-world examples, and posts with embedded video see 3x longer time-on-page. Average length: 520 words. Top performer: "From Couch to 5K: Maya's Story" with 48,000 views.`,
-    fullText: `BLOG POSTS COLLECTION — REFERENCE ARCHIVE
-24 Posts · 18 Months · 12,500 Words
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-POST #1 — Published Jan 12, 2025
-"Why Your Morning Run Sets the Tone for Everything"
-Category: Training · Words: 480
-
-The alarm goes off at 5:47 AM. It's dark outside. Your bed is warm. Every rational part of your brain tells you to stay put. But you lace up anyway. That decision — made before the world wakes up — is the most important choice you'll make all day.
-
-Research from the University of Bristol found that people who exercise in the morning report 41% better mood and 65% higher energy throughout the day compared to non-exercisers. But what the data doesn't capture is the psychological edge: the quiet knowledge that you've already done something hard before breakfast.
-
-The morning run isn't about pace. It's about precedent. When you commit to discomfort early, the rest of the day's challenges feel smaller by comparison. The difficult email becomes easier. The tense meeting becomes manageable. The hard conversation becomes possible.
-
-Here's how to build a morning running habit that sticks...
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-POST #2 — Published Feb 3, 2025
-"From Couch to 5K: Maya's Story"
-Category: Athlete Spotlight · Words: 620 · Views: 48,200
-
-Eighteen months ago, Maya couldn't run to the end of her block without stopping. Today, she finished her first half-marathon in 2:14:33, placing in the top third of her age group.
-
-"I never thought of myself as a runner," she says, sitting across from me at a coffee shop, her calves still carrying the memory of Sunday's race. "I was the person who drove past runners and thought: I could never do that."
-
-What changed? Not talent. Not circumstance. She simply started smaller than she thought possible...
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-POST #3 — Published Mar 18, 2025
-"The Science Behind Recovery: Why Rest Days Aren't Optional"
-Category: Training Science · Words: 540
-
-We've built a culture that glorifies the grind. "No days off" has become a badge of honor. But sports science is unequivocal: without adequate recovery, you're not building fitness — you're accumulating debt.
-
-During exercise, you're creating micro-tears in muscle tissue. The adaptation — the strength gain, the speed improvement — happens during recovery, not during the workout itself. Skip recovery and you skip the gains.
-
-The optimal recovery protocol depends on training volume and intensity, but universal principles apply: 7-9 hours of sleep, adequate protein (1.6-2.2g per kg of bodyweight), active recovery movement, and mental decompression...`,
+    summary: `A curated collection of 24 high-performing blog posts from the past 18 months.`,
+    fullText: `BLOG POSTS COLLECTION — REFERENCE ARCHIVE\n24 Posts · 18 Months · 12,500 Words`,
   },
   {
     id: '4',
-    name: 'Product Demo Video',
-    type: 'video',
-    size: '180 MB',
-    uploadedDate: '1 week ago',
-    transcribed: true,
-    wordCount: 2100,
-    duration: '28:15',
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop',
-    tags: ['product', 'demo'],
-    videoUrl: 'https://www.w3schools.com/html/movie.mp4',
-    summary: `A 28-minute walkthrough of the platform's core features aimed at enterprise decision-makers. Covers onboarding flow, content calendar management, AI generation workflows, team collaboration tools, analytics dashboard, and integration capabilities. The presenter demonstrates three real-world use cases: a solo creator, a marketing team of 5, and an agency managing 12 clients. Strong emphasis on time-savings and ROI metrics throughout.`,
-    transcription: `[00:00] Thanks for joining this product demo. Today I'm going to show you how our platform can transform your content operation from reactive to proactive.
-
-[01:30] Let me start with the content calendar — this is where most teams spend the majority of their time. You can see we have a month view here, and every content piece is color-coded by campaign and funnel stage.
-
-[05:00] The AI generation workflow is where things get really interesting. I'll click "Create Content" and select a topic. Watch how the system pulls context from your brand guidelines, previous content, and target audience profile...
-
-[09:45] For teams, the collaboration features are essential. You can assign content to specific writers, set review deadlines, and track approval status all in one place. No more digging through email chains.
-
-[15:20] The analytics dashboard gives you real-time performance data across all your channels. You can see what's working, identify content gaps, and get AI-powered recommendations for your next campaign.
-
-[22:00] Let me show you the integrations panel. We connect natively with HubSpot, Salesforce, WordPress, and all major social platforms. Content published here syncs automatically.
-
-[27:00] To summarize: most teams using our platform report saving 12-15 hours per week on content operations, and see a 40% improvement in content consistency within the first 90 days.
-
-[28:15] Questions? I'm happy to walk through anything in more detail or set up a tailored demo for your specific use case.`,
-  },
-  {
-    id: '5',
-    name: 'Instagram Post - Feb Campaign',
-    type: 'image',
-    size: '1.2 MB',
-    uploadedDate: '2 weeks ago',
-    transcribed: false,
-    thumbnail: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=800&fit=crop',
-    tags: ['social', 'campaign'],
-    usedCount: 7,
-  },
-  {
-    id: '6',
-    name: 'Air Max Launch - Hero Graphic',
+    name: 'Air Max Launch Graphic',
     type: 'image',
     size: '1.8 MB',
     uploadedDate: '3 weeks ago',
+    resolution: '2400×1600',
+    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=247&h=136&fit=crop',
+    postsCreated: 7,
+    posts: [
+      { name: 'Instagram Post - Product Launch', thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop' },
+      { name: 'Instagram Post - Sneaker Review', thumbnail: 'https://images.unsplash.com/photo-1505503620051-167631057822?w=100&h=100&fit=crop' },
+      { name: 'Twitter Thread - Design Process', thumbnail: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop' },
+      { name: 'LinkedIn Post - Brand Story', thumbnail: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=100&h=100&fit=crop' },
+      { name: 'TikTok Script - Unboxing', thumbnail: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=100&h=100&fit=crop' },
+      { name: 'YouTube Short - Features', thumbnail: 'https://images.unsplash.com/photo-1544717302-de2939b7ef71?w=100&h=100&fit=crop' },
+      { name: 'Pinterest Pin - Style Guide', thumbnail: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop' },
+    ],
     transcribed: false,
-    thumbnail: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&h=450&fit=crop',
     tags: ['social', 'launch'],
-    usedCount: 4,
+  },
+  {
+    id: '5',
+    name: 'Yoga Session Recording.mp4',
+    type: 'video',
+    size: '245 MB',
+    uploadedDate: '2 hours ago',
+    duration: '45:32',
+    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
+    postsCreated: 7,
+    users: [
+      { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
+      { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
+      { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
+      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
+    ],
+    transcribed: true,
+    tags: ['yoga', 'wellness'],
+    videoUrl: 'https://www.w3schools.com/html/movie.mp4',
+  },
+  {
+    id: '6',
+    name: 'Blog Posts Collection',
+    type: 'text',
+    size: '840 KB',
+    uploadedDate: '1 week ago',
+    wordCount: 12500,
+    thumbnail: null,
+    postsCreated: 0,
+    users: [],
+    transcribed: true,
+    tags: ['blog', 'reference'],
   },
   {
     id: '7',
-    name: 'Athlete Portrait - Studio Cut',
-    type: 'image',
-    size: '2.2 MB',
-    uploadedDate: '1 month ago',
-    transcribed: false,
-    thumbnail: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=450&fit=crop',
-    tags: ['athlete', 'portrait'],
-    usedCount: 2,
+    name: 'Blog Posts Collection',
+    type: 'text',
+    size: '840 KB',
+    uploadedDate: '1 week ago',
+    wordCount: 12500,
+    thumbnail: null,
+    postsCreated: 0,
+    users: [],
+    transcribed: true,
+    tags: ['blog', 'reference'],
   },
   {
     id: '8',
-    name: 'Summer Drop - Quote Card',
-    type: 'image',
-    size: '620 KB',
-    uploadedDate: '1 month ago',
-    transcribed: false,
-    thumbnail: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&h=800&fit=crop',
-    tags: ['quote', 'social'],
-    usedCount: 0,
+    name: 'Yoga Session Recording.mp4',
+    type: 'video',
+    size: '245 MB',
+    uploadedDate: '2 hours ago',
+    duration: '45:32',
+    thumbnail: 'https://images.unsplash.com/photo-1588286840104-8957b019727f?w=247&h=136&fit=crop',
+    postsCreated: 7,
+    users: [
+      { name: 'Alex Chen', initials: 'AC', color: '#3B82F6' },
+      { name: 'Sarah Kim', initials: 'SK', color: '#10B981' },
+      { name: 'Mike Johnson', initials: 'MJ', color: '#F59E0B' },
+      { name: 'Lisa Wang', initials: 'LW', color: '#8B5CF6' },
+    ],
+    transcribed: true,
+    tags: ['yoga'],
   },
 ];
 
@@ -311,19 +186,13 @@ function CardMenu({ resource }: { resource: Resource }) {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
     setOpen(false);
   };
 
   const downloadHref = (href: string, filename: string) => {
     const a = document.createElement('a');
-    a.href = href;
-    a.download = filename;
-    a.target = '_blank';
-    a.click();
+    a.href = href; a.download = filename; a.target = '_blank'; a.click();
     setOpen(false);
   };
 
@@ -333,64 +202,40 @@ function CardMenu({ resource }: { resource: Resource }) {
   if (resource.transcribed && (resource.transcription || resource.fullText)) {
     items.push({
       label: 'Download Transcription',
-      action: () => downloadBlob(
-        resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt',
-        resource.transcription ?? resource.fullText ?? ''
-      ),
+      action: () => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? ''),
     });
   }
 
   if (resource.type === 'video') {
-    items.push({
-      label: 'Download Audio',
-      action: () => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3')),
-    });
-    items.push({
-      label: 'Download Video',
-      action: () => downloadHref(resource.videoUrl ?? '#', resource.name),
-    });
+    items.push({ label: 'Download Audio', action: () => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3')) });
+    items.push({ label: 'Download Video', action: () => downloadHref(resource.videoUrl ?? '#', resource.name) });
   }
 
   if (resource.type === 'image' && resource.thumbnail) {
-    items.push({
-      label: 'Download Image',
-      action: () => downloadHref(resource.thumbnail!, resource.name),
-    });
+    items.push({ label: 'Download Image', action: () => downloadHref(resource.thumbnail!, resource.name) });
   }
 
   if (resource.type === 'document' || resource.type === 'text') {
-    items.push({
-      label: 'Download Document',
-      action: () => downloadBlob(resource.name, resource.fullText ?? ''),
-    });
+    items.push({ label: 'Download Document', action: () => downloadBlob(resource.name, resource.fullText ?? '') });
   }
 
   return (
     <div ref={ref} className="relative flex-shrink-0">
       <button
         onClick={e => { e.stopPropagation(); setOpen(o => !o); }}
-        className={`
-          w-7 h-7 flex items-center justify-center rounded-md transition-colors
-          ${open
-            ? 'bg-secondary text-foreground'
-            : 'text-muted-foreground hover:bg-secondary hover:text-foreground opacity-0 group-hover:opacity-100'}
-        `}
+        className="flex items-center justify-center p-1.5 text-muted-foreground hover:text-foreground transition-colors"
         aria-label="Download options"
       >
         <MoreHorizontal className="w-4 h-4" />
       </button>
 
       {open && (
-        <div className="absolute right-0 top-8 z-30 bg-popover border border-border rounded-xl shadow-2xl min-w-[11rem] py-1.5 overflow-hidden">
+        <div className="absolute right-0 top-6 z-30 bg-popover border border-border rounded-xl shadow-2xl min-w-[11rem] py-1.5 overflow-hidden">
           {items.length === 0 ? (
             <p className="px-3 py-2 text-xs text-muted-foreground">No downloads available</p>
           ) : (
             items.map(item => (
-              <button
-                key={item.label}
-                onClick={e => { e.stopPropagation(); item.action(); }}
-                className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-foreground hover:bg-secondary transition-colors text-left"
-              >
+              <button key={item.label} onClick={e => { e.stopPropagation(); item.action(); }} className="w-full flex items-center gap-2.5 px-3 py-2 text-sm text-foreground hover:bg-secondary transition-colors text-left">
                 <Download className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
                 {item.label}
               </button>
@@ -402,30 +247,28 @@ function CardMenu({ resource }: { resource: Resource }) {
   );
 }
 
-const MOCK_CAMPAIGNS: Record<string, { name: string; color: string }[]> = {
-  '1': [{ name: 'Amrit Yoga Q2', color: 'bg-[#10B981]/10 text-[#10B981] border-[#10B981]/20' }],
-  '2': [{ name: 'Nike Summer Drop', color: 'bg-[#3B82F6]/10 text-[#3B82F6] border-[#3B82F6]/20' }, { name: 'Brand Awareness Q2', color: 'bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/20' }],
-  '3': [{ name: 'Retention Drive', color: 'bg-[#8B5CF6]/10 text-[#8B5CF6] border-[#8B5CF6]/20' }],
-  '4': [{ name: 'Nike Summer Drop', color: 'bg-[#3B82F6]/10 text-[#3B82F6] border-[#3B82F6]/20' }],
-  '5': [],
-};
+interface Post {
+  name: string;
+  thumbnail?: string;
+  platform: string;
+  type: string;
+  project: string;
+  campaign: string;
+  createdAt: string;
+  publishDate?: string;
+  status: 'Published' | 'In Review' | 'Draft';
+}
 
 function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () => void }) {
-  const [textTab, setTextTab] = useState<'transcription' | 'summary'>('transcription');
-
-  const typeColor = {
-    video: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    document: 'bg-green-500/10 text-green-400 border-green-500/20',
-    text: 'bg-green-500/10 text-green-400 border-green-500/20',
-    image: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  }[resource.type] ?? 'bg-gray-500/10 text-gray-400 border-gray-500/20';
+  const [textTab, setTextTab] = useState<'transcript' | 'summary'>('transcript');
+  const [showArchiveDialog, setShowArchiveDialog] = useState(false);
+  const [isArchived, setIsArchived] = useState(false);
 
   const downloadBlob = (filename: string, content: string) => {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url; a.download = filename; a.click();
-    URL.revokeObjectURL(url);
+    a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
   };
 
   const downloadHref = (href: string, filename: string) => {
@@ -433,532 +276,842 @@ function ResourceDetail({ resource, onBack }: { resource: Resource; onBack: () =
     a.href = href; a.download = filename; a.target = '_blank'; a.click();
   };
 
-  const campaigns = MOCK_CAMPAIGNS[resource.id] ?? [];
+  const handleArchive = () => {
+    setIsArchived(true);
+    setShowArchiveDialog(false);
+  };
 
-  /* ── LEFT: primary media ────────────────────────────────────────────── */
-  const MediaPanel = () => {
-    if (resource.type === 'video') {
-      return (
-        <div className="w-full bg-black rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
-          {resource.videoUrl ? (
-            <video src={resource.videoUrl} controls className="w-full h-full object-contain" poster={resource.thumbnail ?? undefined} />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center gap-3">
-              <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center">
-                <Play className="w-7 h-7 text-white ml-1" />
-              </div>
-              <span className="text-white/50 text-sm">Preview not available</span>
-            </div>
-          )}
-        </div>
-      );
-    }
+  const posts: Post[] = resource.posts?.map((post, i) => ({
+    name: post.name,
+    thumbnail: post.thumbnail,
+    platform: ['TikTok', 'Instagram', 'LinkedIn', 'YouTube', 'Twitter', 'Pinterest'][i % 6] ?? 'Instagram',
+    type: ['Short Video', 'Carousel', 'Post', 'Shorts', 'Thread', 'Pin'][i % 6] ?? 'Post',
+    project: ['Wellness Startup', 'Nike', 'Tech Innovations', 'Fashion Brand', 'Food & Beverage Co', 'B2B SaaS'][i % 6] ?? 'Wellness Startup',
+    campaign: ['Summer Launch', 'Brand Campaign', 'Retreat Promo', 'Wellness Series'][i % 4] ?? 'Summer Launch',
+    createdAt: ['3 hours ago', '5 hours ago', '1 day ago', '2 days ago', '1 week ago'][i % 5] ?? '3 hours ago',
+    publishDate: ['Jun 15', 'Jun 18', 'Jul 5', 'Jul 10'][i % 4] ?? 'Jun 15',
+    status: ['Published', 'Published', 'In Review', 'Draft', 'Published'][i % 5] as 'Published' | 'In Review' | 'Draft',
+  })) ?? [];
 
-    if (resource.type === 'image') {
-      return (
-        <div className="w-full rounded-xl overflow-hidden bg-secondary/30 flex items-center justify-center" style={{ minHeight: '320px' }}>
-          {resource.thumbnail ? (
-            <img src={resource.thumbnail} alt={resource.name} className="w-full h-full object-contain" />
-          ) : (
-            <div className="flex flex-col items-center gap-3 text-muted-foreground py-16">
-              <ImageIcon className="w-16 h-16" />
-              <span className="text-sm">No preview available</span>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    // document / text — show styled preview
-    return (
-      <div className="w-full h-full rounded-xl border border-border bg-[#0D0D0D] overflow-hidden flex flex-col">
-        {/* fake document chrome */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/30 flex-shrink-0">
-          <FileText className="w-4 h-4 text-muted-foreground" />
-          <span className="text-xs text-muted-foreground font-medium truncate">{resource.name}</span>
-        </div>
-        <div className="flex-1 overflow-y-auto p-6">
-          <pre className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap font-sans">
-            {resource.fullText}
-          </pre>
-        </div>
-      </div>
-    );
+  const statusStyles = {
+    Published: 'bg-[#10B981]',
+    'In Review': 'bg-[#F59E0B]',
+    Draft: 'bg-[#6B7280]',
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden p-8">
-      {/* Back button */}
+    <div className="flex-1 overflow-y-auto">
       <button
         onClick={onBack}
-        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6 flex-shrink-0 w-fit"
+        className="flex items-center gap-2 px-8 py-4 text-sm text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 w-fit"
       >
         <ArrowLeft className="w-4 h-4" />
-        Back to Resources
+        <span>Back to Resources</span>
       </button>
 
-      {/* Two-column body */}
-      <div className="flex gap-6 flex-1 min-h-0">
-
-        {/* ── LEFT COLUMN ~60% ─────────────────────────────────────────── */}
-        <div className="flex-[3] flex flex-col min-h-0 gap-4">
-          <MediaPanel />
-
-          {/* Below media: summary (for video/image, show it here) */}
-          {resource.summary && (resource.type === 'video' || resource.type === 'image') && (
-            <div className="bg-card border border-border rounded-xl p-5 flex-shrink-0">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Summary</p>
-              <p className="text-sm text-foreground leading-relaxed">{resource.summary}</p>
-            </div>
-          )}
-        </div>
-
-        {/* ── RIGHT COLUMN ~40% ────────────────────────────────────────── */}
-        <div className="flex-[2] flex flex-col min-h-0 overflow-y-auto gap-5 pr-1">
-
-          {/* Title + badges */}
-          <div className="flex-shrink-0">
-            <div className="flex items-center gap-2 mb-2">
-              <span className={`px-2.5 py-0.5 rounded-md border text-xs font-medium ${typeColor}`}>
-                {resource.type}
+      <div className="flex gap-8 p-8 pb-16">
+        <div className="flex-[3]">
+          <div className="flex items-center gap-3 mb-6">
+            <span className="px-3 py-1 rounded-lg bg-[#1a1a1a] border border-[#ffffff14] text-xs font-semibold text-[#51a2ff] uppercase">
+              {resource.type}
+            </span>
+            {resource.transcribed && (
+              <span className="px-3 py-1 rounded-lg bg-[#1a1a1a] border border-[#ffffff14] text-xs font-semibold text-[#66b266] uppercase">
+                transcribed
               </span>
-              {resource.transcribed && (
-                <span className="px-2.5 py-0.5 rounded-md border text-xs font-medium bg-success/10 text-success border-success/20">
-                  Transcribed
-                </span>
-              )}
-            </div>
-            <h1 className="text-xl font-bold text-foreground leading-tight">{resource.name}</h1>
+            )}
+            {isArchived && (
+              <span className="px-3 py-1 rounded-lg bg-[#1a1a1a] border border-[#ffffff14] text-xs font-semibold text-[#F59E0B] uppercase">
+                archived
+              </span>
+            )}
           </div>
 
-          {/* Downloads */}
-          <div className="flex-shrink-0">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Downloads</p>
-            <div className="flex flex-col gap-2">
-              {resource.transcribed && (resource.transcription || resource.fullText) && (
-                <button
-                  onClick={() => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? '')}
-                  className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                >
-                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                  Download Transcription
-                </button>
-              )}
-              {resource.type === 'video' && (
-                <>
-                  <button
-                    onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3'))}
-                    className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                  >
-                    <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                    Download Audio
-                  </button>
-                  <button
-                    onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                  >
-                    <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                    Download Video
-                  </button>
-                </>
-              )}
-              {resource.type === 'image' && resource.thumbnail && (
-                <button
-                  onClick={() => downloadHref(resource.thumbnail!, resource.name)}
-                  className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                >
-                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                  Download Image
-                </button>
-              )}
-              {(resource.type === 'document' || resource.type === 'text') && (
-                <button
-                  onClick={() => downloadBlob(resource.name, resource.fullText ?? '')}
-                  className="flex items-center gap-2.5 px-3 py-2.5 bg-secondary hover:bg-secondary/70 rounded-lg text-sm font-medium transition-colors text-left"
-                >
-                  <Download className="w-3.5 h-3.5 text-muted-foreground" />
-                  Download Document
-                </button>
-              )}
-            </div>
-          </div>
+          <h1 className="text-2xl font-bold text-foreground mb-6">{resource.name}</h1>
 
-          {/* Transcription / content text */}
-          {(resource.transcription || resource.fullText) && (
-            <div className="flex-shrink-0">
-              {/* Tab toggle */}
-              {resource.summary && (
-                <div className="flex gap-1 p-1 bg-secondary rounded-lg mb-3 w-fit">
-                  {([
-                    { key: 'transcription' as const, label: resource.type === 'video' ? 'Transcription' : 'Content', icon: Mic },
-                    { key: 'summary' as const, label: 'Summary', icon: BookOpen },
-                  ]).map(({ key, label, icon: Icon }) => (
-                    <button
-                      key={key}
-                      onClick={() => setTextTab(key)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
-                        textTab === key ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'
-                      }`}
-                    >
-                      <Icon className="w-3 h-3" />
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {!resource.summary && (
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">
-                  {resource.type === 'video' ? 'Transcription' : 'Content'}
-                </p>
-              )}
-              <div className="bg-[#0D0D0D] border border-border rounded-xl p-4 max-h-72 overflow-y-auto">
-                <pre className="text-xs text-foreground/80 leading-relaxed whitespace-pre-wrap font-sans">
-                  {textTab === 'summary' && resource.summary
-                    ? resource.summary
-                    : (resource.transcription ?? resource.fullText)}
-                </pre>
+          <div className="w-full rounded-xl overflow-hidden bg-black mb-8" style={{ aspectRatio: '16/9' }}>
+            {resource.type === 'video' && (
+              <video
+                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                poster={resource.thumbnail}
+                controls
+                className="w-full h-full object-cover"
+              />
+            )}
+            {resource.type === 'image' && resource.thumbnail && (
+              <img src={resource.thumbnail} alt={resource.name} className="w-full h-full object-cover" />
+            )}
+            {resource.type === 'document' && (
+              <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
+                <FileText className="w-16 h-16 text-muted-foreground" />
               </div>
-            </div>
-          )}
-
-          {/* Metadata */}
-          <div className="flex-shrink-0">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Details</p>
-            <div className="bg-card border border-border rounded-xl divide-y divide-border">
-              {[
-                { label: 'File size', value: resource.size },
-                { label: 'Uploaded', value: resource.uploadedDate },
-                ...(resource.duration ? [{ label: 'Duration', value: resource.duration }] : []),
-                ...(resource.wordCount ? [{ label: 'Word count', value: resource.wordCount.toLocaleString() }] : []),
-                { label: 'Type', value: resource.type.charAt(0).toUpperCase() + resource.type.slice(1) },
-              ].map(({ label, value }) => (
-                <div key={label} className="flex items-center justify-between px-4 py-2.5 text-sm">
-                  <span className="text-muted-foreground">{label}</span>
-                  <span className="text-foreground font-medium">{value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Tags */}
-          {resource.tags.length > 0 && (
-            <div className="flex-shrink-0">
-              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Tags</p>
-              <div className="flex flex-wrap gap-1.5">
-                {resource.tags.map(tag => (
-                  <span key={tag} className="px-2.5 py-1 bg-secondary rounded-lg text-xs text-muted-foreground">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Associated campaigns */}
-          <div className="flex-shrink-0 pb-6">
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2.5">Associated Campaigns</p>
-            {campaigns.length === 0 ? (
-              <p className="text-xs text-muted-foreground/60 italic">Not linked to any campaign</p>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {campaigns.map(c => (
-                  <span key={c.name} className={`px-2.5 py-1 rounded-lg border text-xs font-medium ${c.color}`}>
-                    {c.name}
-                  </span>
-                ))}
+            )}
+            {resource.type === 'text' && (
+              <div className="w-full h-full bg-[#1a1a1a] flex items-center justify-center">
+                <FileText className="w-16 h-16 text-muted-foreground" />
               </div>
             )}
           </div>
 
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-lg font-semibold text-foreground">Content Created ({posts.length})</h2>
+              <p className="text-xs text-muted-foreground">Social media content generated using this resource</p>
+            </div>
+
+            <div className="space-y-3">
+              {posts.map((post, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 bg-[#1a1a1a] rounded-xl hover:bg-[#212121] transition-colors">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                    {post.thumbnail ? (
+                      <img src={post.thumbnail} alt={post.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full bg-[#262626] flex items-center justify-center">
+                        <span className="text-[10px] text-muted-foreground">{post.name.charAt(0)}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm font-semibold text-foreground truncate">{post.name}</h3>
+                    <div className="flex items-center gap-3 mt-1 flex-wrap">
+                      <span className="text-xs text-muted-foreground">{post.platform} · {post.type}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-[#262626] text-[10px] text-muted-foreground">{post.project}</span>
+                      <span className="px-2 py-0.5 rounded-md bg-[#262626] text-[10px] text-muted-foreground">{post.campaign}</span>
+                    </div>
+                    <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                      <span>{post.createdAt}</span>
+                      {post.status === 'Published' && <span>Published {post.publishDate}</span>}
+                      {post.status === 'In Review' && <span>Scheduled {post.publishDate}</span>}
+                      {post.status === 'Draft' && <span>Draft</span>}
+                    </div>
+                  </div>
+
+                  <span className={`px-2.5 py-1 rounded-md text-[10px] font-semibold text-white flex-shrink-0 ${statusStyles[post.status]}`}>
+                    {post.status}
+                  </span>
+                </div>
+              ))}
+              {posts.length === 0 && (
+                <div className="p-8 bg-[#1a1a1a] rounded-xl text-center">
+                  <p className="text-sm text-muted-foreground">No content created</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-[1.3] sticky top-8">
+          <div className="bg-[#1a1a1a] rounded-xl p-5">
+            {(resource.type === 'video' || resource.type === 'document') && resource.transcribed && (
+              <div className="mb-5">
+                <div className="flex bg-[#0D0D0D] rounded-lg mb-3">
+                  <button
+                    onClick={() => setTextTab('transcript')}
+                    className={`flex-1 py-2.5 text-xs font-semibold uppercase transition-colors ${textTab === 'transcript' ? 'bg-[#262626] text-foreground rounded-lg' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    Transcript
+                  </button>
+                  <button
+                    onClick={() => setTextTab('summary')}
+                    className={`flex-1 py-2.5 text-xs font-semibold uppercase transition-colors ${textTab === 'summary' ? 'bg-[#262626] text-foreground rounded-lg' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    Summary
+                  </button>
+                </div>
+
+                <div className="bg-[#0D0D0D] rounded-lg p-4 max-h-52 overflow-y-auto">
+                  {textTab === 'transcript' && resource.transcription && (
+                    <div className="space-y-3">
+                      {resource.transcription.split('\n').map((line, i) => (
+                        <p key={i} className="text-xs text-white/80 leading-relaxed">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {textTab === 'summary' && resource.summary && (
+                    <p className="text-xs text-white/80 leading-relaxed">
+                      {resource.summary}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="mb-5 pt-5 border-t border-[#ffffff14]">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-400">File size</span>
+                  <span className="text-white font-medium">{resource.size}</span>
+                </div>
+                <div className="flex justify-between items-center text-xs">
+                  <span className="text-gray-400">Uploaded</span>
+                  <span className="text-white font-medium">{resource.uploadedDate}</span>
+                </div>
+                {resource.duration && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Duration</span>
+                    <span className="text-white font-medium">{resource.duration}</span>
+                  </div>
+                )}
+                {resource.pageCount && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Pages</span>
+                    <span className="text-white font-medium">{resource.pageCount} pages</span>
+                  </div>
+                )}
+                {resource.wordCount && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Words</span>
+                    <span className="text-white font-medium">{resource.wordCount.toLocaleString()} words</span>
+                  </div>
+                )}
+                {resource.resolution && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400">Resolution</span>
+                    <span className="text-white font-medium">{resource.resolution}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="pt-5 border-t border-[#ffffff14]">
+              <div className="flex flex-col gap-2">
+                {resource.transcribed && (resource.transcription || resource.fullText) && (
+                  <button onClick={() => downloadBlob(resource.name.replace(/\.[^.]+$/, '') + '_transcription.txt', resource.transcription ?? resource.fullText ?? '')} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                    <FileText className="w-4 h-4 text-gray-400" />
+                    Download Transcription
+                  </button>
+                )}
+                {resource.type === 'video' && (
+                  <>
+                    <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name.replace(/\.[^.]+$/, '.mp3'))} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                      <Mic className="w-4 h-4 text-gray-400" />
+                      Download Audio
+                    </button>
+                    <button onClick={() => downloadHref(resource.videoUrl ?? '#', resource.name)} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                      <Video className="w-4 h-4 text-gray-400" />
+                      Download Video
+                    </button>
+                  </>
+                )}
+                {resource.type === 'image' && resource.thumbnail && (
+                  <button onClick={() => downloadHref(resource.thumbnail!, resource.name)} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                    <ImageIcon className="w-4 h-4 text-gray-400" />
+                    Download Image
+                  </button>
+                )}
+                {(resource.type === 'document' || resource.type === 'text') && (
+                  <button onClick={() => downloadBlob(resource.name, resource.fullText ?? '')} className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left">
+                    <FileText className="w-4 h-4 text-gray-400" />
+                    Download Document
+                  </button>
+                )}
+
+                {!isArchived && (
+                  <button
+                    onClick={() => setShowArchiveDialog(true)}
+                    className="flex items-center gap-3 px-4 py-3 bg-[#262626] hover:bg-[#333333] rounded-lg text-sm font-medium text-white transition-colors text-left mt-2"
+                  >
+                    <Trash2 className="w-4 h-4 text-gray-400" />
+                    Archive Resource
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Delete action — bottom of right column reached via scroll, but keep accessible */}
-      <div className="flex-shrink-0 pt-4 flex justify-end border-t border-border mt-4">
-        <button className="flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-lg transition-colors">
-          <Trash2 className="w-3.5 h-3.5" />
-          Delete resource
-        </button>
-      </div>
+      {showArchiveDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-[#1a1a1a] rounded-xl p-6 max-w-md w-full mx-4 border border-[#ffffff14]">
+            <h3 className="text-lg font-semibold text-white mb-2">Archive Resource</h3>
+            <p className="text-sm text-gray-400 mb-6">
+              This action will archive this resource. It will no longer appear in the main resources list but can be restored later. This is not a permanent deletion.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowArchiveDialog(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleArchive}
+                className="px-4 py-2 bg-[#F59E0B] hover:bg-[#D97706] text-white text-sm font-medium rounded-lg transition-colors"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
+const getTypeIcon = (type: string) => {
+  switch (type) {
+    case 'video': return Video;
+    case 'document':
+    case 'text': return FileText;
+    case 'image': return ImageIcon;
+    default: return FileText;
+  }
+};
+
+type UploadSource = 'device' | 'google-drive' | 'dropbox';
+
+interface RecentAsset {
+  id: string;
+  name: string;
+  type: ResourceType;
+  uploadedDate: string;
+  usedIn?: string;
+  thumbnail?: string;
+}
+
+const RECENT_ASSETS: RecentAsset[] = [
+  { id: 'a1', name: 'hero-banner.png', type: 'image', uploadedDate: '2 mins ago', usedIn: 'Running Form Tips' },
+  { id: 'a2', name: 'project-brief.pdf', type: 'document', uploadedDate: '1 hour ago' },
+  { id: 'a3', name: 'intro-video.mp4', type: 'video', uploadedDate: 'Yesterday', usedIn: "Father's Day" },
+  { id: 'a4', name: 'thumbnail-01.jpg', type: 'image', uploadedDate: '2 days ago' },
+  { id: 'a5', name: 'logo-dark.svg', type: 'image', uploadedDate: '3 days ago', usedIn: 'Summer Sol' },
+  { id: 'a6', name: 'notes.txt', type: 'text', uploadedDate: 'Last week' },
+  { id: 'a7', name: 'brand-kit.pdf', type: 'document', uploadedDate: 'Last week', usedIn: 'Community' },
+  { id: 'a8', name: 'campaign-deck.pptx', type: 'document', uploadedDate: '2 weeks ago' },
+  { id: 'a9', name: 'promo-video.mp4', type: 'video', uploadedDate: '2 weeks ago', usedIn: 'Back to School' },
+  { id: 'a10', name: 'style-guide.pdf', type: 'document', uploadedDate: '3 weeks ago' },
+  { id: 'a11', name: 'cover-art.png', type: 'image', uploadedDate: 'Last month', usedIn: 'Athlete Profile' },
+  { id: 'a12', name: 'raw-footage.mov', type: 'video', uploadedDate: 'Last month' },
+];
+
+const DRIVE_FILES = [
+  { id: 'd1', name: 'brand-assets-folder', type: 'folder', size: '—', modified: '2 days ago' },
+  { id: 'd2', name: 'marketing-video-4k.mp4', type: 'video', size: '852 MB', modified: '1 week ago' },
+  { id: 'd3', name: 'product-photo-shoot', type: 'folder', size: '—', modified: '3 days ago' },
+  { id: 'd4', name: 'campaign-deck-q3.pdf', type: 'document', size: '12.4 MB', modified: '5 hours ago' },
+  { id: 'd5', name: 'testimonial-clip.mp4', type: 'video', size: '340 MB', modified: '1 day ago' },
+  { id: 'd6', name: 'logo-collection', type: 'folder', size: '—', modified: '1 month ago' },
+  { id: 'd7', name: 'voiceover-script.pdf', type: 'document', size: '2.1 MB', modified: '2 weeks ago' },
+  { id: 'd8', name: 'behind-the-scenes.mov', type: 'video', size: '1.2 GB', modified: '4 days ago' },
+];
+
+const DROPBOX_FILES = [
+  { id: 'b1', name: 'social-media-assets', type: 'folder', size: '—', modified: '1 week ago' },
+  { id: 'b2', name: 'user-testimonial.mp4', type: 'video', size: '245 MB', modified: '3 hours ago' },
+  { id: 'b3', name: 'launch-creatives', type: 'folder', size: '—', modified: '2 days ago' },
+  { id: 'b4', name: 'editing-template.prproj', type: 'document', size: '56 MB', modified: '2 weeks ago' },
+  { id: 'b5', name: 'raw-interview.mov', type: 'video', size: '2.4 GB', modified: '5 days ago' },
+  { id: 'b6', name: 'product-lifestyle.jpg', type: 'image', size: '8.7 MB', modified: '1 day ago' },
+  { id: 'b7', name: 'brand-voice-guide.pdf', type: 'document', size: '3.4 MB', modified: '1 month ago' },
+  { id: 'b8', name: 'event-recording.mp4', type: 'video', size: '680 MB', modified: '4 days ago' },
+];
+
+const getAssetIcon = (type: ResourceType) => {
+  switch (type) {
+    case 'video': return Video;
+    case 'document':
+    case 'text': return FileText;
+    case 'image': return ImageIcon;
+    default: return FileText;
+  }
+};
+
+const getFileIcon = (type: string) => {
+  switch (type) {
+    case 'video': return Video;
+    case 'folder': return FolderOpen;
+    case 'image': return ImageIcon;
+    case 'document':
+    default: return FileText;
+  }
+};
 
 export function EnhancedResourcesView() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [uploadSource, setUploadSource] = useState<UploadSource>('device');
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'video': return Video;
-      case 'document':
-      case 'text': return FileText;
-      case 'image': return ImageIcon;
-      default: return FileText;
-    }
-  };
-
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'video': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-      case 'document':
-      case 'text': return 'bg-green-500/10 text-green-400 border-green-500/20';
-      case 'image': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      default: return 'bg-gray-500/10 text-gray-400 border-gray-500/20';
-    }
-  };
+  const [resources, setResources] = useState<Resource[]>(RESOURCES);
+  const [selectedDriveFiles, setSelectedDriveFiles] = useState<Set<string>>(new Set());
+  const [selectedDropboxFiles, setSelectedDropboxFiles] = useState<Set<string>>(new Set());
 
   const filteredResources =
     activeFilter === 'all'
-      ? RESOURCES
-      : RESOURCES.filter((r) =>
+      ? resources
+      : resources.filter((r) =>
           activeFilter === 'document' ? (r.type === 'document' || r.type === 'text') : r.type === activeFilter
         );
+
+  const filterCounts = {
+    all: resources.length,
+    video: resources.filter((r) => r.type === 'video').length,
+    document: resources.filter((r) => r.type === 'document' || r.type === 'text').length,
+    image: resources.filter((r) => r.type === 'image').length,
+  };
+
+  const toggleFileSelection = (fileId: string, source: 'google-drive' | 'dropbox') => {
+    if (source === 'google-drive') {
+      setSelectedDriveFiles((prev) => {
+        const next = new Set(prev);
+        if (next.has(fileId)) next.delete(fileId);
+        else next.add(fileId);
+        return next;
+      });
+    } else {
+      setSelectedDropboxFiles((prev) => {
+        const next = new Set(prev);
+        if (next.has(fileId)) next.delete(fileId);
+        else next.add(fileId);
+        return next;
+      });
+    }
+  };
+
+  const handleUploadFromCloud = (source: 'google-drive' | 'dropbox') => {
+    const selectedIds = source === 'google-drive' ? selectedDriveFiles : selectedDropboxFiles;
+    const files = source === 'google-drive' ? DRIVE_FILES : DROPBOX_FILES;
+    const selectedFiles = files.filter((f) => selectedIds.has(f.id));
+
+    if (selectedFiles.length === 0) return;
+
+    const newResources: Resource[] = selectedFiles.map((file) => ({
+      id: `${source}-${file.id}-${Date.now()}`,
+      name: file.name,
+      type: (file.type === 'folder' ? 'document' : file.type) as ResourceType,
+      size: file.size === '—' ? '—' : file.size,
+      uploadedDate: 'Just now',
+      postsCreated: 0,
+      transcribed: file.type === 'video' ? false : true,
+      tags: [source === 'google-drive' ? 'google-drive' : 'dropbox'],
+    }));
+
+    setResources((prev) => [...newResources, ...prev]);
+
+    if (source === 'google-drive') {
+      setSelectedDriveFiles(new Set());
+    } else {
+      setSelectedDropboxFiles(new Set());
+    }
+    setShowUploadModal(false);
+  };
 
   if (selectedResource) {
     return <ResourceDetail resource={selectedResource} onBack={() => setSelectedResource(null)} />;
   }
 
   return (
-    <div className="flex-1 overflow-y-auto p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+    <div className="flex-1 overflow-y-auto bg-background">
+      <div className="border-b border-border bg-gradient-to-b from-background to-card/30">
+        <div className="px-8 py-8">
+          <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">Resource Library</h1>
-              <p className="text-muted-foreground">
+              <h1 className="text-3xl font-bold text-foreground mb-1">Resource Library</h1>
+              <p className="text-sm text-muted-foreground">
                 Upload files and URLs that can be used as reference for content generation
               </p>
             </div>
-            <button
-              onClick={() => setShowUploadModal(true)}
-              className="flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-            >
-              <Plus className="w-5 h-5" />
+            <button onClick={() => setShowUploadModal(true)} className="flex items-center gap-2 px-5 py-3 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors font-medium">
+              <Plus className="w-4 h-4" />
               Add Resources
             </button>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-4 gap-4">
-            {[
-              { label: 'Total Resources', value: RESOURCES.length, icon: FileText },
-              { label: 'Transcribed', value: RESOURCES.filter((r) => r.transcribed).length, icon: Clock },
-              { label: 'Total Words', value: RESOURCES.reduce((sum, r) => sum + (r.wordCount || 0), 0).toLocaleString(), icon: FileText },
-              { label: 'Storage Used', value: '430 MB', icon: Upload },
-            ].map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div key={stat.label} className="bg-card border border-border rounded-xl p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">{stat.label}</span>
-                    <Icon className="w-4 h-4 text-primary" />
-                  </div>
-                  <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
-                </div>
-              );
-            })}
+          <div className="flex items-center gap-4">
+            <div className="flex-1 relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search resources..."
+                className="w-full pl-11 pr-5 py-2.5 bg-[#1a1a1a] border border-[#ffffff14] rounded-xl text-foreground placeholder:text-muted-foreground text-sm"
+              />
+            </div>
+            <div className="flex items-center gap-2 p-1 bg-[#1a1a1a] rounded-xl border border-[#ffffff14]">
+              {[
+                { value: 'all', label: 'All' },
+                { value: 'video', label: 'Videos' },
+                { value: 'document', label: 'Documents' },
+                { value: 'image', label: 'Images' },
+              ].map((filter) => (
+                <button
+                  key={filter.value}
+                  onClick={() => setActiveFilter(filter.value)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                    activeFilter === filter.value
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {filter.label} ({filterCounts[filter.value as keyof typeof filterCounts]})
+                </button>
+              ))}
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Filters & Search */}
-        <div className="mb-6 flex items-center gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input
-              type="text"
-              placeholder="Search resources..."
-              className="w-full pl-10 pr-4 py-3 bg-card border border-border rounded-lg text-foreground placeholder:text-muted-foreground"
-            />
-          </div>
-          <div className="flex items-center gap-2 p-1 bg-card rounded-lg border border-border">
-            {[
-              { value: 'all', label: 'All', count: RESOURCES.length },
-              { value: 'video', label: 'Videos', count: RESOURCES.filter((r) => r.type === 'video').length },
-              { value: 'document', label: 'Documents', count: RESOURCES.filter((r) => r.type === 'document' || r.type === 'text').length },
-              { value: 'image', label: 'Images', count: RESOURCES.filter((r) => r.type === 'image').length },
-            ].map((filter) => (
-              <button
-                key={filter.value}
-                onClick={() => setActiveFilter(filter.value)}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  activeFilter === filter.value
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {filter.label} ({filter.count})
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Resources Grid */}
-        <div className="grid grid-cols-3 gap-6">
+      <div className="px-8 py-8">
+        <div className="grid gap-5" style={{ gridTemplateColumns: 'repeat(auto-fill, 247px)' }}>
           {filteredResources.map((resource) => {
             const TypeIcon = getTypeIcon(resource.type);
             return (
               <div
                 key={resource.id}
                 onClick={() => setSelectedResource(resource)}
-                className="bg-card border border-border rounded-xl hover:shadow-lg hover:shadow-primary/10 transition-all group cursor-pointer hover:border-primary/30 relative"
+                className="flex flex-col bg-[#1a1a1a] cursor-pointer"
+                style={{ height: '366px' }}
               >
-                {/* Thumbnail/Preview */}
-                <div className="relative h-40 bg-secondary overflow-hidden rounded-t-xl">
+                <div className="relative flex-shrink-0" style={{ height: '136px' }}>
                   {resource.thumbnail ? (
-                    <>
-                      <img
-                        src={resource.thumbnail}
-                        alt={resource.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      {resource.type === 'video' && (
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center">
-                            <Play className="w-5 h-5 text-white ml-0.5" />
-                          </div>
-                        </div>
-                      )}
-                    </>
+                    <img src={resource.thumbnail} alt={resource.name} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <TypeIcon className="w-12 h-12 text-muted-foreground" />
+                    <div className="w-full h-full bg-[#262626] flex items-center justify-center">
+                      <TypeIcon className="w-10 h-10 text-muted-foreground" />
                     </div>
                   )}
-
-                  <div className="absolute top-3 left-3">
-                    <div className={`px-2.5 py-1 rounded-md border text-xs font-medium backdrop-blur-sm ${getTypeColor(resource.type)}`}>
-                      {resource.type}
-                    </div>
-                  </div>
-
-                  {resource.transcribed && (
-                    <div className="absolute bottom-3 right-3">
-                      <div className="px-2 py-1 bg-success/20 backdrop-blur-sm border border-success/30 rounded-md text-xs text-success font-medium">
-                        Transcribed
-                      </div>
-                    </div>
+                  {(resource.type === 'image' || resource.type === 'video') && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   )}
-
-                  {/* Previously-used indicator — images only, usedCount > 0 */}
-                  {resource.type === 'image' && (resource.usedCount ?? 0) > 0 && (
-                    <div className="absolute top-3 right-3 group/used">
-                      <div className="flex items-center gap-1 px-2 py-1 rounded-md bg-black/50 backdrop-blur-sm border border-white/10 text-white/80 text-[10px] font-semibold cursor-default select-none">
-                        <RefreshCw className="w-2.5 h-2.5 flex-shrink-0" />
-                        Used {resource.usedCount}×
-                      </div>
-                      {/* Tooltip */}
-                      <div className="pointer-events-none absolute top-full right-0 mt-1.5 z-50 opacity-0 group-hover/used:opacity-100 transition-opacity duration-150">
-                        <div className="bg-popover border border-border rounded-lg px-3 py-2 shadow-xl whitespace-nowrap">
-                          <p className="text-xs font-semibold text-foreground">
-                            Previously used in {resource.usedCount} content {resource.usedCount === 1 ? 'item' : 'items'}
-                          </p>
-                          <p className="text-[10px] text-muted-foreground mt-0.5">Reuse is still allowed</p>
-                        </div>
-                        <div className="absolute right-3 bottom-full w-0 h-0 border-x-4 border-x-transparent border-b-4 border-b-border" />
-                      </div>
-                    </div>
-                  )}
+                  <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-xl border border-[#2b7fff33] bg-[#2b7fff1a] text-[#51a2ff] text-xs font-medium">
+                    {resource.type}
+                  </span>
                 </div>
 
-                {/* Resource Info */}
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="font-semibold text-foreground truncate text-sm" title={resource.name}>
+                <div className="flex flex-col flex-grow p-4" style={{ rowGap: '12px' }}>
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-foreground truncate max-w-[210px] leading-5">
                       {resource.name}
                     </h3>
                     <CardMenu resource={resource} />
                   </div>
 
-                  <div className="space-y-1.5 text-xs text-muted-foreground mb-3">
-                    <div className="flex items-center justify-between">
+                  <div className="flex flex-col" style={{ rowGap: '4px' }}>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>Size: {resource.size}</span>
-                      {resource.duration && <span>{resource.duration}</span>}
+                      <span>
+                        {resource.duration ??
+                          (resource.pageCount ? `${resource.pageCount} pages` : '') ??
+                          (resource.wordCount ? `${resource.wordCount.toLocaleString()} words` : '') ??
+                          resource.resolution ?? ''}
+                      </span>
                     </div>
-                    {resource.wordCount && (
-                      <div className="flex items-center gap-1">
-                        <FileText className="w-3 h-3" />
-                        <span>{resource.wordCount.toLocaleString()} words</span>
-                      </div>
-                    )}
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="w-2.5 h-2.5" />
                       <span>Uploaded {resource.uploadedDate}</span>
                     </div>
                   </div>
+                </div>
 
-                  <div className="flex flex-wrap gap-1.5">
-                    {resource.tags.map((tag) => (
-                      <span key={tag} className="px-2 py-0.5 bg-secondary rounded-md text-xs text-muted-foreground">
-                        #{tag}
+                <div className="relative border-t border-[#ffffff14] bg-[#212121] group" style={{ height: '52px', padding: '11px 16px 12px' }}>
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center">
+                      {resource.posts?.slice(0, 4).map((post, index) => (
+                        <div
+                          key={index}
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a] overflow-hidden"
+                          style={{
+                            marginLeft: index > 0 ? '-8px' : '0',
+                          }}
+                        >
+                          {post.thumbnail ? (
+                            <img src={post.thumbnail} alt={post.name} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full bg-[#333333] flex items-center justify-center">
+                              <span className="text-[8px]">{post.name.charAt(0)}</span>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      {resource.posts && resource.posts.length > 4 && (
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0 border-2 border-[#1a1a1a] bg-primary ml-[-8px]">
+                          +{resource.posts.length - 4}
+                        </div>
+                      )}
+                    </div>
+                    <div className="relative">
+                      <span className={`text-xs font-medium ${resource.postsCreated && resource.postsCreated > 0 ? 'text-primary cursor-pointer hover:text-primary/80' : 'text-muted-foreground'}`}>
+                        {resource.postsCreated && resource.postsCreated > 0
+                          ? `${resource.postsCreated} posts created`
+                          : 'No content created'}
                       </span>
-                    ))}
+                      {resource.posts && resource.posts.length > 0 && (
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" style={{ width: '246px' }}>
+                          <div className="bg-[#262626] rounded-lg shadow-lg overflow-hidden" style={{ boxShadow: '0px 4px 12px 0px #00000033' }}>
+                            <div className="px-3 py-2.5 space-y-[6px]">
+                              {resource.posts.slice(0, 3).map((post, index) => (
+                                <div key={index} className="text-xs text-white truncate">
+                                  {post.name}
+                                </div>
+                              ))}
+                              {resource.posts.length > 3 && (
+                                <div className="text-xs text-[#999999] pt-1 border-t border-[#ffffff14] mt-[6px]">
+                                  +{resource.posts.length - 3} more posts
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-[#262626]" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
+      </div>
 
-        {/* Upload Modal */}
-        {showUploadModal && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-card w-full max-w-2xl rounded-2xl shadow-2xl border border-border">
-              <div className="p-6 border-b border-border">
-                <h2 className="text-xl font-semibold text-foreground">Add Resources</h2>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Upload files or paste URLs to add to your library
-                </p>
+      {showUploadModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-[#0d0d0d] w-full max-w-[900px] max-h-[90vh] rounded-2xl shadow-2xl border border-[#ffffff14] flex flex-col overflow-hidden">
+            {/* Header */}
+            <div className="px-8 py-6 flex-shrink-0">
+              <h2 className="text-[28px] font-bold text-white leading-tight">Add Resources</h2>
+              <p className="text-sm text-[#a1a1aa] mt-2">Upload files or paste URLs to add to your library</p>
+            </div>
+
+            {/* Body */}
+            <div className="flex flex-1 min-h-0 overflow-hidden">
+              {/* Sidebar */}
+              <div className="w-[200px] flex-shrink-0 border-r border-[#ffffff14] px-4 py-3 flex flex-col gap-1">
+                {([
+                  { key: 'device' as UploadSource, icon: Upload, label: 'Upload from Device' },
+                  { key: 'google-drive' as UploadSource, icon: Cloud, label: 'Google Drive' },
+                  { key: 'dropbox' as UploadSource, icon: Archive, label: 'Dropbox' },
+                ]).map(({ key, icon: Icon, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setUploadSource(key)}
+                    className={`flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-colors text-left ${
+                      uploadSource === key
+                        ? 'bg-[#10b9811a] text-[#10b981] font-semibold'
+                        : 'text-[#fafafa] font-medium hover:bg-[#ffffff0a]'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    {label}
+                  </button>
+                ))}
               </div>
-              <div className="p-6 space-y-6">
-                <div>
-                  <label className="block mb-3 text-sm font-medium text-foreground">Upload Files</label>
-                  <label className="border-2 border-dashed border-border rounded-xl p-12 flex flex-col items-center cursor-pointer hover:border-primary/50 transition-colors bg-secondary/30">
-                    <input type="file" multiple className="hidden" />
-                    <Upload className="w-12 h-12 text-muted-foreground mb-4" />
-                    <p className="text-foreground mb-2">Drag & drop files or click to browse</p>
-                    <p className="text-sm text-muted-foreground">Supports videos, PDFs, documents, images</p>
-                  </label>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex-1 border-t border-border" />
-                  <span className="text-sm text-muted-foreground font-medium">OR</span>
-                  <div className="flex-1 border-t border-border" />
-                </div>
-                <div>
-                  <label className="block mb-3 text-sm font-medium text-foreground">Paste URL</label>
-                  <div className="relative">
-                    <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <input
-                      type="url"
-                      placeholder="https://youtube.com/... or https://your-site.com/..."
-                      className="w-full pl-10 pr-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder:text-muted-foreground"
-                    />
+
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto px-8 py-6 flex flex-col gap-6">
+                {uploadSource === 'device' && (
+                  <>
+                    {/* Upload Zone */}
+                    <label className="border-2 border-dashed border-[#ffffff14] rounded-xl bg-[#0a0a0a33] h-[120px] flex flex-col items-center justify-center cursor-pointer hover:border-[#10b98166] transition-colors">
+                      <input type="file" multiple className="hidden" />
+                      <Cloud className="w-8 h-8 text-[#a1a1aa] mb-2" />
+                      <p className="text-[#fafafa] text-sm font-semibold">Click or drag to upload</p>
+                    </label>
+
+                    {/* Recent Assets */}
+                    <div className="flex flex-col gap-4">
+                      <p className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider">Recent Assets</p>
+                      <div className="grid grid-cols-4 gap-3">
+                        {RECENT_ASSETS.map((asset) => {
+                          const AssetIcon = getAssetIcon(asset.type);
+                          return (
+                            <div
+                              key={asset.id}
+                              className="flex flex-col gap-2 border border-[#ffffff14] rounded-[10px] bg-[#1a1a1a] p-[9px]"
+                            >
+                              <div className="relative flex items-center justify-center rounded-md bg-[#0a0a0a] h-[72px] overflow-hidden">
+                                <AssetIcon className="w-6 h-6 text-[#a1a1aa]" />
+                                {asset.usedIn ? (
+                                  <div className="absolute bottom-1.5 left-1.5 flex items-center border border-[#10b98166] rounded-[4px] bg-[#10b98133] px-1.5 py-0.5 max-w-[130px]">
+                                    <span className="text-[9px] font-bold text-[#10b981] whitespace-nowrap overflow-hidden text-ellipsis">
+                                      Used in {asset.usedIn}
+                                    </span>
+                                  </div>
+                                ) : (
+                                  <div className="absolute bottom-1.5 left-1.5 flex items-center border border-[#ffffff14] rounded-[4px] bg-[#ffffff0a] px-1.5 py-0.5 w-[46px] h-[17px] justify-center">
+                                    <span className="text-[9px] font-medium text-[#a1a1aa] opacity-60">Unused</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex flex-col gap-0.5">
+                                <p className="text-[11px] font-semibold text-[#fafafa] truncate">{asset.name}</p>
+                                <p className="text-[10px] text-[#a1a1aa]">{asset.uploadedDate}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {uploadSource === 'google-drive' && (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider">Google Drive Files</p>
+                      {selectedDriveFiles.size > 0 && (
+                        <span className="text-xs font-semibold text-[#10b981]">
+                          {selectedDriveFiles.size} selected
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {DRIVE_FILES.map((file) => {
+                        const FileIcon = getFileIcon(file.type);
+                        const isSelected = selectedDriveFiles.has(file.id);
+                        return (
+                          <button
+                            key={file.id}
+                            onClick={() => toggleFileSelection(file.id, 'google-drive')}
+                            className={`flex items-center gap-3 border rounded-lg p-3 transition-colors cursor-pointer text-left w-full ${
+                              isSelected
+                                ? 'border-[#10b981] bg-[#10b9811a]'
+                                : 'border-[#ffffff14] bg-[#1a1a1a] hover:border-[#10b98166]'
+                            }`}
+                          >
+                            <div
+                              className={`flex items-center justify-center w-5 h-5 rounded border flex-shrink-0 transition-colors ${
+                                isSelected
+                                  ? 'bg-[#10b981] border-[#10b981]'
+                                  : 'bg-transparent border-[#ffffff33]'
+                              }`}
+                            >
+                              {isSelected && (
+                                <svg viewBox="0 0 12 12" className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M2 6l3 3 5-5" />
+                                </svg>
+                              )}
+                            </div>
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#0a0a0a] flex-shrink-0">
+                              <FileIcon className="w-5 h-5 text-[#a1a1aa]" />
+                            </div>
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-[#fafafa] truncate">{file.name}</p>
+                              <p className="text-[10px] text-[#a1a1aa]">{file.size} · {file.modified}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div className="p-6 border-t border-border flex items-center justify-between">
-                <button
-                  onClick={() => setShowUploadModal(false)}
-                  className="px-6 py-2.5 text-foreground hover:bg-secondary rounded-lg transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => setShowUploadModal(false)}
-                  className="px-8 py-2.5 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity"
-                >
-                  Upload
-                </button>
+                )}
+
+                {uploadSource === 'dropbox' && (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-[#a1a1aa] uppercase tracking-wider">Dropbox Files</p>
+                      {selectedDropboxFiles.size > 0 && (
+                        <span className="text-xs font-semibold text-[#10b981]">
+                          {selectedDropboxFiles.size} selected
+                        </span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {DROPBOX_FILES.map((file) => {
+                        const FileIcon = getFileIcon(file.type);
+                        const isSelected = selectedDropboxFiles.has(file.id);
+                        return (
+                          <button
+                            key={file.id}
+                            onClick={() => toggleFileSelection(file.id, 'dropbox')}
+                            className={`flex items-center gap-3 border rounded-lg p-3 transition-colors cursor-pointer text-left w-full ${
+                              isSelected
+                                ? 'border-[#10b981] bg-[#10b9811a]'
+                                : 'border-[#ffffff14] bg-[#1a1a1a] hover:border-[#10b98166]'
+                            }`}
+                          >
+                            <div
+                              className={`flex items-center justify-center w-5 h-5 rounded border flex-shrink-0 transition-colors ${
+                                isSelected
+                                  ? 'bg-[#10b981] border-[#10b981]'
+                                  : 'bg-transparent border-[#ffffff33]'
+                              }`}
+                            >
+                              {isSelected && (
+                                <svg viewBox="0 0 12 12" className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth="2">
+                                  <path d="M2 6l3 3 5-5" />
+                                </svg>
+                              )}
+                            </div>
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#0a0a0a] flex-shrink-0">
+                              <FileIcon className="w-5 h-5 text-[#a1a1aa]" />
+                            </div>
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-[#fafafa] truncate">{file.name}</p>
+                              <p className="text-[10px] text-[#a1a1aa]">{file.size} · {file.modified}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+
+            {/* Footer */}
+            <div className="flex-shrink-0 flex items-center justify-between border-t border-[#ffffff14] bg-[#1a1a1a] px-8 py-5">
+              <button
+                onClick={() => {
+                  setShowUploadModal(false);
+                  setUploadSource('device');
+                }}
+                className="text-sm font-semibold text-[#a1a1aa] hover:text-white transition-colors"
+              >
+                Cancel
+              </button>
+              {uploadSource === 'device' ? (
+                <label className="inline-flex items-center justify-center rounded-lg bg-[#10b981] px-6 py-2.5 text-sm font-bold text-white shadow-[0px_4px_12px_0px_#10b9814d] cursor-pointer hover:opacity-90 transition-opacity">
+                  <input
+                    type="file"
+                    multiple
+                    className="hidden"
+                    onChange={(e) => {
+                      const files = e.target.files;
+                      if (files && files.length > 0) {
+                        const newResources: Resource[] = Array.from(files).map((file) => {
+                          const ext = file.name.split('.').pop()?.toLowerCase() || '';
+                          let type: ResourceType = 'document';
+                          if (['mp4', 'mov', 'avi', 'webm'].includes(ext)) type = 'video';
+                          else if (['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx'].includes(ext)) type = 'document';
+                          else if (['txt', 'md', 'rtf'].includes(ext)) type = 'text';
+                          else if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext)) type = 'image';
+                          return {
+                            id: `device-${Date.now()}-${Math.random()}`,
+                            name: file.name,
+                            type,
+                            size: file.size > 1048576 ? `${(file.size / 1048576).toFixed(1)} MB` : `${(file.size / 1024).toFixed(0)} KB`,
+                            uploadedDate: 'Just now',
+                            postsCreated: 0,
+                            transcribed: false,
+                            tags: ['uploaded'],
+                          };
+                        });
+                        setResources((prev) => [...newResources, ...prev]);
+                        setShowUploadModal(false);
+                      }
+                    }}
+                  />
+                  Upload
+                </label>
+              ) : (
+                <button
+                  onClick={() => handleUploadFromCloud(uploadSource)}
+                  disabled={(uploadSource === 'google-drive' ? selectedDriveFiles : selectedDropboxFiles).size === 0}
+                  className={`inline-flex items-center justify-center rounded-lg px-6 py-2.5 text-sm font-bold text-white transition-opacity ${
+                    (uploadSource === 'google-drive' ? selectedDriveFiles : selectedDropboxFiles).size === 0
+                      ? 'bg-[#10b9814d] cursor-not-allowed'
+                      : 'bg-[#10b981] shadow-[0px_4px_12px_0px_#10b9814d] hover:opacity-90 cursor-pointer'
+                  }`}
+                >
+                  Upload{(uploadSource === 'google-drive' ? selectedDriveFiles : selectedDropboxFiles).size > 0 ? ` (${(uploadSource === 'google-drive' ? selectedDriveFiles : selectedDropboxFiles).size})` : ''}
+                </button>
+              )}
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
