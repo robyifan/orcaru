@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { X, ChevronDown, Search, Upload } from "lucide-react";
+import { X, ChevronDown, Search, Upload, Sparkles } from "lucide-react";
 import svgPathsShortClip from "@/imports/PostContentContainer-3/svg-ehzova85ar";
 import svgPathsLongForm from "@/imports/PostContentContainer-6/svg-zh0484zckq";
 
@@ -210,31 +210,31 @@ function Textarea({ value, onChange, placeholder, minRows = 4 }: { value: string
   );
 }
 
-// Config input (pill shaped bg-[#262626], rounded-[24px])
+// Config input (matching Figma: bg-[#0a0a0a], rounded-[12px])
 function ConfigInput({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
   return (
-    <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
+    <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[24px]"
+        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[12px]"
       />
     </div>
   );
 }
 
-// Config textarea (pill-ish bg-[#262626], rounded-[24px])
+// Config textarea (matching Figma: bg-[#0a0a0a], rounded-[12px])
 function ConfigTextarea({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
-    <div className="bg-[#262626] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
+    <div className="bg-[#0a0a0a] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={4}
-        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[24px] leading-[20px] resize-none"
+        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[12px] leading-[20px] resize-none"
       />
     </div>
   );
@@ -379,30 +379,13 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
           <span className="font-bold text-[#fafafa] text-[14px]">Select from Library</span>
         </div>
 
-        {/* Library file list */}
-        <div className="rounded-[24px] border border-[rgba(255,255,255,0.08)] overflow-hidden">
-          {[
-            { name: "Brand Logo Pack.zip",        size: "2.4 MB" },
-            { name: "Summer Campaign Video.mp4",  size: "124 MB" },
-            { name: "Product Photography.pdf",    size: "8.1 MB" },
-            { name: "Brand Guidelines 2024.pdf",  size: "3.2 MB" },
-            { name: "Athlete Testimonials.docx",  size: "156 KB" },
-          ].map((f, i, arr) => (
-            <div
-              key={f.name}
-              className={`flex gap-[12px] items-center px-[16px] py-[12px] ${i < arr.length - 1 ? "border-b border-[rgba(255,255,255,0.08)]" : ""}`}
-            >
-              <div className="size-[20px] rounded-[4px] border-2 border-[rgba(255,255,255,0.08)] shrink-0" />
-              <svg fill="none" viewBox="0 0 16 16" className="size-[16px] shrink-0">
-                <path d={svgPathsShortClip.p1f315b00} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
-              </svg>
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-[#fafafa] text-[14px] leading-5 truncate">{f.name}</p>
-                <p className="text-[#a1a1aa] text-[12px] font-medium">{f.size}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Library button */}
+        <button className="w-full bg-[#0a0a0a] border border-[rgba(255,255,255,0.08)] rounded-[12px] flex items-center gap-[12px] px-[16px] py-[14px] hover:bg-[#111] transition-colors">
+          <svg fill="none" viewBox="0 0 16 16" className="size-[16px] shrink-0">
+            <path d={svgPathsShortClip.p1f315b00} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
+          </svg>
+          <span className="text-[#fafafa] text-[14px] font-medium">Include from project library</span>
+        </button>
       </div>
     </div>
   );
@@ -513,7 +496,7 @@ function ConfigurationSection({ category, fields, setField }: {
           {/* Writer Profile */}
           <div className="mb-[20px]">
             <ConfigFieldLabel projectDefault>Writer Profile</ConfigFieldLabel>
-            <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+            <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
               <select
                 value={fields.writerProfile ?? ""}
                 onChange={(e) => setField("writerProfile", e.target.value)}
@@ -533,7 +516,7 @@ function ConfigurationSection({ category, fields, setField }: {
           <div className="flex gap-[16px]">
             <div className="flex-1">
               <ConfigFieldLabel>Writing Tone</ConfigFieldLabel>
-              <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+              <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
                 <select
                   value={fields.writingTone ?? ""}
                   onChange={(e) => setField("writingTone", e.target.value)}
@@ -551,7 +534,7 @@ function ConfigurationSection({ category, fields, setField }: {
             </div>
             <div className="flex-1">
               <ConfigFieldLabel>Writing Level</ConfigFieldLabel>
-              <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+              <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
                 <select
                   value={fields.writingLevel ?? ""}
                   onChange={(e) => setField("writingLevel", e.target.value)}
@@ -578,7 +561,7 @@ function ConfigurationSection({ category, fields, setField }: {
 
           {/* Slider */}
           <div className="space-y-[8px]">
-            <div className="relative h-[8px] bg-[#262626] rounded-full">
+            <div className="relative h-[8px] bg-[#0a0a0a] rounded-full border border-[rgba(255,255,255,0.08)]">
               <div
                 className="absolute h-full bg-[#10b981] rounded-full"
                 style={{
@@ -619,7 +602,7 @@ function ConfigurationSection({ category, fields, setField }: {
 
           {/* Selected range display */}
           <div className="flex items-center justify-center pt-[16px]">
-            <div className="inline-flex items-center gap-[8px] px-[12px] py-[8px] bg-[#262626] border border-[rgba(255,255,255,0.08)] rounded-[12px]">
+            <div className="inline-flex items-center gap-[8px] px-[12px] py-[8px] bg-[#0a0a0a] border border-[rgba(255,255,255,0.08)] rounded-[12px]">
               <span className="text-[14px] text-[#fafafa] font-medium">
                 {(fields.wordCountMin ?? 1200).toLocaleString()} – {(fields.wordCountMax ?? 1700).toLocaleString()}
               </span>
@@ -1014,6 +997,11 @@ export function ContentEditModal({
     wordCountMax: 1700,
   });
 
+  const [version, setVersion] = useState(1);
+  const [showVersionDropdown, setShowVersionDropdown] = useState(false);
+  const [showStatusDropdown, setShowStatusDropdown] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState("Draft");
+
   const setField = (k: string, v: any) => setFieldsRaw((prev) => ({ ...prev, [k]: v }));
 
   if (!isOpen) return null;
@@ -1043,23 +1031,59 @@ export function ContentEditModal({
 
             {/* Right: action buttons */}
             <div className="flex items-center gap-[12px]">
-              {/* Generate button */}
-              <button className="bg-[#262626] flex gap-[8px] h-[36px] items-center justify-center px-[12px] py-[8px] rounded-[12px] shrink-0 hover:bg-[#333] transition-colors">
-                <span className="font-medium text-[#fafafa] text-[14px]">Generate</span>
-                <AISparkleIcon paths={svgPathsShortClip} />
-              </button>
-
-              {/* Draft dropdown */}
-              <div className="bg-[#262626] border border-[rgba(255,255,255,0.08)] flex items-center px-[17px] py-[9px] rounded-[56px] shrink-0 relative">
-                <span className="font-medium text-[#fafafa] text-[14px] mr-[8px]">Draft</span>
-                <div className="w-px h-[20px] bg-[rgba(255,255,255,0.08)] mx-[8px]" />
-                <ChevronDown className="size-[14px] text-[#a1a1aa]" />
+              {/* Version dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowVersionDropdown(!showVersionDropdown)}
+                  className="bg-[#262626] border border-[rgba(255,255,255,0.08)] flex items-center px-[17px] py-[9px] rounded-[56px] shrink-0 hover:bg-[#333] transition-colors"
+                >
+                  <span className="font-medium text-[#fafafa] text-[14px] mr-[8px]">Version {version}</span>
+                  <ChevronDown className="size-[14px] text-[#a1a1aa]" />
+                </button>
+                {showVersionDropdown && (
+                  <div className="absolute right-0 top-full mt-2 bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] rounded-[12px] shadow-xl py-2 min-w-[120px] z-50">
+                    {[1, 2, 3, 4, 5].map((v) => (
+                      <button
+                        key={v}
+                        onClick={() => { setVersion(v); setShowVersionDropdown(false); }}
+                        className={`w-full px-4 py-2 text-left text-sm hover:bg-[#262626] transition-colors ${v === version ? 'text-[#10b981] font-medium' : 'text-[#fafafa]'}`}
+                      >
+                        Version {v}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* Settings */}
-              <button className="flex items-center justify-center rounded-[16px] size-[36px] hover:bg-[#262626] transition-colors">
-                <SettingsIcon />
+              {/* Regenerate Content button */}
+              <button className="bg-[#262626] flex gap-[8px] h-[36px] items-center justify-center px-[12px] py-[8px] rounded-[12px] shrink-0 hover:bg-[#333] transition-colors">
+                <span className="font-medium text-[#fafafa] text-[14px]">Regenerate Content</span>
+                <Sparkles className="size-[14px] text-[#10b981]" />
               </button>
+
+              {/* Status dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowStatusDropdown(!showStatusDropdown)}
+                  className="bg-[#262626] border border-[rgba(255,255,255,0.08)] flex items-center px-[17px] py-[9px] rounded-[56px] shrink-0 hover:bg-[#333] transition-colors"
+                >
+                  <span className="font-medium text-[#fafafa] text-[14px] mr-[8px]">{currentStatus}</span>
+                  <ChevronDown className="size-[14px] text-[#a1a1aa]" />
+                </button>
+                {showStatusDropdown && (
+                  <div className="absolute right-0 top-full mt-2 bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] rounded-[12px] shadow-xl py-2 min-w-[160px] z-50">
+                    {["Draft", "Generating", "Ready for Review", "Approved", "Published", "Rejected"].map((status) => (
+                      <button
+                        key={status}
+                        onClick={() => { setCurrentStatus(status); setShowStatusDropdown(false); }}
+                        className={`w-full px-4 py-2 text-left text-sm hover:bg-[#262626] transition-colors ${status === currentStatus ? 'text-[#10b981] font-medium' : 'text-[#fafafa]'}`}
+                      >
+                        {status}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
 
               {/* Close */}
               <button
