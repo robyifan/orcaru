@@ -6,6 +6,7 @@ import {
   Instagram, Facebook, Linkedin, Twitter, Youtube, Music2,
 } from 'lucide-react';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns';
+import { PostDetailModal } from './post-detail-modal';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -1371,7 +1372,7 @@ export function CalendarView() {
       )}
 
       {editingItem && (
-        <EditModal item={editingItem} onClose={() => setEditingItem(null)} onSave={handleSaveItem} onRegenerate={() => handleOpenRegenerate(editingItem)} />
+        <PostDetailModal item={editingItem} onClose={() => setEditingItem(null)} onSave={handleSaveItem} onRegenerate={() => handleOpenRegenerate(editingItem)} />
       )}
       {regeneratingItems.length > 0 && (
         <RegenerateModal items={regeneratingItems} onClose={() => setRegeneratingItems([])} onConfirmRegenerate={handleConfirmRegenerate} />
