@@ -156,10 +156,10 @@ function SearchIcon() {
 function FieldLabel({ children, projectDefault }: { children: React.ReactNode; projectDefault?: boolean }) {
   return (
     <div className="flex items-center gap-2 h-[24px] relative shrink-0 w-full mb-0">
-      <span className="font-bold text-[#1a1a1a] text-[16px] leading-[21px]">{children}</span>
+      <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">{children}</span>
       {projectDefault && (
-        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00b47d] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
-          <span className="size-[6px] rounded-full bg-[#00b47d] inline-block" />
+        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00d492] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
+          <span className="size-[6px] rounded-full bg-[#00d492] inline-block" />
           Project Default
         </span>
       )}
@@ -170,10 +170,10 @@ function FieldLabel({ children, projectDefault }: { children: React.ReactNode; p
 function ConfigFieldLabel({ children, projectDefault }: { children: React.ReactNode; projectDefault?: boolean }) {
   return (
     <div className="flex items-center gap-2 h-[28px] pb-2 w-full">
-      <span className="font-bold text-[#1a1a1a] text-[14px] leading-5">{children}</span>
+      <span className="font-bold text-[#fafafa] text-[14px] leading-5">{children}</span>
       {projectDefault && (
-        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00b47d] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
-          <span className="size-[6px] rounded-full bg-[#00b47d] inline-block" />
+        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00d492] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
+          <span className="size-[6px] rounded-full bg-[#00d492] inline-block" />
           Project Default
         </span>
       )}
@@ -316,7 +316,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
   return (
     <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
       {/* Section heading */}
-      <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px]">Source material and resources</p>
+      <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Source material and resources</p>
       <p className="text-[#a1a1aa] text-[14px] leading-[20px] pt-[4px]">Provide references and assets to guide content generation. This step is optional.</p>
 
       {/* A — Main Content Source */}
@@ -325,7 +325,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
           <div className="bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] rounded-[12px] size-[24px] flex items-center justify-center shrink-0">
             <span className="font-black text-[#10b981] text-[12px] leading-4">A</span>
           </div>
-          <span className="font-bold text-[#fafafa] text-[14px]">Main Content Source</span>
+          <span className="font-bold text-[#1a1a1a] text-[14px]">Main Content Source</span>
           <span className="text-[#a1a1aa] text-[12px]">(Optional)</span>
         </div>
 
@@ -399,7 +399,7 @@ function ConfigurationSection({ category, fields, setField }: {
 }) {
   return (
     <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
-      <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px]">Configuration</p>
+      <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Configuration</p>
       <p className="text-[#a1a1aa] text-[14px] leading-[20px] pt-[4px]">
         Fields marked <span className="text-[#00d492] font-semibold">Project Default</span> are pre-filled from your project settings.
       </p>
@@ -555,7 +555,7 @@ function ConfigurationSection({ category, fields, setField }: {
         {/* Word Count Range — all types */}
         <div className="pt-[8px]">
           <div className="flex items-center justify-between mb-[16px]">
-            <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Word Count Range</p>
+            <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px]">Word Count Range</p>
             <AISparkleIcon paths={svgPathsShortClip} />
           </div>
 
@@ -1106,7 +1106,7 @@ export function ContentEditModal({
           <PreviewPanel category={category} fields={fields} />
 
           {/* Form panel (right, scrollable) */}
-          <div className="flex-1 min-w-0 overflow-y-auto bg-[#fafafa]">
+          <div className="flex-1 min-w-0 overflow-y-auto bg-[#0a0a0a]">
             <div className="flex flex-col items-start px-[24px] py-[16px] pb-[120px]">
               {category === "long-form" && <LongFormFields fields={fields} setField={setField} />}
               {category === "short-video" && <ShortVideoFields fields={fields} setField={setField} />}
