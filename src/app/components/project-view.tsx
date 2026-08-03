@@ -98,6 +98,7 @@ interface ContentItem {
   imageUrl?: string;
   templateId?: string;
   postContent?: string;
+  platform?: string;
 }
 
 interface ProjectTemplate {
@@ -4217,6 +4218,7 @@ export function ProjectView({ projectId, projectName, onBack }: ProjectViewProps
             date: selectedItem.date,
             status: (selectedItem.status === 'ready-for-review' || selectedItem.status === 'published' ? 'draft' : selectedItem.status) as any,
             title: selectedItem.title,
+            platform: selectedItem.platform,
           }}
           onUpdate={(updates) => {
             setItems(prev => prev.map(it => it.id === selectedItem.id ? { ...it, date: updates.date ?? it.date, topic: updates.topic ?? it.topic, title: updates.title ?? it.title } : it));

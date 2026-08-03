@@ -16,6 +16,7 @@ interface ContentEditModalProps {
     date: string;
     status: "draft" | "approved" | "rejected" | "generating";
     title?: string;
+    platform?: string;
   };
   onUpdate: (updates: any) => void;
   availableContentTypes: string[];
@@ -669,21 +670,21 @@ function ConfigurationSection({ category, fields, setField }: {
   );
 }
 
-// ─── Platform icons ───────────────────────────────────────────────────────────
+// ─── Platform label ───────────────────────────────────────────────────────────
 
-function PlatformIcon({ platform }: { platform: string }) {
+function PlatformLabel({ platform }: { platform: string }) {
   const icons: Record<string, { color: string; label: string }> = {
-    instagram: { color: "#E1306C", label: "IG" },
-    facebook: { color: "#1877F2", label: "FB" },
-    tiktok: { color: "#00f2ea", label: "TT" },
-    youtube: { color: "#FF0000", label: "YT" },
-    linkedin: { color: "#0A66C2", label: "LI" },
+    instagram: { color: "#E1306C", label: "Instagram" },
+    facebook: { color: "#1877F2", label: "Facebook" },
+    tiktok: { color: "#00f2ea", label: "TikTok" },
+    youtube: { color: "#FF0000", label: "YouTube" },
+    linkedin: { color: "#0A66C2", label: "LinkedIn" },
     x: { color: "#fafafa", label: "X" },
   };
-  const p = icons[platform] || { color: "#a1a1aa", label: platform.toUpperCase().slice(0, 2) };
+  const p = icons[platform] || { color: "#a1a1aa", label: platform };
   return (
     <span
-      className="inline-flex items-center justify-center rounded-[6px] text-[9px] font-bold px-[6px] py-[3px]"
+      className="inline-flex items-center rounded-[6px] text-[10px] font-semibold px-[8px] py-[3px]"
       style={{ backgroundColor: `${p.color}22`, color: p.color, border: `1px solid ${p.color}44` }}
     >
       {p.label}
@@ -693,13 +694,13 @@ function PlatformIcon({ platform }: { platform: string }) {
 
 // ─── Preview panel ─────────────────────────────────────────────────────────────
 
-function PreviewPanel({ category, fields }: {
+function PreviewPanel({ category, fields, platform }: {
   category: ContentCategory;
   fields: Record<string, any>;
+  platform?: string;
 }) {
   const title = fields.title || "";
   const tags: string[] = fields.tags ?? [];
-  const platforms: string[] = fields.platforms ?? [];
 
   // Determine the body text to show based on content type
   const bodyText =
@@ -723,20 +724,11 @@ function PreviewPanel({ category, fields }: {
   const contentParas = paragraphs.filter((p: string) => !p.startsWith("#"));
   const hashtagLine = paragraphs.find((p: string) => p.startsWith("#")) || "";
 
-  // Default platforms if none set
-  const displayPlatforms = platforms.length > 0 ? platforms : ["instagram", "youtube"];
-
   return (
     <div className="bg-[rgba(10,10,10,0.2)] border-r border-[rgba(255,255,255,0.08)] self-stretch shrink-0 w-[320px] flex flex-col gap-[10px] pl-[24px] pr-[25px] py-[16px]">
       <div className="flex items-center justify-between">
         <p className="font-bold text-[14px] text-white leading-5">Preview</p>
-        {displayPlatforms.length > 0 && (
-          <div className="flex gap-[4px]">
-            {displayPlatforms.map((p) => (
-              <PlatformIcon key={p} platform={p} />
-            ))}
-          </div>
-        )}
+        {platform && <PlatformLabel platform={platform} />}
       </div>
 
       {/* ── Long Form Preview ── */}
@@ -1488,7 +1480,7 @@ export function ContentEditModal({
         {/* ── Body: Preview + Form ── */}
         <div className="flex flex-1 min-h-0 overflow-hidden">
           {/* Preview panel (left, 320px) */}
-          <PreviewPanel category={category} fields={fields} />
+          <PreviewPanel category={category} fields={fields} platform={contentItem.platform} />
 
           {/* Form panel (right, scrollable) */}
           <div className="flex-1 min-w-0 overflow-y-auto bg-[#0a0a0a]">
