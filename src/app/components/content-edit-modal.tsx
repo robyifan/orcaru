@@ -156,10 +156,10 @@ function SearchIcon() {
 function FieldLabel({ children, projectDefault }: { children: React.ReactNode; projectDefault?: boolean }) {
   return (
     <div className="flex items-center gap-2 h-[24px] relative shrink-0 w-full mb-0">
-      <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">{children}</span>
+      <span className="font-bold text-[#1a1a1a] text-[16px] leading-[21px]">{children}</span>
       {projectDefault && (
-        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00d492] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
-          <span className="size-[6px] rounded-full bg-[#00d492] inline-block" />
+        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00b47d] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
+          <span className="size-[6px] rounded-full bg-[#00b47d] inline-block" />
           Project Default
         </span>
       )}
@@ -170,10 +170,10 @@ function FieldLabel({ children, projectDefault }: { children: React.ReactNode; p
 function ConfigFieldLabel({ children, projectDefault }: { children: React.ReactNode; projectDefault?: boolean }) {
   return (
     <div className="flex items-center gap-2 h-[28px] pb-2 w-full">
-      <span className="font-bold text-[#fafafa] text-[14px] leading-5">{children}</span>
+      <span className="font-bold text-[#1a1a1a] text-[14px] leading-5">{children}</span>
       {projectDefault && (
-        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00d492] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
-          <span className="size-[6px] rounded-full bg-[#00d492] inline-block" />
+        <span className="bg-[rgba(0,188,125,0.1)] border border-[rgba(0,188,125,0.2)] text-[#00b47d] text-[10px] font-bold uppercase tracking-[0.5px] px-[9px] py-[5px] rounded-xl flex items-center gap-[6px]">
+          <span className="size-[6px] rounded-full bg-[#00b47d] inline-block" />
           Project Default
         </span>
       )}
@@ -316,7 +316,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
   return (
     <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
       {/* Section heading */}
-      <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Source material and resources</p>
+      <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px]">Source material and resources</p>
       <p className="text-[#a1a1aa] text-[14px] leading-[20px] pt-[4px]">Provide references and assets to guide content generation. This step is optional.</p>
 
       {/* A — Main Content Source */}
@@ -352,7 +352,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
         {/* Paste a link */}
         <div className="pt-[20px] w-full">
           <div className="h-[24px] relative mb-0">
-            <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">Paste a link</span>
+            <span className="font-bold text-[#1a1a1a] text-[16px] leading-[21px]">Paste a link</span>
           </div>
           <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 mt-0 border border-[rgba(255,255,255,0.12)]">
             <SearchIcon />
@@ -399,7 +399,7 @@ function ConfigurationSection({ category, fields, setField }: {
 }) {
   return (
     <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
-      <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Configuration</p>
+      <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px]">Configuration</p>
       <p className="text-[#a1a1aa] text-[14px] leading-[20px] pt-[4px]">
         Fields marked <span className="text-[#00d492] font-semibold">Project Default</span> are pre-filled from your project settings.
       </p>
@@ -491,7 +491,7 @@ function ConfigurationSection({ category, fields, setField }: {
 
         {/* Voice & Style — all types */}
         <div className="pt-[8px]">
-          <p className="font-bold text-[#fafafa] text-[16px] leading-[24px] mb-[16px]">Voice & Style</p>
+          <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px] mb-[16px]">Voice & Style</p>
 
           {/* Writer Profile */}
           <div className="mb-[20px]">
@@ -1106,7 +1106,7 @@ export function ContentEditModal({
           <PreviewPanel category={category} fields={fields} />
 
           {/* Form panel (right, scrollable) */}
-          <div className="flex-1 min-w-0 overflow-y-auto">
+          <div className="flex-1 min-w-0 overflow-y-auto bg-[#fafafa]">
             <div className="flex flex-col items-start px-[24px] py-[16px] pb-[120px]">
               {category === "long-form" && <LongFormFields fields={fields} setField={setField} />}
               {category === "short-video" && <ShortVideoFields fields={fields} setField={setField} />}
@@ -1114,6 +1114,76 @@ export function ContentEditModal({
               {category === "quote-card" && <QuoteCardFields fields={fields} setField={setField} />}
               {category === "ai-video" && <AIVideoFields fields={fields} setField={setField} />}
               {category === "other" && <OtherFields fields={fields} setField={setField} />}
+
+              {/* ── Comments Section ── */}
+              <div className="w-full pt-[24px]">
+                <div className="h-px bg-[rgba(0,0,0,0.08)] mb-[16px]" />
+                <div className="flex items-center gap-[8px] mb-[16px]">
+                  <p className="font-bold text-[#1a1a1a] text-[15px]">Comments</p>
+                  <div className="bg-[rgba(0,0,0,0.08)] rounded-[10px] px-[6px] py-[2px]">
+                    <span className="text-[#71717a] text-[11px] font-semibold">3</span>
+                  </div>
+                </div>
+
+                {/* Comment list */}
+                <div className="flex flex-col gap-[16px] mb-[16px]">
+                  {/* Comment 1 */}
+                  <div className="flex gap-[12px]">
+                    <div className="bg-[#8b5cf6] rounded-[14px] size-[28px] flex items-center justify-center shrink-0">
+                      <span className="text-white text-[11px] font-bold">SC</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-[8px] mb-[4px]">
+                        <span className="font-bold text-[#1a1a1a] text-[13px]">Sarah Chen</span>
+                        <span className="text-[#71717a] text-[11px]">2h ago</span>
+                      </div>
+                      <p className="text-[#52525b] text-[13px] leading-[18px]">Should we adjust the hashtags to include #SummerFitness?</p>
+                    </div>
+                  </div>
+
+                  {/* Comment 2 */}
+                  <div className="flex gap-[12px]">
+                    <div className="bg-[#f59e0b] rounded-[14px] size-[28px] flex items-center justify-center shrink-0">
+                      <span className="text-white text-[11px] font-bold">MT</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-[8px] mb-[4px]">
+                        <span className="font-bold text-[#1a1a1a] text-[13px]">Mike Torres</span>
+                        <span className="text-[#71717a] text-[11px]">1h ago</span>
+                      </div>
+                      <p className="text-[#52525b] text-[13px] leading-[18px]">Good call, also the publish date might conflict with the campaign launch</p>
+                    </div>
+                  </div>
+
+                  {/* Comment 3 */}
+                  <div className="flex gap-[12px]">
+                    <div className="bg-[#8b5cf6] rounded-[14px] size-[28px] flex items-center justify-center shrink-0">
+                      <span className="text-white text-[11px] font-bold">SC</span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-[8px] mb-[4px]">
+                        <span className="font-bold text-[#1a1a1a] text-[13px]">Sarah Chen</span>
+                        <span className="text-[#71717a] text-[11px]">30m ago</span>
+                      </div>
+                      <p className="text-[#52525b] text-[13px] leading-[18px]">Updated the tags, can you review?</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Comment composer */}
+                <div className="bg-[#262626] border border-[rgba(255,255,255,0.08)] rounded-[12px] flex items-center gap-[12px] px-[15px] py-[9px]">
+                  <input
+                    type="text"
+                    placeholder="Add a comment..."
+                    className="flex-1 bg-transparent text-[13px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none"
+                  />
+                  <button className="flex items-center justify-center size-[24px] rounded-[4px] hover:bg-[rgba(255,255,255,0.1)] transition-colors">
+                    <svg fill="none" viewBox="0 0 14 14" className="size-[14px]">
+                      <path d="M13 1L6 8M13 1L8 13L6 8M13 1L1 6L6 8" stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
