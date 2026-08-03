@@ -325,7 +325,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
           <div className="bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] rounded-[12px] size-[24px] flex items-center justify-center shrink-0">
             <span className="font-black text-[#10b981] text-[12px] leading-4">A</span>
           </div>
-          <span className="font-bold text-[#1a1a1a] text-[14px]">Main Content Source</span>
+          <span className="font-bold text-[#fafafa] text-[14px]">Main Content Source</span>
           <span className="text-[#a1a1aa] text-[12px]">(Optional)</span>
         </div>
 
@@ -352,7 +352,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
         {/* Paste a link */}
         <div className="pt-[20px] w-full">
           <div className="h-[24px] relative mb-0">
-            <span className="font-bold text-[#1a1a1a] text-[16px] leading-[21px]">Paste a link</span>
+            <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">Paste a link</span>
           </div>
           <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 mt-0 border border-[rgba(255,255,255,0.12)]">
             <SearchIcon />
@@ -1117,11 +1117,11 @@ export function ContentEditModal({
 
               {/* ── Comments Section ── */}
               <div className="w-full pt-[24px]">
-                <div className="h-px bg-[rgba(0,0,0,0.08)] mb-[16px]" />
+                <div className="h-px bg-[rgba(255,255,255,0.08)] mb-[16px]" />
                 <div className="flex items-center gap-[8px] mb-[16px]">
-                  <p className="font-bold text-[#1a1a1a] text-[15px]">Comments</p>
-                  <div className="bg-[rgba(0,0,0,0.08)] rounded-[10px] px-[6px] py-[2px]">
-                    <span className="text-[#71717a] text-[11px] font-semibold">3</span>
+                  <p className="font-bold text-[#fafafa] text-[15px]">Comments</p>
+                  <div className="bg-[rgba(255,255,255,0.08)] rounded-[10px] px-[6px] py-[2px]">
+                    <span className="text-[#a1a1aa] text-[11px] font-semibold">3</span>
                   </div>
                 </div>
 
@@ -1134,10 +1134,10 @@ export function ContentEditModal({
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-[8px] mb-[4px]">
-                        <span className="font-bold text-[#1a1a1a] text-[13px]">Sarah Chen</span>
-                        <span className="text-[#71717a] text-[11px]">2h ago</span>
+                        <span className="font-bold text-[#fafafa] text-[13px]">Sarah Chen</span>
+                        <span className="text-[#a1a1aa] text-[11px]">2h ago</span>
                       </div>
-                      <p className="text-[#52525b] text-[13px] leading-[18px]">Should we adjust the hashtags to include #SummerFitness?</p>
+                      <p className="text-[#d4d4d8] text-[13px] leading-[18px]">Should we adjust the hashtags to include #SummerFitness?</p>
                     </div>
                   </div>
 
@@ -1148,10 +1148,10 @@ export function ContentEditModal({
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-[8px] mb-[4px]">
-                        <span className="font-bold text-[#1a1a1a] text-[13px]">Mike Torres</span>
-                        <span className="text-[#71717a] text-[11px]">1h ago</span>
+                        <span className="font-bold text-[#fafafa] text-[13px]">Mike Torres</span>
+                        <span className="text-[#a1a1aa] text-[11px]">1h ago</span>
                       </div>
-                      <p className="text-[#52525b] text-[13px] leading-[18px]">Good call, also the publish date might conflict with the campaign launch</p>
+                      <p className="text-[#d4d4d8] text-[13px] leading-[18px]">Good call, also the publish date might conflict with the campaign launch</p>
                     </div>
                   </div>
 
@@ -1162,16 +1162,16 @@ export function ContentEditModal({
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-[8px] mb-[4px]">
-                        <span className="font-bold text-[#1a1a1a] text-[13px]">Sarah Chen</span>
-                        <span className="text-[#71717a] text-[11px]">30m ago</span>
+                        <span className="font-bold text-[#fafafa] text-[13px]">Sarah Chen</span>
+                        <span className="text-[#a1a1aa] text-[11px]">30m ago</span>
                       </div>
-                      <p className="text-[#52525b] text-[13px] leading-[18px]">Updated the tags, can you review?</p>
+                      <p className="text-[#d4d4d8] text-[13px] leading-[18px]">Updated the tags, can you review?</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Comment composer */}
-                <div className="bg-[#262626] border border-[rgba(255,255,255,0.08)] rounded-[12px] flex items-center gap-[12px] px-[15px] py-[9px]">
+                <div className="bg-[#1a1a1a] border border-[rgba(255,255,255,0.12)] rounded-[12px] flex items-center gap-[12px] px-[15px] py-[9px]">
                   <input
                     type="text"
                     placeholder="Add a comment..."
