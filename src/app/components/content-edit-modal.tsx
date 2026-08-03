@@ -281,32 +281,40 @@ function ReadOnlySelect({ value, options }: { value: string; options: Record<str
 }
 
 // Date + Time row (matching Figma PublishDateTime)
-function PublishDateTimeRow({ date, time, onDate, onTime }: { date: string; time: string; onDate: (v: string) => void; onTime: (v: string) => void }) {
+function PublishDateTimeRow({ date, time, onDate, onTime, isApproved }: { date: string; time: string; onDate: (v: string) => void; onTime: (v: string) => void; isApproved?: boolean }) {
   return (
     <div className="flex gap-[16px] h-[76px] items-center shrink-0 w-full">
       <div className="flex flex-col flex-1 min-w-0 pt-[16px]">
         <FieldLabel>Publish Date</FieldLabel>
-        <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 border border-[rgba(255,255,255,0.12)]">
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => onDate(e.target.value)}
-            className="flex-1 bg-transparent text-[14px] text-[#fafafa] outline-none min-w-0"
-          />
-          <CalendarIcon />
-        </div>
+        {isApproved ? (
+          <ReadOnlyText value={date} />
+        ) : (
+          <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 border border-[rgba(255,255,255,0.12)]">
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => onDate(e.target.value)}
+              className="flex-1 bg-transparent text-[14px] text-[#fafafa] outline-none min-w-0"
+            />
+            <CalendarIcon />
+          </div>
+        )}
       </div>
       <div className="flex flex-col flex-1 min-w-0 pt-[16px]">
         <FieldLabel>Publish Time</FieldLabel>
-        <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 border border-[rgba(255,255,255,0.12)]">
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => onTime(e.target.value)}
-            className="flex-1 bg-transparent text-[14px] text-[#fafafa] outline-none min-w-0"
-          />
-          <ClockIcon />
-        </div>
+        {isApproved ? (
+          <ReadOnlyText value={time} />
+        ) : (
+          <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 border border-[rgba(255,255,255,0.12)]">
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => onTime(e.target.value)}
+              className="flex-1 bg-transparent text-[14px] text-[#fafafa] outline-none min-w-0"
+            />
+            <ClockIcon />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -852,156 +860,205 @@ function LongFormFields({ fields, setField, isApproved }: { fields: Record<strin
   );
 }
 
-function ShortVideoFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+function ShortVideoFields({ fields, setField, isApproved }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void; isApproved?: boolean }) {
   return (
     <>
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Title*</FieldLabel>
-        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter clip title" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.title ?? ""} />
+        ) : (
+          <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter clip title" />
+        )}
       </div>
 
       <PublishDateTimeRow
         date={fields.date ?? ""} time={fields.time ?? "09:00"}
         onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+        isApproved={isApproved}
       />
 
       <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
         <FieldLabel>Caption / Script</FieldLabel>
-        <Textarea
-          value={fields.caption ?? ""}
-          onChange={(v) => setField("caption", v)}
-          placeholder="Write your video caption or script here..."
-          minRows={5}
-        />
+        {isApproved ? (
+          <ReadOnlyText value={fields.caption ?? ""} />
+        ) : (
+          <Textarea
+            value={fields.caption ?? ""}
+            onChange={(v) => setField("caption", v)}
+            placeholder="Write your video caption or script here..."
+            minRows={5}
+          />
+        )}
       </div>
 
-      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
-      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
-      <ConfigurationSection category="short-video" fields={fields} setField={setField as any} />
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} isApproved={isApproved} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} isApproved={isApproved} />
+      <ConfigurationSection category="short-video" fields={fields} setField={setField as any} isApproved={isApproved} />
     </>
   );
 }
 
-function HighlightFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+function HighlightFields({ fields, setField, isApproved }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void; isApproved?: boolean }) {
   return (
     <>
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Title*</FieldLabel>
-        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter highlight reel title" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.title ?? ""} />
+        ) : (
+          <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter highlight reel title" />
+        )}
       </div>
 
       <PublishDateTimeRow
         date={fields.date ?? ""} time={fields.time ?? "09:00"}
         onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+        isApproved={isApproved}
       />
 
       <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
         <FieldLabel>Description</FieldLabel>
-        <Textarea
-          value={fields.description ?? ""}
-          onChange={(v) => setField("description", v)}
-          placeholder="Describe this highlight reel..."
-          minRows={4}
-        />
+        {isApproved ? (
+          <ReadOnlyText value={fields.description ?? ""} />
+        ) : (
+          <Textarea
+            value={fields.description ?? ""}
+            onChange={(v) => setField("description", v)}
+            placeholder="Describe this highlight reel..."
+            minRows={4}
+          />
+        )}
       </div>
 
-      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
-      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
-      <ConfigurationSection category="highlight" fields={fields} setField={setField as any} />
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} isApproved={isApproved} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} isApproved={isApproved} />
+      <ConfigurationSection category="highlight" fields={fields} setField={setField as any} isApproved={isApproved} />
     </>
   );
 }
 
-function QuoteCardFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+function QuoteCardFields({ fields, setField, isApproved }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void; isApproved?: boolean }) {
   return (
     <>
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Title*</FieldLabel>
-        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter quote card title" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.title ?? ""} />
+        ) : (
+          <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter quote card title" />
+        )}
       </div>
 
       <PublishDateTimeRow
         date={fields.date ?? ""} time={fields.time ?? "09:00"}
         onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+        isApproved={isApproved}
       />
 
       <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
         <FieldLabel>Quote Text</FieldLabel>
-        <Textarea
-          value={fields.quoteText ?? ""}
-          onChange={(v) => setField("quoteText", v)}
-          placeholder="Enter the quote to display on the card..."
-          minRows={4}
-        />
+        {isApproved ? (
+          <ReadOnlyText value={fields.quoteText ?? ""} />
+        ) : (
+          <Textarea
+            value={fields.quoteText ?? ""}
+            onChange={(v) => setField("quoteText", v)}
+            placeholder="Enter the quote to display on the card..."
+            minRows={4}
+          />
+        )}
       </div>
 
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Author Attribution</FieldLabel>
-        <Input value={fields.author ?? ""} onChange={(v) => setField("author", v)} placeholder="e.g., Gurudev Shri Amritji" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.author ?? ""} />
+        ) : (
+          <Input value={fields.author ?? ""} onChange={(v) => setField("author", v)} placeholder="e.g., Gurudev Shri Amritji" />
+        )}
       </div>
 
-      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
-      <ConfigurationSection category="quote-card" fields={fields} setField={setField as any} />
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} isApproved={isApproved} />
+      <ConfigurationSection category="quote-card" fields={fields} setField={setField as any} isApproved={isApproved} />
     </>
   );
 }
 
-function AIVideoFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+function AIVideoFields({ fields, setField, isApproved }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void; isApproved?: boolean }) {
   return (
     <>
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Title*</FieldLabel>
-        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter AI video title" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.title ?? ""} />
+        ) : (
+          <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter AI video title" />
+        )}
       </div>
 
       <PublishDateTimeRow
         date={fields.date ?? ""} time={fields.time ?? "09:00"}
         onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+        isApproved={isApproved}
       />
 
       <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
         <FieldLabel>Script / Prompt</FieldLabel>
-        <Textarea
-          value={fields.script ?? ""}
-          onChange={(v) => setField("script", v)}
-          placeholder="Write the script or prompt for AI video generation..."
-          minRows={5}
-        />
+        {isApproved ? (
+          <ReadOnlyText value={fields.script ?? ""} />
+        ) : (
+          <Textarea
+            value={fields.script ?? ""}
+            onChange={(v) => setField("script", v)}
+            placeholder="Write the script or prompt for AI video generation..."
+            minRows={5}
+          />
+        )}
       </div>
 
-      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
-      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
-      <ConfigurationSection category="ai-video" fields={fields} setField={setField as any} />
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} isApproved={isApproved} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} isApproved={isApproved} />
+      <ConfigurationSection category="ai-video" fields={fields} setField={setField as any} isApproved={isApproved} />
     </>
   );
 }
 
-function OtherFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+function OtherFields({ fields, setField, isApproved }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void; isApproved?: boolean }) {
   return (
     <>
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Title*</FieldLabel>
-        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter post title" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.title ?? ""} />
+        ) : (
+          <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter post title" />
+        )}
       </div>
 
       <PublishDateTimeRow
         date={fields.date ?? ""} time={fields.time ?? "09:00"}
         onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+        isApproved={isApproved}
       />
 
       <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
         <FieldLabel>Post Content</FieldLabel>
-        <Textarea
-          value={fields.content ?? ""}
-          onChange={(v) => setField("content", v)}
-          placeholder="Write your post content here..."
-          minRows={5}
-        />
+        {isApproved ? (
+          <ReadOnlyText value={fields.content ?? ""} />
+        ) : (
+          <Textarea
+            value={fields.content ?? ""}
+            onChange={(v) => setField("content", v)}
+            placeholder="Write your post content here..."
+            minRows={5}
+          />
+        )}
       </div>
 
-      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
-      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
-      <ConfigurationSection category="other" fields={fields} setField={setField as any} />
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} isApproved={isApproved} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} isApproved={isApproved} />
+      <ConfigurationSection category="other" fields={fields} setField={setField as any} isApproved={isApproved} />
     </>
   );
 }
