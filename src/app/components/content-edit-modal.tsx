@@ -181,10 +181,10 @@ function ConfigFieldLabel({ children, projectDefault }: { children: React.ReactN
   );
 }
 
-// Basic input (dark bg-[#0a0a0a], rounded-[12px])
+// Basic input (lighter bg to stand out from modal background)
 function Input({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
-    <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] shrink-0 w-full">
+    <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]">
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -195,10 +195,10 @@ function Input({ value, onChange, placeholder }: { value: string; onChange: (v: 
   );
 }
 
-// Basic textarea (dark bg-[#0a0a0a], rounded-[12px])
+// Basic textarea (lighter bg to stand out from modal background)
 function Textarea({ value, onChange, placeholder, minRows = 4 }: { value: string; onChange: (v: string) => void; placeholder?: string; minRows?: number }) {
   return (
-    <div className="bg-[#0a0a0a] relative rounded-[12px] shrink-0 w-full" style={{ minHeight: minRows * 28 }}>
+    <div className="bg-[#1a1a1a] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]" style={{ minHeight: minRows * 28 }}>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -210,31 +210,31 @@ function Textarea({ value, onChange, placeholder, minRows = 4 }: { value: string
   );
 }
 
-// Config input (matching Figma: bg-[#0a0a0a], rounded-[12px])
+// Config input (lighter bg with visible border to stand out)
 function ConfigInput({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
   return (
-    <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
+    <div className="bg-[#1a1a1a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]">
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[12px]"
+        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.6)] outline-none rounded-[12px]"
       />
     </div>
   );
 }
 
-// Config textarea (matching Figma: bg-[#0a0a0a], rounded-[12px])
+// Config textarea (lighter bg with visible border to stand out)
 function ConfigTextarea({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
-    <div className="bg-[#0a0a0a] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)]">
+    <div className="bg-[#1a1a1a] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]">
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={4}
-        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none rounded-[12px] leading-[20px] resize-none"
+        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.6)] outline-none rounded-[12px] leading-[20px] resize-none"
       />
     </div>
   );
@@ -246,7 +246,7 @@ function PublishDateTimeRow({ date, time, onDate, onTime }: { date: string; time
     <div className="flex gap-[16px] h-[76px] items-center shrink-0 w-full">
       <div className="flex flex-col flex-1 min-w-0 pt-[16px]">
         <FieldLabel>Publish Date</FieldLabel>
-        <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2">
+        <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 border border-[rgba(255,255,255,0.12)]">
           <input
             type="date"
             value={date}
@@ -258,7 +258,7 @@ function PublishDateTimeRow({ date, time, onDate, onTime }: { date: string; time
       </div>
       <div className="flex flex-col flex-1 min-w-0 pt-[16px]">
         <FieldLabel>Publish Time</FieldLabel>
-        <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2">
+        <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 border border-[rgba(255,255,255,0.12)]">
           <input
             type="time"
             value={time}
@@ -283,7 +283,7 @@ function TagsSection({ tags, onChange }: { tags: string[]; onChange: (t: string[
   return (
     <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
       <FieldLabel>Tags</FieldLabel>
-      <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] shrink-0 w-full flex items-center px-[13px] gap-2 mt-0">
+      <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] shrink-0 w-full flex items-center px-[13px] gap-2 mt-0 border border-[rgba(255,255,255,0.12)]">
         <SearchIcon />
         <input
           value={input}
@@ -335,7 +335,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
           className="w-full border-2 border-dashed border-[rgba(255,255,255,0.08)] rounded-[24px] flex flex-col items-center justify-center py-[32px] px-[24px] gap-[12px] hover:border-[rgba(16,185,129,0.3)] transition-colors group"
         >
           <input ref={fileRef} type="file" className="hidden" multiple />
-          <div className="bg-[#262626] size-[48px] rounded-full flex items-center justify-center group-hover:bg-[rgba(16,185,129,0.1)] transition-colors">
+          <div className="bg-[#1a1a1a] size-[48px] rounded-full flex items-center justify-center group-hover:bg-[rgba(16,185,129,0.1)] transition-colors border border-[rgba(255,255,255,0.12)]">
             <UploadIcon />
           </div>
           <p className="font-semibold text-[#fafafa] text-[14px]">Drag &amp; drop or click to browse</p>
@@ -354,7 +354,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
           <div className="h-[24px] relative mb-0">
             <span className="font-bold text-[#fafafa] text-[16px] leading-[21px]">Paste a link</span>
           </div>
-          <div className="bg-[#0a0a0a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 mt-0">
+          <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] w-full flex items-center px-[13px] gap-2 mt-0 border border-[rgba(255,255,255,0.12)]">
             <SearchIcon />
             <input
               value={linkValue}
@@ -380,7 +380,7 @@ function ResourcesSection({ linkValue, onLinkChange }: { linkValue: string; onLi
         </div>
 
         {/* Library button */}
-        <button className="w-full bg-[#0a0a0a] border border-[rgba(255,255,255,0.08)] rounded-[12px] flex items-center gap-[12px] px-[16px] py-[14px] hover:bg-[#111] transition-colors">
+        <button className="w-full bg-[#1a1a1a] border border-[rgba(255,255,255,0.12)] rounded-[12px] flex items-center gap-[12px] px-[16px] py-[14px] hover:bg-[#222] transition-colors">
           <svg fill="none" viewBox="0 0 16 16" className="size-[16px] shrink-0">
             <path d={svgPathsShortClip.p1f315b00} stroke="#A1A1AA" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.33333" />
           </svg>
@@ -496,7 +496,7 @@ function ConfigurationSection({ category, fields, setField }: {
           {/* Writer Profile */}
           <div className="mb-[20px]">
             <ConfigFieldLabel projectDefault>Writer Profile</ConfigFieldLabel>
-            <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+            <div className="bg-[#1a1a1a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)] flex items-center px-[17px]">
               <select
                 value={fields.writerProfile ?? ""}
                 onChange={(e) => setField("writerProfile", e.target.value)}
@@ -516,7 +516,7 @@ function ConfigurationSection({ category, fields, setField }: {
           <div className="flex gap-[16px]">
             <div className="flex-1">
               <ConfigFieldLabel>Writing Tone</ConfigFieldLabel>
-              <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+              <div className="bg-[#1a1a1a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)] flex items-center px-[17px]">
                 <select
                   value={fields.writingTone ?? ""}
                   onChange={(e) => setField("writingTone", e.target.value)}
@@ -534,7 +534,7 @@ function ConfigurationSection({ category, fields, setField }: {
             </div>
             <div className="flex-1">
               <ConfigFieldLabel>Writing Level</ConfigFieldLabel>
-              <div className="bg-[#0a0a0a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+              <div className="bg-[#1a1a1a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)] flex items-center px-[17px]">
                 <select
                   value={fields.writingLevel ?? ""}
                   onChange={(e) => setField("writingLevel", e.target.value)}
@@ -561,7 +561,7 @@ function ConfigurationSection({ category, fields, setField }: {
 
           {/* Slider */}
           <div className="space-y-[8px]">
-            <div className="relative h-[8px] bg-[#0a0a0a] rounded-full border border-[rgba(255,255,255,0.08)]">
+            <div className="relative h-[8px] bg-[#1a1a1a] rounded-full border border-[rgba(255,255,255,0.12)]">
               <div
                 className="absolute h-full bg-[#10b981] rounded-full"
                 style={{
@@ -602,7 +602,7 @@ function ConfigurationSection({ category, fields, setField }: {
 
           {/* Selected range display */}
           <div className="flex items-center justify-center pt-[16px]">
-            <div className="inline-flex items-center gap-[8px] px-[12px] py-[8px] bg-[#0a0a0a] border border-[rgba(255,255,255,0.08)] rounded-[12px]">
+            <div className="inline-flex items-center gap-[8px] px-[12px] py-[8px] bg-[#1a1a1a] border border-[rgba(255,255,255,0.12)] rounded-[12px]">
               <span className="text-[14px] text-[#fafafa] font-medium">
                 {(fields.wordCountMin ?? 1200).toLocaleString()} – {(fields.wordCountMax ?? 1700).toLocaleString()}
               </span>
