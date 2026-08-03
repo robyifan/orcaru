@@ -120,7 +120,7 @@ export default function App() {
         return (
           <>
             <Sidebar activeTab={activeTab} onTabChange={handleTabChange} />
-            <CalendarView />
+            <CalendarView key="v3-aug-sep-2026" />
           </>
         );
       case 'projects':

@@ -469,7 +469,10 @@ function SelectionBar({ count, onClear, onRegenerate, onPublish, onDuplicate, on
 // ─── CalendarView ─────────────────────────────────────────────────────────────
 
 export function CalendarView() {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2026, 5, 1));
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
   const [selectedContentTypes, setSelectedContentTypes] = useState<Set<ContentType>>(new Set());
   const [selectedFunnelStages, setSelectedFunnelStages] = useState<Set<FunnelStage>>(new Set());
   const [selectedStatuses, setSelectedStatuses] = useState<Set<Status>>(new Set());
@@ -929,6 +932,164 @@ export function CalendarView() {
     { id: 'j731b', title: 'July Roundup',                   date: new Date(2026, 6, 31), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'bj731' },
     { id: 'j731c', title: 'July Roundup',                   date: new Date(2026, 6, 31), contentType: 'social-post', platform: 'linkedin',  funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'bj731' },
     { id: 'j731d', title: '"End Strong, Start Stronger"',   date: new Date(2026, 6, 31), contentType: 'quote-card',     funnelStage: 'top',    status: 'approved',   campaign: 'Nike Summer Drop' },
+
+    // ════════════════ AUGUST 2026 — upcoming content ═══════════════
+
+    // Aug 1
+    { id: 'a801a', title: 'Back to School: Gear Guide',     date: new Date(2026, 7, 1),  contentType: 'long-form',      funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026' },
+    { id: 'a801b', title: 'Back to School',                 date: new Date(2026, 7, 1),  contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026', batchId: 'ba801' },
+    { id: 'a801c', title: 'Back to School',                 date: new Date(2026, 7, 1),  contentType: 'social-post', platform: 'facebook',  funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026', batchId: 'ba801' },
+    { id: 'a801d', title: 'Back to School',                 date: new Date(2026, 7, 1),  contentType: 'social-post', platform: 'tiktok',    funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026', batchId: 'ba801' },
+    { id: 'a801e', title: 'Gear Up Clip',                   date: new Date(2026, 7, 1),  contentType: 'short-clip',     funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026' },
+
+    // Aug 3
+    { id: 'a803a', title: 'Fall Collection Teaser',         date: new Date(2026, 7, 3),  contentType: 'ai-video',       funnelStage: 'top',    status: 'generating', campaign: 'Fall Collection Launch' },
+    { id: 'a803b', title: 'Fall Collection',                date: new Date(2026, 7, 3),  contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'ba803' },
+    { id: 'a803c', title: 'Fall Collection',                date: new Date(2026, 7, 3),  contentType: 'social-post', platform: 'linkedin',  funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'ba803' },
+
+    // Aug 5
+    { id: 'a805a', title: 'Training for Marathon Season',   date: new Date(2026, 7, 5),  contentType: 'long-form',      funnelStage: 'middle', status: 'review',     campaign: 'Marathon Prep 2026' },
+    { id: 'a805b', title: 'Marathon Tips',                  date: new Date(2026, 7, 5),  contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'review',     campaign: 'Marathon Prep 2026', batchId: 'ba805' },
+    { id: 'a805c', title: 'Marathon Tips',                  date: new Date(2026, 7, 5),  contentType: 'social-post', platform: 'x',         funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba805' },
+    { id: 'a805d', title: '"Miles Make Champions"',          date: new Date(2026, 7, 5),  contentType: 'quote-card',     funnelStage: 'middle', status: 'approved',   campaign: 'Marathon Prep 2026' },
+
+    // Aug 8
+    { id: 'a808a', title: 'Community Run Recap',            date: new Date(2026, 7, 8),  contentType: 'highlight-reel', funnelStage: 'top',    status: 'review',     campaign: 'Community Engagement' },
+    { id: 'a808b', title: 'Community Run',                  date: new Date(2026, 7, 8),  contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'review',     campaign: 'Community Engagement', batchId: 'ba808' },
+    { id: 'a808c', title: 'Community Run',                  date: new Date(2026, 7, 8),  contentType: 'social-post', platform: 'tiktok',    funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement', batchId: 'ba808' },
+
+    // Aug 10
+    { id: 'a810a', title: 'Product Spotlight: Air Zoom',    date: new Date(2026, 7, 10), contentType: 'long-form',      funnelStage: 'middle', status: 'approved',   campaign: 'Fall Collection Launch' },
+    { id: 'a810b', title: 'Air Zoom Feature',               date: new Date(2026, 7, 10), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'approved',   campaign: 'Fall Collection Launch', batchId: 'ba810' },
+    { id: 'a810c', title: 'Air Zoom Feature',               date: new Date(2026, 7, 10), contentType: 'social-post', platform: 'youtube',   funnelStage: 'middle', status: 'review',     campaign: 'Fall Collection Launch', batchId: 'ba810' },
+    { id: 'a810d', title: 'Air Zoom Tech Video',            date: new Date(2026, 7, 10), contentType: 'ai-video',       funnelStage: 'middle', status: 'generating', campaign: 'Fall Collection Launch' },
+
+    // Aug 12
+    { id: 'a812a', title: 'Athlete Interview: Race Day',    date: new Date(2026, 7, 12), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba812' },
+    { id: 'a812b', title: 'Race Day Clip',                  date: new Date(2026, 7, 12), contentType: 'short-clip',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba812' },
+    { id: 'a812c', title: '"Every Mile Matters"',            date: new Date(2026, 7, 12), contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba812' },
+
+    // Aug 15
+    { id: 'a815a', title: 'Mid-August Member Exclusive',    date: new Date(2026, 7, 15), contentType: 'long-form',      funnelStage: 'bottom', status: 'approved',   campaign: 'Retention Drive' },
+    { id: 'a815b', title: 'Member Exclusive',               date: new Date(2026, 7, 15), contentType: 'social-post', platform: 'instagram', funnelStage: 'bottom', status: 'approved',   campaign: 'Retention Drive', batchId: 'ba815' },
+    { id: 'a815c', title: 'Member Exclusive',               date: new Date(2026, 7, 15), contentType: 'social-post', platform: 'facebook',  funnelStage: 'bottom', status: 'review',     campaign: 'Retention Drive', batchId: 'ba815' },
+    { id: 'a815d', title: 'Member Exclusive',               date: new Date(2026, 7, 15), contentType: 'social-post', platform: 'linkedin',  funnelStage: 'bottom', status: 'draft',      campaign: 'Retention Drive', batchId: 'ba815' },
+
+    // Aug 18
+    { id: 'a818a', title: 'Fall Fashion Lookbook',          date: new Date(2026, 7, 18), contentType: 'highlight-reel', funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch' },
+    { id: 'a818b', title: 'Lookbook Sneak Peek',            date: new Date(2026, 7, 18), contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'ba818' },
+    { id: 'a818c', title: 'Lookbook Sneak Peek',            date: new Date(2026, 7, 18), contentType: 'social-post', platform: 'tiktok',    funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'ba818' },
+
+    // Aug 20
+    { id: 'a820a', title: 'Nutrition for Endurance',        date: new Date(2026, 7, 20), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+    { id: 'a820b', title: 'Endurance Tips',                 date: new Date(2026, 7, 20), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba820' },
+    { id: 'a820c', title: 'Endurance Tips',                 date: new Date(2026, 7, 20), contentType: 'social-post', platform: 'x',         funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba820' },
+    { id: 'a820d', title: '"Fuel the Long Run"',             date: new Date(2026, 7, 20), contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+
+    // Aug 22
+    { id: 'a822a', title: 'Back to School Flash Sale',      date: new Date(2026, 7, 22), contentType: 'social-post', platform: 'instagram', funnelStage: 'bottom', status: 'review',     campaign: 'Back to School 2026', batchId: 'ba822' },
+    { id: 'a822b', title: 'Back to School Flash Sale',      date: new Date(2026, 7, 22), contentType: 'social-post', platform: 'facebook',  funnelStage: 'bottom', status: 'review',     campaign: 'Back to School 2026', batchId: 'ba822' },
+    { id: 'a822c', title: 'Back to School Flash Sale',      date: new Date(2026, 7, 22), contentType: 'social-post', platform: 'tiktok',    funnelStage: 'bottom', status: 'draft',      campaign: 'Back to School 2026', batchId: 'ba822' },
+    { id: 'a822d', title: 'Back to School Flash Sale',      date: new Date(2026, 7, 22), contentType: 'social-post', platform: 'x',         funnelStage: 'bottom', status: 'draft',      campaign: 'Back to School 2026', batchId: 'ba822' },
+    { id: 'a822e', title: 'Flash Sale Clip',                date: new Date(2026, 7, 22), contentType: 'short-clip',     funnelStage: 'bottom', status: 'approved',   campaign: 'Back to School 2026' },
+
+    // Aug 25
+    { id: 'a825a', title: 'End of Summer Celebration',      date: new Date(2026, 7, 25), contentType: 'long-form',      funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement' },
+    { id: 'a825b', title: 'Summer Celebration',             date: new Date(2026, 7, 25), contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement', batchId: 'ba825' },
+    { id: 'a825c', title: 'Summer Celebration',             date: new Date(2026, 7, 25), contentType: 'social-post', platform: 'facebook',  funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement', batchId: 'ba825' },
+    { id: 'a825d', title: 'Summer Highlights Reel',         date: new Date(2026, 7, 25), contentType: 'highlight-reel', funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement' },
+
+    // Aug 28
+    { id: 'a828a', title: 'September Training Plan Launch', date: new Date(2026, 7, 28), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+    { id: 'a828b', title: 'Training Plan',                  date: new Date(2026, 7, 28), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba828' },
+    { id: 'a828c', title: 'Training Plan',                  date: new Date(2026, 7, 28), contentType: 'social-post', platform: 'linkedin',  funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'ba828' },
+    { id: 'a828d', title: '"Plan Your Victory"',             date: new Date(2026, 7, 28), contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+
+    // Aug 30
+    { id: 'a830a', title: 'August Wins Roundup',            date: new Date(2026, 7, 30), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2' },
+    { id: 'a830b', title: 'August Roundup',                 date: new Date(2026, 7, 30), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'ba830' },
+    { id: 'a830c', title: 'August Roundup',                 date: new Date(2026, 7, 30), contentType: 'social-post', platform: 'facebook',  funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'ba830' },
+
+    // ════════════════ SEPTEMBER 2026 — upcoming content ════════════════
+
+    // Sep 1
+    { id: 's901a', title: 'Fall Collection Official Launch', date: new Date(2026, 8, 1), contentType: 'long-form',      funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch' },
+    { id: 's901b', title: 'Fall Collection Launch',         date: new Date(2026, 8, 1),  contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs901' },
+    { id: 's901c', title: 'Fall Collection Launch',         date: new Date(2026, 8, 1),  contentType: 'social-post', platform: 'facebook',  funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs901' },
+    { id: 's901d', title: 'Fall Collection Launch',         date: new Date(2026, 8, 1),  contentType: 'social-post', platform: 'tiktok',    funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs901' },
+    { id: 's901e', title: 'Fall Collection Launch',         date: new Date(2026, 8, 1),  contentType: 'social-post', platform: 'linkedin',  funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs901' },
+    { id: 's901f', title: 'Fall Launch Video',              date: new Date(2026, 8, 1),  contentType: 'ai-video',       funnelStage: 'top',    status: 'generating', campaign: 'Fall Collection Launch' },
+
+    // Sep 3
+    { id: 's903a', title: 'Marathon Training Week 1',       date: new Date(2026, 8, 3),  contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+    { id: 's903b', title: 'Training Week 1',                date: new Date(2026, 8, 3),  contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs903' },
+    { id: 's903c', title: 'Training Week 1',                date: new Date(2026, 8, 3),  contentType: 'social-post', platform: 'x',         funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs903' },
+    { id: 's903d', title: '"Start Strong, Finish Stronger"', date: new Date(2026, 8, 3),  contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+
+    // Sep 5
+    { id: 's905a', title: 'Back to School Success Stories', date: new Date(2026, 8, 5),  contentType: 'long-form',      funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026' },
+    { id: 's905b', title: 'Success Stories',                date: new Date(2026, 8, 5),  contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026', batchId: 'bs905' },
+    { id: 's905c', title: 'Success Stories',                date: new Date(2026, 8, 5),  contentType: 'social-post', platform: 'facebook',  funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026', batchId: 'bs905' },
+    { id: 's905d', title: 'Student Athlete Highlight',      date: new Date(2026, 8, 5),  contentType: 'short-clip',     funnelStage: 'top',    status: 'draft',      campaign: 'Back to School 2026' },
+
+    // Sep 8
+    { id: 's908a', title: 'Fall Fashion Week Recap',        date: new Date(2026, 8, 8),  contentType: 'highlight-reel', funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch' },
+    { id: 's908b', title: 'Fashion Week',                   date: new Date(2026, 8, 8),  contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs908' },
+    { id: 's908c', title: 'Fashion Week',                   date: new Date(2026, 8, 8),  contentType: 'social-post', platform: 'tiktok',    funnelStage: 'top',    status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs908' },
+
+    // Sep 10
+    { id: 's910a', title: 'Mid-September Member Drop',      date: new Date(2026, 8, 10), contentType: 'long-form',      funnelStage: 'bottom', status: 'draft',      campaign: 'Retention Drive' },
+    { id: 's910b', title: 'Member Drop',                    date: new Date(2026, 8, 10), contentType: 'social-post', platform: 'instagram', funnelStage: 'bottom', status: 'draft',      campaign: 'Retention Drive', batchId: 'bs910' },
+    { id: 's910c', title: 'Member Drop',                    date: new Date(2026, 8, 10), contentType: 'social-post', platform: 'facebook',  funnelStage: 'bottom', status: 'draft',      campaign: 'Retention Drive', batchId: 'bs910' },
+    { id: 's910d', title: 'Member Drop',                    date: new Date(2026, 8, 10), contentType: 'social-post', platform: 'linkedin',  funnelStage: 'bottom', status: 'draft',      campaign: 'Retention Drive', batchId: 'bs910' },
+    { id: 's910e', title: 'Exclusive Access Clip',          date: new Date(2026, 8, 10), contentType: 'short-clip',     funnelStage: 'bottom', status: 'draft',      campaign: 'Retention Drive' },
+
+    // Sep 12
+    { id: 's912a', title: 'Marathon Training Week 2',       date: new Date(2026, 8, 12), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+    { id: 's912b', title: 'Training Week 2',                date: new Date(2026, 8, 12), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs912' },
+    { id: 's912c', title: 'Training Week 2',                date: new Date(2026, 8, 12), contentType: 'social-post', platform: 'x',         funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs912' },
+    { id: 's912d', title: '"Consistency Beats Intensity"',   date: new Date(2026, 8, 12), contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+
+    // Sep 15
+    { id: 's915a', title: 'Fall Product Spotlight',         date: new Date(2026, 8, 15), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Fall Collection Launch' },
+    { id: 's915b', title: 'Product Spotlight',              date: new Date(2026, 8, 15), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs915' },
+    { id: 's915c', title: 'Product Spotlight',              date: new Date(2026, 8, 15), contentType: 'social-post', platform: 'youtube',   funnelStage: 'middle', status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs915' },
+    { id: 's915d', title: 'Product Tech Video',             date: new Date(2026, 8, 15), contentType: 'ai-video',       funnelStage: 'middle', status: 'generating', campaign: 'Fall Collection Launch' },
+
+    // Sep 18
+    { id: 's918a', title: 'Community Challenge September',  date: new Date(2026, 8, 18), contentType: 'long-form',      funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement' },
+    { id: 's918b', title: 'September Challenge',            date: new Date(2026, 8, 18), contentType: 'social-post', platform: 'instagram', funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement', batchId: 'bs918' },
+    { id: 's918c', title: 'September Challenge',            date: new Date(2026, 8, 18), contentType: 'social-post', platform: 'tiktok',    funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement', batchId: 'bs918' },
+    { id: 's918d', title: 'Challenge Kickoff Clip',         date: new Date(2026, 8, 18), contentType: 'short-clip',     funnelStage: 'top',    status: 'draft',      campaign: 'Community Engagement' },
+
+    // Sep 20
+    { id: 's920a', title: 'Athlete Interview: Fall Goals',  date: new Date(2026, 8, 20), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs920' },
+    { id: 's920b', title: 'Fall Goals Clip',                date: new Date(2026, 8, 20), contentType: 'short-clip',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs920' },
+    { id: 's920c', title: '"Set the Bar High"',              date: new Date(2026, 8, 20), contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs920' },
+
+    // Sep 22
+    { id: 's922a', title: 'Fall Sale Preview',              date: new Date(2026, 8, 22), contentType: 'social-post', platform: 'instagram', funnelStage: 'bottom', status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs922' },
+    { id: 's922b', title: 'Fall Sale Preview',              date: new Date(2026, 8, 22), contentType: 'social-post', platform: 'facebook',  funnelStage: 'bottom', status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs922' },
+    { id: 's922c', title: 'Fall Sale Preview',              date: new Date(2026, 8, 22), contentType: 'social-post', platform: 'tiktok',    funnelStage: 'bottom', status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs922' },
+    { id: 's922d', title: 'Fall Sale Preview',              date: new Date(2026, 8, 22), contentType: 'social-post', platform: 'x',         funnelStage: 'bottom', status: 'draft',      campaign: 'Fall Collection Launch', batchId: 'bs922' },
+    { id: 's922e', title: 'Sale Teaser Clip',               date: new Date(2026, 8, 22), contentType: 'short-clip',     funnelStage: 'bottom', status: 'draft',      campaign: 'Fall Collection Launch' },
+
+    // Sep 25
+    { id: 's925a', title: 'End of September Recap',         date: new Date(2026, 8, 25), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2' },
+    { id: 's925b', title: 'September Recap',                date: new Date(2026, 8, 25), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'bs925' },
+    { id: 's925c', title: 'September Recap',                date: new Date(2026, 8, 25), contentType: 'social-post', platform: 'facebook',  funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'bs925' },
+    { id: 's925d', title: 'September Highlights',           date: new Date(2026, 8, 25), contentType: 'highlight-reel', funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2' },
+
+    // Sep 28
+    { id: 's928a', title: 'October Training Plan Preview',  date: new Date(2026, 8, 28), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+    { id: 's928b', title: 'October Plan',                   date: new Date(2026, 8, 28), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs928' },
+    { id: 's928c', title: 'October Plan',                   date: new Date(2026, 8, 28), contentType: 'social-post', platform: 'linkedin',  funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026', batchId: 'bs928' },
+    { id: 's928d', title: '"Next Chapter, Next Mile"',       date: new Date(2026, 8, 28), contentType: 'quote-card',     funnelStage: 'middle', status: 'draft',      campaign: 'Marathon Prep 2026' },
+
+    // Sep 30
+    { id: 's930a', title: 'September Wins Roundup',         date: new Date(2026, 8, 30), contentType: 'long-form',      funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2' },
+    { id: 's930b', title: 'September Roundup',              date: new Date(2026, 8, 30), contentType: 'social-post', platform: 'instagram', funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'bs930' },
+    { id: 's930c', title: 'September Roundup',              date: new Date(2026, 8, 30), contentType: 'social-post', platform: 'facebook',  funnelStage: 'middle', status: 'draft',      campaign: 'Brand Awareness Q2', batchId: 'bs930' },
   ]);
 
   const toggleContentType = (type: ContentType) => { const s = new Set(selectedContentTypes); s.has(type) ? s.delete(type) : s.add(type); setSelectedContentTypes(s); };
@@ -939,14 +1100,21 @@ export function CalendarView() {
   const clearSelection = () => { setSelectedItems(new Set()); setSelectMode(false); setCampaignError(false); };
   const toggleSelectMode = () => { if (selectMode) { setSelectedItems(new Set()); setSelectMode(false); } else { setSelectMode(true); } };
 
-  const filteredItems = useMemo(() => calendarItems.filter(item => {
-    if (selectedContentTypes.size > 0 && !selectedContentTypes.has(item.contentType)) return false;
-    if (selectedFunnelStages.size > 0 && !selectedFunnelStages.has(item.funnelStage)) return false;
-    if (selectedStatuses.size > 0 && !selectedStatuses.has(item.status)) return false;
-    if (dateRange.start && item.date < dateRange.start) return false;
-    if (dateRange.end && item.date > dateRange.end) return false;
-    return true;
-  }), [calendarItems, selectedContentTypes, selectedFunnelStages, selectedStatuses, dateRange]);
+  const filteredItems = useMemo(() => {
+    const result = calendarItems.filter(item => {
+      if (selectedContentTypes.size > 0 && !selectedContentTypes.has(item.contentType)) return false;
+      if (selectedFunnelStages.size > 0 && !selectedFunnelStages.has(item.funnelStage)) return false;
+      if (selectedStatuses.size > 0 && !selectedStatuses.has(item.status)) return false;
+      if (dateRange.start && item.date < dateRange.start) return false;
+      if (dateRange.end && item.date > dateRange.end) return false;
+      return true;
+    });
+    console.log('[Calendar Debug] currentMonth:', format(currentMonth, 'yyyy-MM-dd'), '| total items:', calendarItems.length, '| filtered:', result.length);
+    if (result.length > 0) {
+      console.log('[Calendar Debug] First 3 items:', result.slice(0, 3).map(i => ({ id: i.id, title: i.title, date: format(i.date, 'yyyy-MM-dd') })));
+    }
+    return result;
+  }, [calendarItems, selectedContentTypes, selectedFunnelStages, selectedStatuses, dateRange, currentMonth]);
 
   const selectAll = () => { if (filteredItems.length === 0) return; setSelectedItems(new Set(filteredItems.map(i => i.id))); setCampaignError(false); };
   const handleSaveItem = (updated: CalendarItem) => setCalendarItems(prev => prev.map(item => item.id === updated.id ? updated : item));

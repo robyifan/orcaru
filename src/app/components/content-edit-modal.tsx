@@ -505,6 +505,128 @@ function ConfigurationSection({ category, fields, setField }: {
             placeholder="Any additional instructions on how you want the post to be"
           />
         </div>
+
+        {/* Voice & Style — all types */}
+        <div className="pt-[8px]">
+          <p className="font-bold text-[#fafafa] text-[16px] leading-[24px] mb-[16px]">Voice & Style</p>
+
+          {/* Writer Profile */}
+          <div className="mb-[20px]">
+            <ConfigFieldLabel projectDefault>Writer Profile</ConfigFieldLabel>
+            <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+              <select
+                value={fields.writerProfile ?? ""}
+                onChange={(e) => setField("writerProfile", e.target.value)}
+                className="w-full bg-transparent text-[14px] text-[#fafafa] outline-none appearance-none pr-[24px] cursor-pointer"
+              >
+                <option value="">No writer profile - Set tone manually</option>
+                <option value="professional">Professional</option>
+                <option value="casual">Casual</option>
+                <option value="technical">Technical</option>
+                <option value="creative">Creative</option>
+              </select>
+              <ChevronDown className="absolute right-[17px] size-[14px] text-[#a1a1aa] pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Writing Tone + Level */}
+          <div className="flex gap-[16px]">
+            <div className="flex-1">
+              <ConfigFieldLabel>Writing Tone</ConfigFieldLabel>
+              <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+                <select
+                  value={fields.writingTone ?? ""}
+                  onChange={(e) => setField("writingTone", e.target.value)}
+                  className="w-full bg-transparent text-[14px] text-[#fafafa] outline-none appearance-none pr-[24px] cursor-pointer"
+                >
+                  <option value="">Select tone...</option>
+                  <option value="formal">Formal</option>
+                  <option value="informal">Informal</option>
+                  <option value="inspirational">Inspirational</option>
+                  <option value="educational">Educational</option>
+                  <option value="persuasive">Persuasive</option>
+                </select>
+                <ChevronDown className="absolute right-[17px] size-[14px] text-[#a1a1aa] pointer-events-none" />
+              </div>
+            </div>
+            <div className="flex-1">
+              <ConfigFieldLabel>Writing Level</ConfigFieldLabel>
+              <div className="bg-[#262626] h-[46px] relative rounded-[24px] shrink-0 w-full border border-[rgba(255,255,255,0.08)] flex items-center px-[17px]">
+                <select
+                  value={fields.writingLevel ?? ""}
+                  onChange={(e) => setField("writingLevel", e.target.value)}
+                  className="w-full bg-transparent text-[14px] text-[#fafafa] outline-none appearance-none pr-[24px] cursor-pointer"
+                >
+                  <option value="">Select level...</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                  <option value="expert">Expert</option>
+                </select>
+                <ChevronDown className="absolute right-[17px] size-[14px] text-[#a1a1aa] pointer-events-none" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Word Count Range — all types */}
+        <div className="pt-[8px]">
+          <div className="flex items-center justify-between mb-[16px]">
+            <p className="font-bold text-[#fafafa] text-[16px] leading-[24px]">Word Count Range</p>
+            <AISparkleIcon paths={svgPathsShortClip} />
+          </div>
+
+          {/* Slider */}
+          <div className="space-y-[8px]">
+            <div className="relative h-[8px] bg-[#262626] rounded-full">
+              <div
+                className="absolute h-full bg-[#10b981] rounded-full"
+                style={{
+                  left: `${((fields.wordCountMin ?? 1200) - 800) / (2500 - 800) * 100}%`,
+                  right: `${100 - ((fields.wordCountMax ?? 1700) - 800) / (2500 - 800) * 100}%`,
+                }}
+              />
+              <input
+                type="range"
+                min="800"
+                max="2500"
+                value={fields.wordCountMin ?? 1200}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  if (val < (fields.wordCountMax ?? 1700)) setField("wordCountMin", val);
+                }}
+                className="absolute inset-0 w-full opacity-0 cursor-pointer"
+              />
+              <input
+                type="range"
+                min="800"
+                max="2500"
+                value={fields.wordCountMax ?? 1700}
+                onChange={(e) => {
+                  const val = Number(e.target.value);
+                  if (val > (fields.wordCountMin ?? 1200)) setField("wordCountMax", val);
+                }}
+                className="absolute inset-0 w-full opacity-0 cursor-pointer"
+              />
+            </div>
+            <div className="flex justify-between text-[12px] text-[#a1a1aa]">
+              <span>800</span>
+              <span>1200</span>
+              <span>1700</span>
+              <span>2500</span>
+            </div>
+          </div>
+
+          {/* Selected range display */}
+          <div className="flex items-center justify-center pt-[16px]">
+            <div className="inline-flex items-center gap-[8px] px-[12px] py-[8px] bg-[#262626] border border-[rgba(255,255,255,0.08)] rounded-[12px]">
+              <span className="text-[14px] text-[#fafafa] font-medium">
+                {(fields.wordCountMin ?? 1200).toLocaleString()} – {(fields.wordCountMax ?? 1700).toLocaleString()}
+              </span>
+              <span className="text-[12px] text-[#a1a1aa]">words</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -885,6 +1007,11 @@ export function ContentEditModal({
     sourceVideoRef: "",
     totalDuration: "90",
     numHighlights: "5",
+    writerProfile: "",
+    writingTone: "",
+    writingLevel: "",
+    wordCountMin: 1200,
+    wordCountMax: 1700,
   });
 
   const setField = (k: string, v: any) => setFieldsRaw((prev) => ({ ...prev, [k]: v }));

@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import {
-  X, Upload, Sparkles, ChevronDown, Calendar, Clock, Tag, Plus,
+  X, Upload, Sparkles, ChevronDown, Calendar, Clock, Tag,
   FileText, Scissors, Star, Wand2, Quote, Share2,
   Instagram, Facebook, Linkedin, Twitter, Youtube, Music2,
-  RefreshCw,
+  Link2, Search, Library,
 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -114,6 +114,17 @@ export function PostDetailModal({ item, onClose, onSave, onRegenerate }: PostDet
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [sourceLink, setSourceLink] = useState('');
+  const [itemTopic, setItemTopic] = useState('');
+  const [sourceVideoRef, setSourceVideoRef] = useState('');
+  const [clipDuration, setClipDuration] = useState('30');
+  const [brandGuidelines, setBrandGuidelines] = useState('');
+  const [additionalInstructions, setAdditionalInstructions] = useState('');
+  const [writerProfile, setWriterProfile] = useState('');
+  const [writingTone, setWritingTone] = useState('');
+  const [writingLevel, setWritingLevel] = useState('');
+  const [wordCountMin, setWordCountMin] = useState(1200);
+  const [wordCountMax, setWordCountMax] = useState(1700);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const contentSubtitle = item.platform
@@ -282,7 +293,7 @@ export function PostDetailModal({ item, onClose, onSave, onRegenerate }: PostDet
 
           {/* Right panel: Content fields */}
           <div className="flex-1 min-w-0 overflow-y-auto bg-card">
-            <div className="p-6 space-y-5">
+            <div className="p-6 space-y-6">
               {/* Title */}
               <div>
                 <label className="block text-sm font-semibold text-foreground mb-1.5">Title<span className="text-destructive ml-0.5">*</span></label>
@@ -378,6 +389,266 @@ export function PostDetailModal({ item, onClose, onSave, onRegenerate }: PostDet
                       </button>
                     </span>
                   ))}
+                </div>
+              </div>
+
+              {/* ── Source Material & Resources ─ */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground">Source material and resources</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Provide references and assets to guide content generation. This step is optional.</p>
+                </div>
+
+                {/* Section A: Main Content Source */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs font-semibold text-primary">A</div>
+                    <span className="text-sm font-medium text-foreground">Main Content Source</span>
+                    <span className="text-xs text-muted-foreground">(Optional)</span>
+                  </div>
+
+                  {/* Upload area */}
+                  <div className="border-2 border-dashed border-border rounded-xl p-6 flex flex-col items-center justify-center gap-2 hover:border-primary/40 transition-colors">
+                    <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
+                      <Upload className="w-5 h-5 text-muted-foreground" />
+                    </div>
+                    <p className="text-sm text-foreground">Drag & drop or click to browse</p>
+                    <p className="text-xs text-muted-foreground">Upload video, documents, images or audio</p>
+                  </div>
+
+                  {/* OR divider */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-px bg-border" />
+                    <span className="text-xs text-muted-foreground">or</span>
+                    <div className="flex-1 h-px bg-border" />
+                  </div>
+
+                  {/* Paste a link */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Paste a link</label>
+                    <div className="relative">
+                      <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                      <input
+                        type="text"
+                        value={sourceLink}
+                        onChange={e => setSourceLink(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground/50"
+                        placeholder="Search content..."
+                      />
+                    </div>
+                  </div>
+
+                  <button className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                    Skip — no main source to provide
+                  </button>
+                </div>
+
+                {/* Section B: Select from Library */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-xs font-semibold text-primary">B</div>
+                    <span className="text-sm font-medium text-foreground">Select from Library</span>
+                  </div>
+                  <button className="w-full flex items-center gap-2 px-4 py-3 bg-secondary border border-border rounded-lg text-sm text-foreground hover:bg-secondary/70 transition-colors">
+                    <Library className="w-4 h-4 text-muted-foreground" />
+                    Include from project library
+                  </button>
+                </div>
+              </div>
+
+              {/* ── Configuration ── */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground">Configuration</h4>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Fields marked <span className="text-primary font-medium">Project Default</span> are pre-filled from your project settings.
+                  </p>
+                </div>
+
+                {/* Item Topic */}
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Item Topic</label>
+                  <input
+                    type="text"
+                    value={itemTopic}
+                    onChange={e => setItemTopic(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground/50"
+                    placeholder="e.g., Summer collection launch and performance innovation"
+                  />
+                </div>
+
+                {/* Source Video Reference */}
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Source Video Reference</label>
+                  <input
+                    type="text"
+                    value={sourceVideoRef}
+                    onChange={e => setSourceVideoRef(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground/50"
+                    placeholder="e.g., Summer Campaign Video - Main Edit"
+                  />
+                </div>
+
+                {/* Clip Duration */}
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Clip Duration (seconds)</label>
+                  <input
+                    type="number"
+                    value={clipDuration}
+                    onChange={e => setClipDuration(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+                  />
+                </div>
+
+                {/* Brand Guidelines */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <label className="text-sm font-medium text-foreground">Brand Guidelines</label>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 border border-primary/20 rounded text-xs text-primary">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Project Default
+                    </span>
+                  </div>
+                  <textarea
+                    rows={3}
+                    value={brandGuidelines}
+                    onChange={e => setBrandGuidelines(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground/50 resize-none"
+                    placeholder="Describe your brand voice, style guidelines, and any dos/don'ts..."
+                  />
+                </div>
+
+                {/* Additional Instructions */}
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Additional Instructions</label>
+                  <textarea
+                    rows={2}
+                    value={additionalInstructions}
+                    onChange={e => setAdditionalInstructions(e.target.value)}
+                    className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all placeholder:text-muted-foreground/50 resize-none"
+                    placeholder="Any additional instructions on how you want the post to be"
+                  />
+                </div>
+              </div>
+
+              {/* ── Voice & Style ─ */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <div>
+                  <h4 className="text-sm font-semibold text-foreground">Voice & Style</h4>
+                </div>
+
+                {/* Writer Profile */}
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <label className="text-sm font-medium text-foreground">Writer Profile</label>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-primary/10 border border-primary/20 rounded text-xs text-primary">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      Project Default
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <select
+                      value={writerProfile}
+                      onChange={e => setWriterProfile(e.target.value)}
+                      className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all appearance-none pr-10"
+                    >
+                      <option value="">No writer profile - Set tone manually</option>
+                      <option value="professional">Professional</option>
+                      <option value="casual">Casual</option>
+                      <option value="technical">Technical</option>
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                  </div>
+                </div>
+
+                {/* Writing Tone + Level */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Writing Tone</label>
+                    <div className="relative">
+                      <select
+                        value={writingTone}
+                        onChange={e => setWritingTone(e.target.value)}
+                        className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all appearance-none pr-10"
+                      >
+                        <option value="">Select tone...</option>
+                        <option value="formal">Formal</option>
+                        <option value="informal">Informal</option>
+                        <option value="inspirational">Inspirational</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-foreground mb-1.5">Writing Level</label>
+                    <div className="relative">
+                      <select
+                        value={writingLevel}
+                        onChange={e => setWritingLevel(e.target.value)}
+                        className="w-full px-3.5 py-2.5 bg-[#111] border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all appearance-none pr-10"
+                      >
+                        <option value="">Select level...</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ── Word Count Range ── */}
+              <div className="space-y-4 pt-4 border-t border-border">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-semibold text-foreground">Word Count Range</label>
+                  <Sparkles className="w-4 h-4 text-muted-foreground" />
+                </div>
+
+                {/* Slider */}
+                <div className="space-y-2">
+                  <div className="relative h-2 bg-secondary rounded-full">
+                    <div
+                      className="absolute h-full bg-primary rounded-full"
+                      style={{ left: `${((wordCountMin - 800) / 1700) * 100}%`, right: `${100 - ((wordCountMax - 800) / 1700) * 100}%` }}
+                    />
+                    <input
+                      type="range"
+                      min="800"
+                      max="2500"
+                      value={wordCountMin}
+                      onChange={e => {
+                        const val = Number(e.target.value);
+                        if (val < wordCountMax) setWordCountMin(val);
+                      }}
+                      className="absolute inset-0 w-full opacity-0 cursor-pointer"
+                    />
+                    <input
+                      type="range"
+                      min="800"
+                      max="2500"
+                      value={wordCountMax}
+                      onChange={e => {
+                        const val = Number(e.target.value);
+                        if (val > wordCountMin) setWordCountMax(val);
+                      }}
+                      className="absolute inset-0 w-full opacity-0 cursor-pointer"
+                    />
+                  </div>
+                  <div className="flex justify-between text-xs text-muted-foreground">
+                    <span>800</span>
+                    <span>1200</span>
+                    <span>1700</span>
+                    <span>2500</span>
+                  </div>
+                </div>
+
+                {/* Selected range display */}
+                <div className="flex items-center justify-center">
+                  <div className="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary border border-border rounded-lg text-sm text-foreground">
+                    {wordCountMin.toLocaleString()} – {wordCountMax.toLocaleString()}
+                    <span className="text-xs text-muted-foreground ml-1">words</span>
+                  </div>
                 </div>
               </div>
             </div>
