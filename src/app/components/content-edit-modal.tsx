@@ -184,12 +184,12 @@ function ConfigFieldLabel({ children, projectDefault }: { children: React.ReactN
 // Basic input (lighter bg to stand out from modal background)
 function Input({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
-    <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]">
+    <div className="bg-[#141414] h-[36px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.15)]">
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-full bg-transparent px-[13px] py-[5px] text-[14px] text-[#fafafa] placeholder-[#a1a1aa] outline-none rounded-[12px]"
+        className="w-full h-full bg-transparent px-[13px] py-[5px] text-[14px] text-[#fafafa] placeholder-[#71717a] outline-none rounded-[12px]"
       />
     </div>
   );
@@ -198,13 +198,13 @@ function Input({ value, onChange, placeholder }: { value: string; onChange: (v: 
 // Basic textarea (lighter bg to stand out from modal background)
 function Textarea({ value, onChange, placeholder, minRows = 4 }: { value: string; onChange: (v: string) => void; placeholder?: string; minRows?: number }) {
   return (
-    <div className="bg-[#1a1a1a] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]" style={{ minHeight: minRows * 28 }}>
+    <div className="bg-[#141414] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.15)]" style={{ minHeight: minRows * 28 }}>
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={minRows}
-        className="w-full bg-transparent px-[13px] py-[9px] text-[14px] text-[#fafafa] placeholder-[#a1a1aa] outline-none rounded-[12px] leading-[20px] resize-none"
+        className="w-full bg-transparent px-[13px] py-[9px] text-[14px] text-[#fafafa] placeholder-[#71717a] outline-none rounded-[12px] leading-[20px] resize-none"
       />
     </div>
   );
@@ -213,13 +213,13 @@ function Textarea({ value, onChange, placeholder, minRows = 4 }: { value: string
 // Config input (lighter bg with visible border to stand out)
 function ConfigInput({ value, onChange, placeholder, type = "text" }: { value: string; onChange: (v: string) => void; placeholder?: string; type?: string }) {
   return (
-    <div className="bg-[#1a1a1a] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]">
+    <div className="bg-[#141414] h-[46px] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.15)]">
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.6)] outline-none rounded-[12px]"
+        className="w-full h-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[#71717a] outline-none rounded-[12px]"
       />
     </div>
   );
@@ -228,13 +228,13 @@ function ConfigInput({ value, onChange, placeholder, type = "text" }: { value: s
 // Config textarea (lighter bg with visible border to stand out)
 function ConfigTextarea({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
   return (
-    <div className="bg-[#1a1a1a] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.12)]">
+    <div className="bg-[#141414] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.15)]">
       <textarea
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={4}
-        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.6)] outline-none rounded-[12px] leading-[20px] resize-none"
+        className="w-full bg-transparent px-[17px] py-[13px] text-[14px] text-[#fafafa] placeholder-[#71717a] outline-none rounded-[12px] leading-[20px] resize-none"
       />
     </div>
   );
@@ -321,7 +321,7 @@ function PublishDateTimeRow({ date, time, onDate, onTime, isApproved }: { date: 
 }
 
 // Tags section
-function TagsSection({ tags, onChange }: { tags: string[]; onChange: (t: string[]) => void }) {
+function TagsSection({ tags, onChange, isApproved }: { tags: string[]; onChange: (t: string[]) => void; isApproved?: boolean }) {
   const [input, setInput] = useState("");
   const add = (raw: string) => {
     const clean = raw.trim().replace(/^#/, "");
@@ -331,28 +331,34 @@ function TagsSection({ tags, onChange }: { tags: string[]; onChange: (t: string[
   return (
     <div className="flex flex-col items-start shrink-0 w-full pt-[16px]">
       <FieldLabel>Tags</FieldLabel>
-      <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] shrink-0 w-full flex items-center px-[13px] gap-2 mt-0 border border-[rgba(255,255,255,0.12)]">
-        <SearchIcon />
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(input); } }}
-          placeholder="Search of Tags"
-          className="flex-1 bg-transparent text-[14px] text-[#a1a1aa] placeholder-[#a1a1aa] outline-none"
-        />
-      </div>
-      {tags.length > 0 && (
-        <div className="flex gap-[8px] flex-wrap pt-[8px]">
-          {tags.map((t) => (
-            <button
-              key={t}
-              onClick={() => onChange(tags.filter((x) => x !== t))}
-              className="bg-[rgba(16,185,129,0.2)] border border-[rgba(16,185,129,0.3)] text-[#10b981] text-[12px] font-medium px-[10px] py-[5px] rounded-[8px] whitespace-nowrap hover:bg-[rgba(16,185,129,0.3)] transition-colors"
-            >
-              {t}
-            </button>
-          ))}
-        </div>
+      {isApproved ? (
+        <ReadOnlyTags tags={tags} />
+      ) : (
+        <>
+          <div className="bg-[#1a1a1a] h-[36px] relative rounded-[12px] shrink-0 w-full flex items-center px-[13px] gap-2 mt-0 border border-[rgba(255,255,255,0.12)]">
+            <SearchIcon />
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); add(input); } }}
+              placeholder="Search of Tags"
+              className="flex-1 bg-transparent text-[14px] text-[#a1a1aa] placeholder-[#a1a1aa] outline-none"
+            />
+          </div>
+          {tags.length > 0 && (
+            <div className="flex gap-[8px] flex-wrap pt-[8px]">
+              {tags.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => onChange(tags.filter((x) => x !== t))}
+                  className="bg-[rgba(16,185,129,0.2)] border border-[rgba(16,185,129,0.3)] text-[#10b981] text-[12px] font-medium px-[10px] py-[5px] rounded-[8px] whitespace-nowrap hover:bg-[rgba(16,185,129,0.3)] transition-colors"
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
@@ -539,7 +545,7 @@ function ConfigurationSection({ category, fields, setField }: {
 
         {/* Voice & Style — all types */}
         <div className="pt-[8px]">
-          <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px] mb-[16px]">Voice & Style</p>
+          <p className="font-bold text-[#a1a1aa] text-[16px] leading-[24px] mb-[16px]">Voice & Style</p>
 
           {/* Writer Profile */}
           <div className="mb-[20px]">
@@ -603,7 +609,7 @@ function ConfigurationSection({ category, fields, setField }: {
         {/* Word Count Range — all types */}
         <div className="pt-[8px]">
           <div className="flex items-center justify-between mb-[16px]">
-            <p className="font-bold text-[#1a1a1a] text-[16px] leading-[24px]">Word Count Range</p>
+            <p className="font-bold text-[#a1a1aa] text-[16px] leading-[24px]">Word Count Range</p>
             <AISparkleIcon paths={svgPathsShortClip} />
           </div>
 
