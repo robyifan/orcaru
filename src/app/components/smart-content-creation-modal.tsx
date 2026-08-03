@@ -75,7 +75,7 @@ interface SmartContentCreationModalProps {
   defaultFile?: File;
 }
 
-type ContentTypeId = "long-form" | "short-clip" | "highlight-reel" | "quote-card" | "ai-video" | "social-post";
+type ContentTypeId = "long-form" | "short-clip" | "highlight-reel" | "quote-card" | "ai-video" | "social-post" | "carousel";
 type SocialPlatformId = "instagram" | "facebook" | "linkedin" | "x" | "tiktok" | "youtube";
 
 // ─── Config ───────────────────────────────────────────────────────────────────
@@ -224,6 +224,15 @@ const CONTENT_TYPES: ContentTypeDef[] = [
     description: "Platform-native posts adapted for each channel's format and algorithm",
     credits: 10,
   },
+  {
+    id: "carousel",
+    label: "Carousel",
+    sublabel: "Multi-Slide Posts",
+    Icon: LayoutGrid,
+    color: "#8B5CF6",
+    description: "Multi-slide swipeable posts",
+    credits: 12,
+  },
 ];
 
 const WRITER_PROFILES = [
@@ -249,7 +258,7 @@ const QUOTE_TEMPLATES = [
   "Branded",
 ];
 
-const STEP_LABELS = ["How to Create", "Content Type", "Sources & Assets", "Configuration", "Review"];
+const STEP_LABELS = ["How to Create", "Sources & Assets", "Content Type", "Configuration", "Review"];
 const CREDIT_BALANCE = 147;
 
 // Mock library assets
@@ -329,16 +338,16 @@ export function SmartContentCreationModal({
   isOpen, onClose, onComplete, contentType: initialType, defaultCampaign, defaultFile,
 }: SmartContentCreationModalProps) {
   // ── Origin selection (Step 1) ──
-  const [originMode, setOriginMode] = useState<"new" | "campaign" | null>(null);
+  const [originMode, setOriginMode] = useState<"new" | "campaign">("new");
   const [selectedCampaignId, setSelectedCampaignId] = useState<string>("");
 
-  // Steps: 1=Origin, 2=Content Type, 3=Sources, 4=Configuration, 5=Review
+  // Steps: 1=Origin, 2=Sources & Assets, 3=Content Type, 4=Configuration, 5=Review
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
 
-  // Step 2 - Content Type quantities
+  // Step 3 - Content Type quantities
   const [quantities, setQuantities] = useState<Record<ContentTypeId, number>>({
     "long-form": 0, "short-clip": 0, "highlight-reel": 0,
-    "quote-card": 0, "ai-video": 0, "social-post": 0,
+    "quote-card": 0, "ai-video": 0, "social-post": 0, "carousel": 0,
   });
 
   const changeQty = (id: ContentTypeId, delta: number) => {
@@ -346,10 +355,42 @@ export function SmartContentCreationModal({
   };
 
   const totalQuantity = Object.values(quantities).reduce((a, b) => a + b, 0);
+
+  // Per-type platform selection
+  const [platformsByType, setPlatformsByType] = useState<Record<ContentTypeId, Set<SocialPlatformId>>>({
+    "long-form": new Set(),
+    "short-clip": new Set(),
+    "highlight-reel": new Set(),
+    "quote-card": new Set(),
+    "ai-video": new Set(),
+    "social-post": new Set(),
+    "carousel": new Set(),
+  });
+
+  const togglePlatformForType = (typeId: ContentTypeId, platformId: SocialPlatformId) => {
+    setPlatformsByType(prev => {
+      const next = { ...prev };
+      const typeSet = new Set(next[typeId]);
+      typeSet.has(platformId) ? typeSet.delete(platformId) : typeSet.add(platformId);
+      next[typeId] = typeSet;
+      return next;
+    });
+  };
+
+  const getTypeItemCount = (typeId: ContentTypeId): number => {
+    const qty = quantities[typeId];
+    if (qty === 0) return 0;
+    if (typeId === "long-form") return qty;
+    const platforms = platformsByType[typeId];
+    return qty * (platforms.size > 0 ? platforms.size : 1);
+  };
+
+  const grandTotal = CONTENT_TYPES.reduce((sum, t) => sum + getTypeItemCount(t.id), 0);
+
   // Primary type drives config/review steps — first type with qty > 0
   const selectedType: ContentTypeId | null = CONTENT_TYPES.find(t => quantities[t.id] > 0)?.id ?? null;
 
-  // Step 2 - Configuration
+  // Step 4 - Configuration
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
   const [writerProfile, setWriterProfile] = useState(PROJECT_DEFAULTS.writerProfile);
@@ -368,18 +409,7 @@ export function SmartContentCreationModal({
   const [sourceVideoRef, setSourceVideoRef] = useState("");
   const [clipDuration, setClipDuration] = useState("30");
 
-  // Social Post specific
-  const [selectedPlatforms, setSelectedPlatforms] = useState<Set<SocialPlatformId>>(new Set());
-
-  const togglePlatform = (id: SocialPlatformId) => {
-    setSelectedPlatforms(prev => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  };
-
-  // Step 3 - Source & Assets
+  // Step 2 - Source & Assets
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [sourceUrl, setSourceUrl] = useState("");
   const [selectedLibraryAssets, setSelectedLibraryAssets] = useState<Set<number>>(new Set());
@@ -441,6 +471,8 @@ export function SmartContentCreationModal({
     if (!isOpen) return;
 
     setStep(1);
+    setOriginMode("new");
+    setSelectedCampaignId("");
     setQuantities({
       "long-form": initialType === "long-form" ? 1 : 0,
       "short-clip": initialType === "short-clip" ? 1 : 0,
@@ -448,6 +480,16 @@ export function SmartContentCreationModal({
       "quote-card": initialType === "quote-card" ? 1 : 0,
       "ai-video": initialType === "ai-video" ? 1 : 0,
       "social-post": initialType === "social-post" ? 1 : 0,
+      "carousel": 0,
+    });
+    setPlatformsByType({
+      "long-form": new Set(),
+      "short-clip": new Set(),
+      "highlight-reel": new Set(),
+      "quote-card": new Set(),
+      "ai-video": new Set(),
+      "social-post": new Set(),
+      "carousel": new Set(),
     });
     clearPreset();
 
@@ -455,9 +497,7 @@ export function SmartContentCreationModal({
       const match = CAMPAIGNS.find(c => c.name === defaultCampaign);
       setOriginMode("campaign");
       setSelectedCampaignId(match?.id ?? "");
-    } else {
-      setOriginMode(null);
-      setSelectedCampaignId("");
+      if (match) applyPreset(match.id);
     }
 
     if (initialType) {
@@ -475,8 +515,15 @@ export function SmartContentCreationModal({
 
   const canProceed = () => {
     if (step === 1) return originMode !== null && (originMode !== "campaign" || selectedCampaignId !== "");
-    if (step === 2) return totalQuantity >= 1 && (quantities["social-post"] === 0 || selectedPlatforms.size > 0);
-    if (step === 3) return true; // Sources & Assets is optional
+    if (step === 2) return true; // Sources & Assets is optional
+    if (step === 3) {
+      if (grandTotal < 1) return false;
+      for (const t of CONTENT_TYPES) {
+        if (t.id === "long-form") continue;
+        if (quantities[t.id] > 0 && platformsByType[t.id].size === 0) return false;
+      }
+      return true;
+    }
     if (step === 4) return topic.trim().length > 0;
     return true;
   };
@@ -484,26 +531,29 @@ export function SmartContentCreationModal({
   const handleBack = () => setStep((s) => Math.max(1, s - 1) as 1 | 2 | 3 | 4 | 5);
   const handleNext = () => {
     if (step === 1) {
-      // Apply or clear campaign preset before moving to content type
       if (originMode === "campaign" && selectedCampaignId) applyPreset(selectedCampaignId);
       else clearPreset();
       setStep(2);
     } else if (step === 2) {
-      // Default word count based on primary selected type
+      setStep(3);
+    } else if (step === 3) {
       if (selectedType === "long-form") setWordCount([1200, 1700]);
       else setWordCount([200, 300]);
-      setStep(3);
+      setStep(4);
     } else if (step < 5) {
       setStep((s) => (s + 1) as 1 | 2 | 3 | 4 | 5);
     } else {
       onComplete({
         contentType: selectedType,
         quantities,
+        platformsByType: Object.fromEntries(
+          Object.entries(platformsByType).map(([k, v]) => [k, Array.from(v)])
+        ),
         title, topic, writerProfile, writingTone, writingLevel,
         wordCount, brandGuidelines, targetAudience,
         quoteText, quoteSource, selectedTemplate,
         sourceVideoRef, clipDuration,
-        selectedPlatforms: Array.from(selectedPlatforms),
+        grandTotal,
         uploadedFile, sourceUrl, selectedLibraryAssets, additionalFiles,
         campaign: originMode === "campaign" ? selectedCampaignId : null,
       });
@@ -687,247 +737,8 @@ export function SmartContentCreationModal({
             </div>
           )}
 
-          {/* ═══ Step 2: Content Type Selection ═══ */}
+          {/* ═══ Step 2: Sources & Assets ═══ */}
           {step === 2 && (
-            <div className="p-6 space-y-3">
-              <div className="mb-5">
-                <h3 className="text-base font-bold text-foreground mb-1">What type of content do you want to create?</h3>
-                <p className="text-sm text-muted-foreground">Add quantities for each type — mix and match in a single batch.</p>
-              </div>
-
-              {/* ── Quantity-selector card helper ── */}
-              {CONTENT_TYPES.filter(t => t.id !== "quote-card" && t.id !== "social-post").map((type) => {
-                const qty = quantities[type.id];
-                const Icon = type.Icon;
-                return (
-                  <div
-                    key={type.id}
-                    className={clsx(
-                      "flex items-center gap-4 px-5 py-4 rounded-xl border-2 transition-all",
-                      qty > 0 ? "border-primary/50 bg-primary/[0.04]" : "border-border bg-card"
-                    )}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${type.color}1A`, border: `1px solid ${type.color}30` }}
-                    >
-                      <Icon className="w-5 h-5" style={{ color: type.color }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-bold text-foreground leading-tight">{type.label}</div>
-                      <div className="text-[10px] font-bold uppercase tracking-wider mt-0.5" style={{ color: type.color }}>{type.sublabel}</div>
-                      <div className="text-xs text-muted-foreground leading-snug mt-1">{type.description}</div>
-                    </div>
-                    <div className="flex items-center gap-1.5 flex-shrink-0">
-                      <button
-                        onClick={() => changeQty(type.id, -1)}
-                        disabled={qty === 0}
-                        className={clsx(
-                          "w-8 h-8 rounded-lg border flex items-center justify-center transition-all",
-                          qty === 0
-                            ? "border-border/40 text-muted-foreground/25 cursor-not-allowed"
-                            : "border-border text-muted-foreground hover:bg-secondary hover:text-foreground"
-                        )}
-                      >
-                        <Minus className="w-3.5 h-3.5" />
-                      </button>
-                      <span className={clsx(
-                        "w-7 text-center text-sm font-bold tabular-nums select-none",
-                        qty > 0 ? "text-foreground" : "text-muted-foreground/30"
-                      )}>{qty}</span>
-                      <button
-                        onClick={() => changeQty(type.id, 1)}
-                        className="w-8 h-8 rounded-lg border border-border flex items-center justify-center transition-all hover:bg-secondary hover:text-foreground text-muted-foreground"
-                      >
-                        <Plus className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* ── Social Post — expands platform picker when qty > 0 ── */}
-              {(() => {
-                const type = CONTENT_TYPES.find(t => t.id === "social-post")!;
-                const qty = quantities["social-post"];
-                return (
-                  <div className={clsx(
-                    "rounded-xl border-2 transition-all",
-                    qty > 0 ? "border-primary/50 bg-primary/[0.04]" : "border-border bg-card"
-                  )}>
-                    <div className="flex items-center gap-4 px-5 py-4">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: `${type.color}1A`, border: `1px solid ${type.color}30` }}
-                      >
-                        <type.Icon className="w-5 h-5" style={{ color: type.color }} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-bold text-foreground leading-tight">{type.label}</div>
-                        <div className="text-[10px] font-bold uppercase tracking-wider mt-0.5" style={{ color: type.color }}>{type.sublabel}</div>
-                        <div className="text-xs text-muted-foreground leading-snug mt-1">{type.description}</div>
-                      </div>
-                      <div className="flex items-center gap-1.5 flex-shrink-0">
-                        <button
-                          onClick={() => changeQty("social-post", -1)}
-                          disabled={qty === 0}
-                          className={clsx(
-                            "w-8 h-8 rounded-lg border flex items-center justify-center transition-all",
-                            qty === 0
-                              ? "border-border/40 text-muted-foreground/25 cursor-not-allowed"
-                              : "border-border text-muted-foreground hover:bg-secondary hover:text-foreground"
-                          )}
-                        >
-                          <Minus className="w-3.5 h-3.5" />
-                        </button>
-                        <span className={clsx(
-                          "w-7 text-center text-sm font-bold tabular-nums select-none",
-                          qty > 0 ? "text-foreground" : "text-muted-foreground/30"
-                        )}>{qty}</span>
-                        <button
-                          onClick={() => changeQty("social-post", 1)}
-                          className="w-8 h-8 rounded-lg border border-border flex items-center justify-center transition-all hover:bg-secondary hover:text-foreground text-muted-foreground"
-                        >
-                          <Plus className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Platform selector — visible when social-post qty > 0 */}
-                    {qty > 0 && (
-                      <div className="border-t border-border/60 px-5 pb-5 pt-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <p className="text-xs font-bold text-foreground">Select platforms <span className="text-muted-foreground font-normal">(one post per platform)</span></p>
-                          {selectedPlatforms.size > 0 && (
-                            <span className="text-[10px] font-bold text-primary">{selectedPlatforms.size} selected</span>
-                          )}
-                        </div>
-                        <div className="grid grid-cols-3 gap-2">
-                          {SOCIAL_PLATFORMS.map((p) => {
-                            const PIcon = p.Icon;
-                            const active = selectedPlatforms.has(p.id);
-                            return (
-                              <button
-                                key={p.id}
-                                onClick={() => togglePlatform(p.id)}
-                                className={clsx(
-                                  "relative flex flex-col gap-2 p-3 rounded-xl border-2 text-left transition-all",
-                                  active
-                                    ? "border-primary/60 bg-primary/[0.06]"
-                                    : "border-border bg-secondary/30 hover:border-border/70 hover:bg-secondary/50"
-                                )}
-                              >
-                                {active && (
-                                  <span className="absolute top-2 right-2 w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-                                    <Check className="w-2.5 h-2.5 text-primary-foreground" />
-                                  </span>
-                                )}
-                                <div
-                                  className="w-8 h-8 rounded-lg flex items-center justify-center"
-                                  style={{ backgroundColor: `${p.color}18`, border: `1px solid ${p.color}30` }}
-                                >
-                                  <PIcon className="w-4 h-4" style={{ color: p.color === "#010101" || p.color === "#000000" ? "var(--foreground)" : p.color }} />
-                                </div>
-                                <div>
-                                  <p className="text-xs font-bold text-foreground leading-tight">{p.label}</p>
-                                  <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{p.textLength}</p>
-                                </div>
-                                <div className="mt-auto pt-1 border-t border-border/40">
-                                  <p className="text-[9px] text-muted-foreground/60 leading-tight">{p.dimensions}</p>
-                                  <p className="text-[9px] text-muted-foreground/50 leading-tight mt-0.5">{p.toneNote}</p>
-                                </div>
-                              </button>
-                            );
-                          })}
-                        </div>
-                        {selectedPlatforms.size === 0 && (
-                          <p className="text-[11px] text-amber-400/70 mt-2 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400/70 flex-shrink-0" />
-                            Select at least one platform to continue
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                );
-              })()}
-
-              {/* Separator */}
-              <div className="flex items-center gap-3 py-1">
-                <div className="flex-1 h-px bg-border" />
-                <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">From Templates</span>
-                <div className="flex-1 h-px bg-border" />
-              </div>
-
-              {/* Quote Card */}
-              {CONTENT_TYPES.filter(t => t.id === "quote-card").map((type) => {
-                const qty = quantities[type.id];
-                const Icon = type.Icon;
-                return (
-                  <div
-                    key={type.id}
-                    className={clsx(
-                      "flex items-center gap-4 px-5 py-4 rounded-xl border-2 transition-all",
-                      qty > 0 ? "border-primary/50 bg-primary/[0.04]" : "border-border bg-card"
-                    )}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                      style={{ backgroundColor: `${type.color}1A`, border: `1px solid ${type.color}30` }}
-                    >
-                      <Icon className="w-5 h-5" style={{ color: type.color }} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-bold text-foreground leading-tight">{type.label}</div>
-                      <div className="text-[10px] font-bold uppercase tracking-wider mt-0.5" style={{ color: type.color }}>{type.sublabel}</div>
-                      <div className="text-xs text-muted-foreground leading-snug mt-1">{type.description}</div>
-                    </div>
-                    <div className="flex items-center gap-1.5 flex-shrink-0">
-                      <button
-                        onClick={() => changeQty(type.id, -1)}
-                        disabled={qty === 0}
-                        className={clsx(
-                          "w-8 h-8 rounded-lg border flex items-center justify-center transition-all",
-                          qty === 0
-                            ? "border-border/40 text-muted-foreground/25 cursor-not-allowed"
-                            : "border-border text-muted-foreground hover:bg-secondary hover:text-foreground"
-                        )}
-                      >
-                        <Minus className="w-3.5 h-3.5" />
-                      </button>
-                      <span className={clsx(
-                        "w-7 text-center text-sm font-bold tabular-nums select-none",
-                        qty > 0 ? "text-foreground" : "text-muted-foreground/30"
-                      )}>{qty}</span>
-                      <button
-                        onClick={() => changeQty(type.id, 1)}
-                        className="w-8 h-8 rounded-lg border border-border flex items-center justify-center transition-all hover:bg-secondary hover:text-foreground text-muted-foreground"
-                      >
-                        <Plus className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* Validation hint */}
-              {totalQuantity === 0 && (
-                <p className="text-[11px] text-muted-foreground/50 flex items-center gap-1.5 pt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30 flex-shrink-0" />
-                  Add at least one content type to continue
-                </p>
-              )}
-              {totalQuantity > 0 && (
-                <p className="text-[11px] text-primary/70 flex items-center gap-1.5 pt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/50 flex-shrink-0" />
-                  {totalQuantity} item{totalQuantity !== 1 ? "s" : ""} queued
-                </p>
-              )}
-            </div>
-          )}
-
-          {/* ═══ Step 3: Sources & Assets ═══ */}
-          {step === 3 && (
             <div className="p-6 space-y-6">
               <div>
                 <h3 className="text-base font-bold text-foreground mb-1">Add source material and resources</h3>
@@ -1121,15 +932,166 @@ export function SmartContentCreationModal({
             </div>
           )}
 
+          {/* ═══ Step 3: Content Type ═══ */}
+          {step === 3 && (
+            <div className="p-0 flex flex-col h-full">
+              <div className="px-6 pt-5 pb-4">
+                <h3 className="text-lg font-bold text-foreground">Review your content batch</h3>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {grandTotal} item{grandTotal !== 1 ? "s" : ""} will be generated immediately after you click Create Content
+                </p>
+              </div>
+
+              <div className="flex-1 overflow-y-auto px-6 pb-4 space-y-3">
+                {/* Batch list container */}
+                <div className="rounded-[20px] border border-white/[0.08] bg-black/30 overflow-hidden">
+                  {/* Batch badge */}
+                  <div className="flex items-center gap-2 border-b border-white/[0.05] bg-white/[0.02] px-5 py-2.5">
+                    <Layers className="w-3.5 h-3.5 text-muted-foreground/80" />
+                    <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/75">
+                      Batch — {grandTotal} item{grandTotal !== 1 ? "s" : ""}
+                    </span>
+                  </div>
+
+                  {/* Content type rows */}
+                  {CONTENT_TYPES.map((type, idx) => {
+                    const qty = quantities[type.id];
+                    const Icon = type.Icon;
+                    const itemCount = getTypeItemCount(type.id);
+                    const hasPlatforms = type.id !== "long-form";
+                    const platforms = platformsByType[type.id];
+                    const rowBorder = idx < CONTENT_TYPES.length - 1 ? "border-b border-white/[0.05]" : "";
+
+                    const showBadge = type.id === "long-form" || type.id === "carousel";
+                    const badgeLabel = type.id === "long-form" ? type.sublabel : type.id === "carousel" ? "CAROUSEL" : "";
+                    const badgeStyle = type.id === "carousel"
+                      ? { borderColor: `${type.color}80`, backgroundColor: `${type.color}40`, color: type.color }
+                      : { borderColor: `${type.color}4D`, backgroundColor: "rgba(10,10,10,0.5)", color: "var(--muted-foreground)" };
+
+                    return (
+                      <div key={type.id}>
+                        {/* Main row */}
+                        <div className={clsx("flex items-center justify-between px-5 py-3", rowBorder)}>
+                          {/* Left: icon + info */}
+                          <div className="flex items-center gap-3 min-w-0 flex-1">
+                            <div
+                              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                              style={{ backgroundColor: `${type.color}1A`, border: `1px solid ${type.color}33` }}
+                            >
+                              <Icon className="w-4 h-4" style={{ color: type.color }} />
+                            </div>
+                            <div className="flex flex-col gap-0.5 min-w-0">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-bold text-foreground leading-none">{type.label}</span>
+                                {showBadge && (
+                                  <span
+                                    className="text-[9px] font-black uppercase tracking-wider rounded px-[5px] py-px"
+                                    style={{
+                                      border: `1px solid ${badgeStyle.borderColor}`,
+                                      backgroundColor: badgeStyle.backgroundColor,
+                                      color: badgeStyle.color,
+                                    }}
+                                  >
+                                    {badgeLabel}
+                                  </span>
+                                )}
+                              </div>
+                              <span className="text-xs text-muted-foreground truncate">
+                                {type.id === "long-form"
+                                  ? `${qty > 0 ? type.description + " · " + wordCount[0] + "–" + wordCount[1] + " words" : type.description}`
+                                  : type.description}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Right: stepper + count */}
+                          <div className="flex items-center gap-5 flex-shrink-0">
+                            <div className="flex items-center gap-3">
+                              <button
+                                onClick={() => changeQty(type.id, -1)}
+                                disabled={qty === 0}
+                                className={clsx(
+                                  "w-6 h-6 rounded-md flex items-center justify-center transition-all",
+                                  qty === 0
+                                    ? "bg-secondary/50 text-muted-foreground/30 cursor-not-allowed"
+                                    : "bg-secondary hover:bg-secondary/80 text-muted-foreground"
+                                )}
+                              >
+                                <Minus className="w-2.5 h-2.5" />
+                              </button>
+                              <span className={clsx(
+                                "w-4 text-center text-sm font-bold tabular-nums select-none",
+                                qty > 0 ? "text-foreground" : "text-muted-foreground/40"
+                              )}>{qty}</span>
+                              <button
+                                onClick={() => changeQty(type.id, 1)}
+                                className="w-6 h-6 rounded-md bg-secondary flex items-center justify-center transition-all hover:bg-secondary/80 text-muted-foreground"
+                              >
+                                <Plus className="w-2.5 h-2.5" />
+                              </button>
+                            </div>
+                            <span className={clsx(
+                              "text-[13px] font-semibold tabular-nums w-[60px] text-right",
+                              itemCount > 0 ? "text-foreground/90" : "text-muted-foreground/30"
+                            )}>
+                              {itemCount} {itemCount === 1 ? "item" : "items"}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Platform pills — shown when qty > 0 and type supports platforms */}
+                        {qty > 0 && hasPlatforms && (
+                          <div className={clsx(
+                            "flex flex-wrap gap-2 px-5 pb-3 pt-1 pl-[44px]",
+                            idx < CONTENT_TYPES.length - 1 ? "border-b border-white/[0.05]" : ""
+                          )}>
+                            {SOCIAL_PLATFORMS.map((p) => {
+                              const active = platforms.has(p.id);
+                              return (
+                                <button
+                                  key={p.id}
+                                  onClick={() => togglePlatformForType(type.id, p.id)}
+                                  className={clsx(
+                                    "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 transition-all",
+                                    active
+                                      ? "border border-primary bg-primary/10 text-foreground"
+                                      : "border border-white/[0.08] bg-white/[0.02] text-muted-foreground/60 hover:bg-white/[0.04]"
+                                  )}
+                                >
+                                  <span className="text-[11px] font-semibold leading-[13px]">{p.label}</span>
+                                  {active && (
+                                    <span className="flex items-center justify-center w-[9px] h-[9px] rounded-full bg-primary/80" />
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  {/* Brand kit hint */}
+                  <div className="flex items-center gap-2 px-5 py-2.5">
+                    <span className="w-3 h-3 rounded-full bg-primary/15 flex-shrink-0" />
+                    <span className="text-[11px] text-muted-foreground/50">
+                      {brandGuidelines.trim() || "Load a brand kit to auto-fill guidelines, tone, and style"}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* ═══ Step 4: Configuration ═══ */}
           {step === 4 && (() => {
-            const hasTextTypes = quantities["long-form"] > 0 || quantities["social-post"] > 0 || quantities["quote-card"] > 0;
+            const hasTextTypes = quantities["long-form"] > 0 || quantities["social-post"] > 0 || quantities["quote-card"] > 0 || quantities["carousel"] > 0;
             return (
             <div className="p-6 space-y-4">
               <div>
                 <h3 className="text-base font-bold text-foreground mb-1">Configure your content batch</h3>
                 <p className="text-sm text-muted-foreground">
-                  Shared settings apply to all {totalQuantity} item{totalQuantity !== 1 ? "s" : ""}.{" "}
+                  Shared settings apply to all {grandTotal} item{grandTotal !== 1 ? "s" : ""}.{" "}
                   Type-specific options appear in each section below.
                 </p>
               </div>
@@ -1366,6 +1328,7 @@ export function SmartContentCreationModal({
               {/* ── Social Post ─────────────────────────────────────── */}
               {quantities["social-post"] > 0 && (() => {
                 const t = CONTENT_TYPES.find(x => x.id === "social-post")!;
+                const selectedPlatforms = platformsByType["social-post"];
                 return (
                   <div className="rounded-xl border border-border overflow-hidden">
                     <div className="flex items-center gap-3 px-4 py-3 bg-secondary/40 border-b border-border">
@@ -1389,6 +1352,38 @@ export function SmartContentCreationModal({
                         })}
                       </div>
                       <p className="text-[11px] text-muted-foreground/50 mt-2">Format and length adapted per platform automatically.</p>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* ── Carousel ──────────────────────────────────────── */}
+              {quantities["carousel"] > 0 && (() => {
+                const t = CONTENT_TYPES.find(x => x.id === "carousel")!;
+                const selectedPlatforms = platformsByType["carousel"];
+                return (
+                  <div className="rounded-xl border border-border overflow-hidden">
+                    <div className="flex items-center gap-3 px-4 py-3 bg-secondary/40 border-b border-border">
+                      <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${t.color}1A`, border: `1px solid ${t.color}30` }}>
+                        <t.Icon className="w-3.5 h-3.5" style={{ color: t.color }} />
+                      </div>
+                      <span className="text-xs font-black uppercase tracking-wider text-muted-foreground/70">{t.label}</span>
+                      <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ backgroundColor: `${t.color}18`, color: t.color }}>×{quantities["carousel"]}</span>
+                    </div>
+                    <div className="p-4">
+                      <p className="text-xs font-bold text-foreground mb-2">Platforms <span className="font-normal text-muted-foreground">(configured in previous step)</span></p>
+                      <div className="flex flex-wrap gap-2">
+                        {SOCIAL_PLATFORMS.filter(p => selectedPlatforms.has(p.id)).map(p => {
+                          const PIcon = p.Icon;
+                          return (
+                            <div key={p.id} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary border border-border">
+                              <PIcon className="w-3.5 h-3.5 flex-shrink-0" style={{ color: p.color === "#010101" || p.color === "#000000" ? "var(--foreground)" : p.color }} />
+                              <span className="text-xs font-semibold text-foreground">{p.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <p className="text-[11px] text-muted-foreground/50 mt-2">Multi-slide posts adapted per platform automatically.</p>
                     </div>
                   </div>
                 );
@@ -1437,12 +1432,10 @@ export function SmartContentCreationModal({
             const batchTypes = CONTENT_TYPES.filter(t => quantities[t.id] > 0);
             const totalCost = CONTENT_TYPES.reduce((sum, t) => {
               const q = quantities[t.id] ?? 0;
-              if (t.id === "social-post") return sum + t.credits * Math.max(1, selectedPlatforms.size) * q;
-              return sum + t.credits * q;
-            }, 0);
-            const totalItems = batchTypes.reduce((sum, t) => {
-              if (t.id === "social-post") return sum + quantities[t.id] * Math.max(1, selectedPlatforms.size);
-              return sum + quantities[t.id];
+              if (t.id === "long-form") return sum + t.credits * q;
+              const platforms = platformsByType[t.id];
+              const platformCount = Math.max(1, platforms.size);
+              return sum + t.credits * q * platformCount;
             }, 0);
 
             return (
@@ -1450,7 +1443,7 @@ export function SmartContentCreationModal({
               <div>
                 <h3 className="text-base font-bold text-foreground mb-1">Review your content batch</h3>
                 <p className="text-sm text-muted-foreground">
-                  {totalItems} item{totalItems !== 1 ? "s" : ""} will be generated immediately after you click Create Content.
+                  {grandTotal} item{grandTotal !== 1 ? "s" : ""} will be generated immediately after you click Create Content.
                 </p>
               </div>
 
@@ -1461,7 +1454,7 @@ export function SmartContentCreationModal({
                   <div className="flex items-center gap-2">
                     <Layers className="w-4 h-4 text-muted-foreground" />
                     <span className="text-xs font-black uppercase tracking-wider text-muted-foreground/70">
-                      Batch — {totalItems} item{totalItems !== 1 ? "s" : ""}
+                      Batch — {grandTotal} item{grandTotal !== 1 ? "s" : ""}
                     </span>
                   </div>
                   {topic && (
@@ -1472,9 +1465,8 @@ export function SmartContentCreationModal({
                 {/* One row per selected content type */}
                 {batchTypes.map((t, idx) => {
                   const isLast = idx === batchTypes.length - 1;
-                  const itemCount = t.id === "social-post"
-                    ? quantities[t.id] * Math.max(1, selectedPlatforms.size)
-                    : quantities[t.id];
+                  const itemCount = getTypeItemCount(t.id);
+                  const selectedPlatforms = platformsByType[t.id];
                   return (
                     <div
                       key={t.id}
@@ -1485,7 +1477,7 @@ export function SmartContentCreationModal({
                           className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5"
                           style={{ backgroundColor: `${t.color}1A`, border: `1px solid ${t.color}30` }}
                         >
-                          <t.Icon className="w-4.5 h-4.5 w-[18px] h-[18px]" style={{ color: t.color }} />
+                          <t.Icon className="w-[18px] h-[18px]" style={{ color: t.color }} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
@@ -1516,7 +1508,7 @@ export function SmartContentCreationModal({
                               {quoteText && <span className="text-[11px] text-muted-foreground/60 italic truncate max-w-[220px]">"{quoteText.slice(0, 60)}{quoteText.length > 60 ? "…" : ""}"</span>}
                             </div>
                           )}
-                          {t.id === "social-post" && (
+                          {(t.id === "social-post" || t.id === "carousel") && selectedPlatforms.size > 0 && (
                             <div className="flex items-center gap-2 flex-wrap mt-1">
                               {SOCIAL_PLATFORMS.filter(p => selectedPlatforms.has(p.id)).map(p => {
                                 const PIcon = p.Icon;
@@ -1567,7 +1559,7 @@ export function SmartContentCreationModal({
                     label: "Est. Time",
                     value: (() => {
                       const mins = batchTypes.reduce((sum, t) => {
-                        const q = t.id === "social-post" ? quantities[t.id] * Math.max(1, selectedPlatforms.size) : quantities[t.id];
+                        const q = getTypeItemCount(t.id);
                         const perItem = t.id === "long-form" ? 3 : t.id === "short-clip" ? 5 : t.id === "social-post" ? 1 : 1;
                         return sum + q * perItem;
                       }, 0);

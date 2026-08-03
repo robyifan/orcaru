@@ -1,24 +1,55 @@
 import React, { useState, useRef, useMemo, useEffect } from "react";
 import {
-  X, Upload, Link as LinkIcon, FileText, Video, ImageIcon,
+  X, Upload, Link as LinkIcon, FileText, Video, ImageIcon, LayoutGrid,
   Check, Flag, ChevronDown, ChevronUp,
   Calendar, Target, ArrowLeft, Quote, Scissors, Star,
   Wand2, Plus, Minus, Lightbulb, Users, ShoppingCart,
-  AlertCircle, Zap,
+  AlertCircle, Zap, Layers, Cloud, Archive, HardDrive,
 } from "lucide-react";
 import { clsx } from "clsx";
 
+// Social platforms
+type SocialPlatformId = "instagram" | "facebook" | "linkedin" | "twitter" | "tiktok" | "youtube";
+
+interface SocialPlatform {
+  id: SocialPlatformId;
+  label: string;
+  color: string;
+  Icon: React.ElementType;
+}
+
+const PLATFORM_ICON_STYLE = {
+  instagram: { color: "#E11D48", Icon: ImageIcon },
+  facebook: { color: "#010101", Icon: LayoutGrid },
+  linkedin: { color: "#0A66C2", Icon: LayoutGrid },
+  twitter: { color: "#000000", Icon: LayoutGrid },
+  tiktok: { color: "#FE2C55", Icon: Video },
+  youtube: { color: "#FF0000", Icon: Video },
+};
+
+const SOCIAL_PLATFORMS: SocialPlatform[] = [
+  { id: "instagram", label: "Instagram", color: "#E11D48", Icon: PLATFORM_ICON_STYLE.instagram.Icon },
+  { id: "facebook", label: "Facebook", color: "#010101", Icon: PLATFORM_ICON_STYLE.facebook.Icon },
+  { id: "linkedin", label: "LinkedIn", color: "#0A66C2", Icon: PLATFORM_ICON_STYLE.linkedin.Icon },
+  { id: "twitter", label: "X (Twitter)", color: "#000000", Icon: PLATFORM_ICON_STYLE.twitter.Icon },
+  { id: "tiktok", label: "TikTok", color: "#FE2C55", Icon: PLATFORM_ICON_STYLE.tiktok.Icon },
+  { id: "youtube", label: "YouTube", color: "#FF0000", Icon: PLATFORM_ICON_STYLE.youtube.Icon },
+];
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type ContentTypeId = "blog-post" | "social-post" | "short-clip" | "highlight-reel" | "quote-card" | "ai-video";
+type ContentTypeId = "blog-post" | "social-post" | "short-clip" | "highlight-reel" | "quote-card" | "ai-video" | "carousel";
 type FunnelStage = "awareness" | "consideration" | "conversion";
 
 interface ContentTypeDef {
   id: ContentTypeId;
   label: string;
+  sublabel: string;
+  description: string;
   Icon: React.ElementType;
   color: string;
   credits: number;
+  hasPlatforms: boolean;
 }
 
 interface ScheduledItem {
@@ -27,17 +58,19 @@ interface ScheduledItem {
   typeId: ContentTypeId;
   topic: string;
   funnelStage?: FunnelStage;
+  platform?: SocialPlatformId;
 }
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
 const CONTENT_TYPES: ContentTypeDef[] = [
-  { id: "blog-post", label: "Blog Post", Icon: FileText, color: "#60A5FA", credits: 20 },
-  { id: "short-clip", label: "Short Clip", Icon: Scissors, color: "#10B981", credits: 15 },
-  { id: "highlight-reel", label: "Highlight Reel", Icon: Star, color: "#F59E0B", credits: 25 },
-  { id: "social-post", label: "Social Post", Icon: ImageIcon, color: "#F472B6", credits: 5 },
-  { id: "quote-card", label: "Quote Card", Icon: Quote, color: "#A78BFA", credits: 8 },
-  { id: "ai-video", label: "Text-to-AI Video", Icon: Wand2, color: "#EC4899", credits: 30 },
+  { id: "blog-post", label: "Long Form", sublabel: "Article / Blog Post", description: "In-depth article or recap", Icon: FileText, color: "#10B981", credits: 20, hasPlatforms: false },
+  { id: "short-clip", label: "Short Clip", sublabel: "Short Video", description: "8s per clip · Extracts & re-edits", Icon: Scissors, color: "#60A5FA", credits: 15, hasPlatforms: true },
+  { id: "highlight-reel", label: "Highlight Reel", sublabel: "Compilation", description: "60–90s compilation, auto-curated", Icon: Star, color: "#F59E0B", credits: 25, hasPlatforms: true },
+  { id: "quote-card", label: "Quote Card", sublabel: "Graphic", description: "Minimal Dark", Icon: Quote, color: "#A78BFA", credits: 8, hasPlatforms: true },
+  { id: "ai-video", label: "Text to AI Video", sublabel: "AI Video", description: "AI-generated from topic & guidelines", Icon: Wand2, color: "#EC4899", credits: 30, hasPlatforms: true },
+  { id: "social-post", label: "Social Post", sublabel: "Text + Image", description: "Text and image posts", Icon: ImageIcon, color: "#06B6D4", credits: 5, hasPlatforms: true },
+  { id: "carousel", label: "Carousel", sublabel: "Carousel", description: "Multi-slide swipeable posts", Icon: LayoutGrid, color: "#8B5CF6", credits: 12, hasPlatforms: true },
 ];
 
 const FUNNEL_STAGES = [
@@ -72,6 +105,23 @@ const PROJECT_LIBRARY = [
   { id: "athlete-footage", name: "Athlete Footage Raw.mp4", size: "890 MB", type: "mp4" },
   { id: "campaign-brief", name: "Campaign Brief Q3.docx", size: "540 KB", type: "docx" },
 ];
+
+const DRIVE_FILES = [
+  { id: "d1", name: "Product Photoshoot Q3.zip", type: "zip", size: "312 MB", modified: "Aug 12" },
+  { id: "d2", name: "Brand Voice & Tone Guide.pdf", type: "pdf", size: "4.8 MB", modified: "Jul 28" },
+  { id: "d3", name: "Interview with Olympic Athlete.m4a", type: "audio", size: "86 MB", modified: "Aug 15" },
+  { id: "d4", name: "Competitor Social Audit.xlsx", type: "sheet", size: "2.1 MB", modified: "Aug 03" },
+  { id: "d5", name: "Customer Research Notes.gdoc", type: "doc", size: "Shared", modified: "Aug 01" },
+];
+
+const DROPBOX_FILES = [
+  { id: "db1", name: "Brand Video Cut_03_Compressed.mp4", type: "video", size: "254 MB", modified: "Aug 10" },
+  { id: "db2", name: "Hero Images _ Hero Shots.zip", type: "zip", size: "610 MB", modified: "Aug 09" },
+  { id: "db3", name: "Team_Bio_Sheets.docx", type: "doc", size: "1.9 MB", modified: "Jul 26" },
+  { id: "db4", name: "Athlete Consent Forms _ Signed.pdf", type: "pdf", size: "15 MB", modified: "Jul 20" },
+];
+
+type LibrarySource = "library" | "device" | "google-drive" | "dropbox";
 
 const PROJECT_TOPICS = [
   "Performance Innovation",
@@ -554,6 +604,12 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
   const [selectedLibraryItems, setSelectedLibraryItems] = useState<Set<string>>(new Set());
   const [showLibraryModal, setShowLibraryModal] = useState(false);
   const [libraryDraft, setLibraryDraft] = useState<Set<string>>(new Set());
+  // Library tabs
+  const [librarySource, setLibrarySource] = useState<LibrarySource>("library");
+  const [selectedDriveFiles, setSelectedDriveFiles] = useState<Set<string>>(new Set());
+  const [selectedDropboxFiles, setSelectedDropboxFiles] = useState<Set<string>>(new Set());
+  const [extraUploads, setExtraUploads] = useState<File[]>([]);
+  const extraFileInputRef = useRef<HTMLInputElement>(null);
 
   // Step 3 - Content Type Mix
   const [contentTypeCounts, setContentTypeCounts] = useState<Record<ContentTypeId, number>>({
@@ -563,7 +619,35 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
     "quote-card": 2,
     "social-post": 3,
     "ai-video": 0,
+    "carousel": 0,
   });
+  const [platformsByType, setPlatformsByType] = useState<Record<ContentTypeId, Set<SocialPlatformId>>>({
+    "blog-post": new Set(),
+    "short-clip": new Set(["instagram", "tiktok"]),
+    "highlight-reel": new Set(),
+    "quote-card": new Set(),
+    "ai-video": new Set(),
+    "social-post": new Set(["facebook", "linkedin"]),
+    "carousel": new Set(),
+  });
+
+  const togglePlatformForType = (typeId: ContentTypeId, platformId: SocialPlatformId) => {
+    setPlatformsByType(prev => {
+      const newSet = new Set(prev[typeId]);
+      if (newSet.has(platformId)) newSet.delete(platformId);
+      else newSet.add(platformId);
+      return { ...prev, [typeId]: newSet };
+    });
+  };
+
+  const getTypeItemCount = (typeId: ContentTypeId): number => {
+    const qty = contentTypeCounts[typeId];
+    if (qty === 0) return 0;
+    const type = CONTENT_TYPES.find(t => t.id === typeId)!;
+    if (!type.hasPlatforms) return qty;
+    const platforms = platformsByType[typeId];
+    return qty * (platforms.size > 0 ? platforms.size : 1);
+  };
 
   // Step 4 - Funnel Stage Assignment
   const [funnelAssignments, setFunnelAssignments] = useState<Record<number, FunnelStage>>({});
@@ -642,14 +726,28 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
 
   // Calculated values
   const totalItems = useMemo(() =>
-    Object.values(contentTypeCounts).reduce((sum, count) => sum + count, 0),
-    [contentTypeCounts]
+    CONTENT_TYPES.reduce((sum, t) => sum + getTypeItemCount(t.id), 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [contentTypeCounts, platformsByType]
   );
 
   const totalCredits = useMemo(() =>
-    CONTENT_TYPES.reduce((sum, type) => sum + (contentTypeCounts[type.id] * type.credits), 0),
-    [contentTypeCounts]
+    CONTENT_TYPES.reduce((sum, type) => sum + (getTypeItemCount(type.id) * type.credits), 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [contentTypeCounts, platformsByType]
   );
+
+  const contentTypeDistribution = useMemo(() => {
+    return CONTENT_TYPES.map((type) => {
+      const count = getTypeItemCount(type.id);
+      return {
+        ...type,
+        count,
+        percentage: totalItems > 0 ? (count / totalItems) * 100 : 0,
+      };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentTypeCounts, platformsByType, totalItems]);
 
   // Generate scheduled items — runs as soon as dates + content are configured
   useEffect(() => {
@@ -663,13 +761,17 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
     const startD = new Date(start + "T00:00:00");
     const endD = new Date(end + "T00:00:00");
     const dayCount = Math.ceil((endD.getTime() - startD.getTime()) / (1000 * 60 * 60 * 24));
-    const total = Object.values(contentTypeCounts).reduce((sum, count) => sum + count, 0);
+    const total = CONTENT_TYPES.reduce((sum, t) => sum + getTypeItemCount(t.id), 0);
 
-    const allItems: { typeId: ContentTypeId; label: string; idx: number }[] = [];
+    const allItems: { typeId: ContentTypeId; label: string; idx: number; platform?: SocialPlatformId }[] = [];
     CONTENT_TYPES.forEach((type) => {
-      const count = contentTypeCounts[type.id];
-      for (let i = 0; i < count; i++) {
-        allItems.push({ typeId: type.id, label: type.label, idx: i });
+      const qty = contentTypeCounts[type.id];
+      const platforms = type.hasPlatforms ? Array.from(platformsByType[type.id]) : [undefined];
+      const platformsToUse = platforms.length > 0 ? platforms : [undefined];
+      for (let i = 0; i < qty; i++) {
+        platformsToUse.forEach((platform) => {
+          allItems.push({ typeId: type.id, label: type.label, idx: i, platform });
+        });
       }
     });
 
@@ -678,17 +780,19 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
       const itemDate = new Date(startD);
       itemDate.setDate(itemDate.getDate() + Math.min(dayOffset, dayCount));
       const id = i + 1;
+      const pLabel = item.platform ? SOCIAL_PLATFORMS.find(p => p.id === item.platform)?.label : "";
       items.push({
         id,
         date: itemDate.toISOString().split("T")[0],
         typeId: item.typeId,
-        topic: `${item.label} ${item.idx + 1}`,
+        topic: `${item.label} ${item.idx + 1}${pLabel ? " · " + pLabel : ""}`,
         funnelStage: funnelAssignments[id],
+        platform: item.platform,
       });
     });
 
     setScheduledItems(items);
-  }, [effectiveDates, contentTypeCounts, funnelAssignments]);
+  }, [effectiveDates, contentTypeCounts, platformsByType, funnelAssignments]);
 
   if (!isOpen) return null;
 
@@ -1129,15 +1233,15 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
                           </div>
                         </div>
 
-                        {/* Project library */}
+                        {/* Add Resources button — opens the same dialog as the Resources page */}
                         <div>
                           <button
-                            onClick={() => { setLibraryDraft(new Set(selectedLibraryItems)); setShowLibraryModal(true); }}
+                            onClick={() => { setLibraryDraft(new Set(selectedLibraryItems)); setLibrarySource("library"); setShowLibraryModal(true); }}
                             className="w-full flex items-center justify-between px-4 py-2.5 border border-border rounded-lg hover:border-primary/50 hover:bg-accent/30 transition-colors"
                           >
                             <div className="flex items-center gap-2 text-sm text-foreground font-medium">
                               <Plus className="w-4 h-4 text-muted-foreground" />
-                              Include from project library
+                              Add Resources
                             </div>
                             {selectedLibraryItems.size > 0 && (
                               <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">{selectedLibraryItems.size} selected</span>
@@ -1168,41 +1272,116 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
                       <div className="space-y-3">
                         {CONTENT_TYPES.map((type) => {
                           const Icon = type.Icon;
+                          const count = contentTypeCounts[type.id];
+                          const typeTotal = getTypeItemCount(type.id);
+                          const platforms = platformsByType[type.id];
                           return (
-                            <div key={type.id} className="flex items-center gap-3 p-3 bg-background rounded-lg border border-border">
-                              <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${type.color}20` }}>
-                                <Icon className="w-4 h-4" style={{ color: type.color }} />
+                            <div key={type.id} className={clsx(
+                              "p-3 border rounded-xl transition-all bg-background",
+                              count > 0 ? "border-primary/40 shadow-sm" : "border-border"
+                            )}>
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${type.color}18`, border: `1px solid ${type.color}30` }}>
+                                  <Icon className="w-5 h-5" style={{ color: type.color }} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-bold text-foreground">{type.label}</span>
+                                    <span className="text-[11px] px-1.5 py-0.5 rounded-md bg-secondary border border-border text-muted-foreground font-medium">{type.sublabel}</span>
+                                  </div>
+                                  <div className="text-[12px] text-muted-foreground mt-0.5">{type.description}</div>
+                                  <div className="flex items-center gap-2 mt-1.5">
+                                    <span className="text-[11px] text-muted-foreground font-medium">{type.credits} credits / item</span>
+                                    {count > 0 && type.hasPlatforms && platforms.size > 0 && (
+                                      <>
+                                        <span className="text-muted-foreground/40">·</span>
+                                        <span className="text-[11px] text-primary font-semibold">{count} × {platforms.size} = {typeTotal} total items</span>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-1.5">
+                                  <button
+                                    onClick={() => decrementCount(type.id)}
+                                    disabled={count === 0}
+                                    className="w-8 h-8 rounded-lg bg-secondary hover:bg-secondary/80 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center border border-border"
+                                  >
+                                    <Minus className="w-4 h-4 text-foreground" />
+                                  </button>
+                                  <span className="text-sm font-bold w-6 text-center tabular-nums">{count}</span>
+                                  <button
+                                    onClick={() => incrementCount(type.id)}
+                                    className="w-8 h-8 rounded-lg bg-secondary hover:bg-secondary/80 flex items-center justify-center border border-border"
+                                  >
+                                    <Plus className="w-4 h-4 text-foreground" />
+                                  </button>
+                                </div>
                               </div>
-                              <div className="flex-1">
-                                <div className="text-sm font-medium text-foreground">{type.label}</div>
-                                <div className="text-xs text-muted-foreground">{type.credits} credits each</div>
-                              </div>
-                              <div className="flex items-center gap-2">
-                                <button
-                                  onClick={() => decrementCount(type.id)}
-                                  disabled={contentTypeCounts[type.id] === 0}
-                                  className="w-7 h-7 rounded-md bg-secondary hover:bg-secondary/80 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center"
-                                >
-                                  <Minus className="w-4 h-4" />
-                                </button>
-                                <span className="text-sm font-bold w-6 text-center">{contentTypeCounts[type.id]}</span>
-                                <button
-                                  onClick={() => incrementCount(type.id)}
-                                  className="w-7 h-7 rounded-md bg-secondary hover:bg-secondary/80 flex items-center justify-center"
-                                >
-                                  <Plus className="w-4 h-4" />
-                                </button>
-                              </div>
+
+                              {/* Platform pills row (only when count > 0 and hasPlatforms) */}
+                              {count > 0 && type.hasPlatforms && (
+                                <div className="mt-3 pt-3 border-t border-border/80">
+                                  <div className="flex items-center gap-1.5 mb-2">
+                                    <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Distribute across</span>
+                                  </div>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {SOCIAL_PLATFORMS.map(({ id, label, color, Icon: PIcon }) => {
+                                      const on = platforms.has(id);
+                                      return (
+                                        <button
+                                          key={id}
+                                          onClick={() => togglePlatformForType(type.id, id)}
+                                          className={clsx(
+                                            "group flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border text-[11.5px] font-semibold transition-all",
+                                            on
+                                              ? "bg-foreground/5 border-foreground/15 text-foreground"
+                                              : "bg-background border-border text-muted-foreground hover:text-foreground hover:border-foreground/20 hover:bg-foreground/[0.03]"
+                                          )}
+                                          style={on ? { backgroundColor: `${color}10`, borderColor: `${color}40`, color: color } : {}}
+                                        >
+                                          <PIcon className="w-3.5 h-3.5" style={on ? { color } : {}} />
+                                          {label}
+                                        </button>
+                                      );
+                                    })}
+                                  </div>
+                                  {platforms.size === 0 && (
+                                    <p className="mt-2 text-[11px] text-muted-foreground italic">No platforms selected — will be assigned globally later.</p>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           );
                         })}
-                        <div className="pt-3 border-t border-border flex justify-between">
-                          <span className="text-sm font-bold text-foreground">Total Items:</span>
-                          <span className="text-sm font-bold text-primary">{totalItems}</span>
+
+                        {/* Distribution bar */}
+                        {totalItems > 0 && (
+                          <div className="p-3 border border-border rounded-xl bg-background/60">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Mix distribution</span>
+                              <span className="text-[11px] text-muted-foreground">{totalItems} items · {totalCredits} credits</span>
+                            </div>
+                            <div className="flex h-2.5 w-full rounded-full overflow-hidden bg-secondary border border-border">
+                              {contentTypeDistribution.filter(d => d.count > 0).map(d => (
+                                <div key={d.id} style={{ width: `${d.percentage}%`, backgroundColor: d.color }} className="h-full first:rounded-l-full last:rounded-r-full" />
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="pt-3 border-t border-border flex justify-between items-center">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-bold text-foreground">Total Items</span>
+                              <Zap className="w-4 h-4 text-amber-400" />
+                            </div>
+                            <span className="text-[11px] text-muted-foreground">Quantity × platforms = total deliverables</span>
+                          </div>
+                          <span className="text-lg font-bold text-primary tabular-nums">{totalItems}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm font-bold text-foreground">Total Credits:</span>
-                          <span className="text-sm font-bold text-primary">{totalCredits}</span>
+                        <div className="flex justify-between items-center -mt-1">
+                          <span className="text-sm font-bold text-foreground">Total Credits</span>
+                          <span className="text-lg font-bold text-primary tabular-nums">{totalCredits}</span>
                         </div>
                       </div>
                     )}
@@ -1550,8 +1729,8 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
           : null;
         const typeBreakdown = CONTENT_TYPES.map(t => ({
           type: t,
-          count: contentTypeCounts[t.id] || 0,
-          pct: totalItems > 0 ? Math.round(((contentTypeCounts[t.id] || 0) / totalItems) * 100) : 0,
+          count: getTypeItemCount(t.id) || 0,
+          pct: totalItems > 0 ? Math.round(((getTypeItemCount(t.id) || 0) / totalItems) * 100) : 0,
         })).filter(x => x.count > 0);
         const funnelBreakdown = FUNNEL_STAGES.map(s => ({
           stage: s,
@@ -1693,76 +1872,257 @@ export function CampaignCreationFullView({ isOpen, onClose, onComplete, initialD
         );
       })()}
 
-      {/* Project Library Modal */}
+      {/* Add Resources Modal — same dialog as the Resources page */}
       {showLibraryModal && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center p-4"
           onClick={() => setShowLibraryModal(false)}
         >
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
           <div
-            className="relative bg-card border border-border rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden"
+            className="relative bg-card border border-border rounded-2xl shadow-2xl w-full max-w-[900px] max-h-[90vh] flex flex-col overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="px-5 pt-5 pb-5 space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-foreground">Project Library</span>
-                <button
-                  onClick={() => setShowLibraryModal(false)}
-                  className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+            {/* Header */}
+            <div className="px-8 py-6 flex-shrink-0 flex items-start justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground leading-tight">Add Resources</h2>
+                <p className="text-sm text-muted-foreground mt-1.5">Pick from your library, upload from device, or import from the cloud</p>
               </div>
-              <p className="text-xs text-muted-foreground">Select files to include as source material for this campaign.</p>
-              <div className="space-y-1.5 max-h-64 overflow-y-auto">
-                {PROJECT_LIBRARY.map((item) => {
-                  const isSelected = libraryDraft.has(item.id);
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        const next = new Set(libraryDraft);
-                        if (next.has(item.id)) next.delete(item.id);
-                        else next.add(item.id);
-                        setLibraryDraft(next);
-                      }}
-                      className={clsx(
-                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-colors text-left",
-                        isSelected
-                          ? "border-primary bg-primary/10"
-                          : "border-border hover:border-primary/40 hover:bg-accent/30"
+              <button
+                onClick={() => setShowLibraryModal(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Body: sidebar + content */}
+            <div className="flex flex-1 min-h-0 overflow-hidden">
+              {/* Sidebar */}
+              <div className="w-[200px] flex-shrink-0 border-r border-border px-4 py-3 flex flex-col gap-1">
+                {([
+                  { key: "library" as LibrarySource, Icon: Layers, label: "My Library" },
+                  { key: "device" as LibrarySource, Icon: Upload, label: "Upload from Device" },
+                  { key: "google-drive" as LibrarySource, Icon: Cloud, label: "Google Drive" },
+                  { key: "dropbox" as LibrarySource, Icon: Archive, label: "Dropbox" },
+                ]).map(({ key, Icon: SIcon, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setLibrarySource(key)}
+                    className={clsx(
+                      "flex items-center gap-3 rounded-lg px-4 py-3 text-sm transition-colors text-left",
+                      librarySource === key
+                        ? "bg-primary/10 text-primary font-semibold"
+                        : "text-foreground font-medium hover:bg-accent/40"
+                    )}
+                  >
+                    <SIcon className="w-5 h-5 flex-shrink-0" />
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto px-8 py-6 flex flex-col gap-6">
+                {/* My Library */}
+                {librarySource === "library" && (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Your Resources</p>
+                      {libraryDraft.size > 0 && (
+                        <span className="text-xs font-semibold text-primary">{libraryDraft.size} selected</span>
                       )}
-                    >
-                      <div className={clsx(
-                        "w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors",
-                        isSelected ? "bg-primary border-primary" : "border-border"
-                      )}>
-                        {isSelected && <Check className="w-3 h-3 text-primary-foreground" />}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {PROJECT_LIBRARY.map((item) => {
+                        const isSelected = libraryDraft.has(item.id);
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => {
+                              const next = new Set(libraryDraft);
+                              if (next.has(item.id)) next.delete(item.id);
+                              else next.add(item.id);
+                              setLibraryDraft(next);
+                            }}
+                            className={clsx(
+                              "flex items-center gap-3 border rounded-lg p-3 transition-colors cursor-pointer text-left w-full",
+                              isSelected
+                                ? "border-primary bg-primary/10"
+                                : "border-border bg-secondary/40 hover:border-primary/40"
+                            )}
+                          >
+                            <div className={clsx(
+                              "flex items-center justify-center w-5 h-5 rounded border flex-shrink-0 transition-colors",
+                              isSelected ? "bg-primary border-primary" : "bg-transparent border-muted-foreground/40"
+                            )}>
+                              {isSelected && <Check className="w-3 h-3 text-primary-foreground" />}
+                            </div>
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-background border border-border flex-shrink-0">
+                              <FileText className="w-5 h-5 text-muted-foreground" />
+                            </div>
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-foreground truncate">{item.name}</p>
+                              <p className="text-[10px] text-muted-foreground">{item.size}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Upload from Device */}
+                {librarySource === "device" && (
+                  <>
+                    <label className="border-2 border-dashed border-border rounded-xl bg-background/60 h-[120px] flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition-colors">
+                      <input ref={extraFileInputRef} type="file" multiple className="hidden" onChange={(e) => setExtraUploads(a => [...a, ...Array.from(e.target.files || [])])} />
+                      <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+                      <p className="text-foreground text-sm font-semibold">Click or drag to upload</p>
+                      <p className="text-[11px] text-muted-foreground mt-1">Video, audio, docs, images</p>
+                    </label>
+                    {extraUploads.length > 0 && (
+                      <div className="flex flex-col gap-2">
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Added this session</p>
+                        {extraUploads.map((f, i) => (
+                          <div key={i} className="flex items-center gap-3 border border-border rounded-lg bg-secondary/40 p-3">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-background border border-border flex-shrink-0">
+                              <FileText className="w-5 h-5 text-muted-foreground" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-semibold text-foreground truncate">{f.name}</p>
+                              <p className="text-[10px] text-muted-foreground">{f.size > 1048576 ? `${(f.size / 1048576).toFixed(1)} MB` : `${(f.size / 1024).toFixed(0)} KB`}</p>
+                            </div>
+                            <button
+                              onClick={() => setExtraUploads(a => a.filter((_, idx) => idx !== i))}
+                              className="text-muted-foreground hover:text-red-400 text-lg leading-none px-1"
+                            >×</button>
+                          </div>
+                        ))}
                       </div>
-                      <FileText className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-foreground truncate">{item.name}</div>
-                        <div className="text-xs text-muted-foreground">{item.size}</div>
-                      </div>
-                    </button>
-                  );
-                })}
+                    )}
+                  </>
+                )}
+
+                {/* Google Drive */}
+                {librarySource === "google-drive" && (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Google Drive Files</p>
+                      {selectedDriveFiles.size > 0 && (
+                        <span className="text-xs font-semibold text-primary">{selectedDriveFiles.size} selected</span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {DRIVE_FILES.map((file) => {
+                        const isSelected = selectedDriveFiles.has(file.id);
+                        return (
+                          <button
+                            key={file.id}
+                            onClick={() => {
+                              const next = new Set(selectedDriveFiles);
+                              if (next.has(file.id)) next.delete(file.id);
+                              else next.add(file.id);
+                              setSelectedDriveFiles(next);
+                              const d = new Set(libraryDraft);
+                              if (d.has(file.id)) d.delete(file.id); else d.add(file.id);
+                              setLibraryDraft(d);
+                            }}
+                            className={clsx(
+                              "flex items-center gap-3 border rounded-lg p-3 transition-colors cursor-pointer text-left w-full",
+                              isSelected ? "border-primary bg-primary/10" : "border-border bg-secondary/40 hover:border-primary/40"
+                            )}
+                          >
+                            <div className={clsx(
+                              "flex items-center justify-center w-5 h-5 rounded border flex-shrink-0 transition-colors",
+                              isSelected ? "bg-primary border-primary" : "bg-transparent border-muted-foreground/40"
+                            )}>
+                              {isSelected && <Check className="w-3 h-3 text-primary-foreground" />}
+                            </div>
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-background border border-border flex-shrink-0">
+                              <Cloud className="w-5 h-5 text-sky-500" />
+                            </div>
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-foreground truncate">{file.name}</p>
+                              <p className="text-[10px] text-muted-foreground">{file.size} · {file.modified}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Dropbox */}
+                {librarySource === "dropbox" && (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Dropbox Files</p>
+                      {selectedDropboxFiles.size > 0 && (
+                        <span className="text-xs font-semibold text-primary">{selectedDropboxFiles.size} selected</span>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      {DROPBOX_FILES.map((file) => {
+                        const isSelected = selectedDropboxFiles.has(file.id);
+                        return (
+                          <button
+                            key={file.id}
+                            onClick={() => {
+                              const next = new Set(selectedDropboxFiles);
+                              if (next.has(file.id)) next.delete(file.id);
+                              else next.add(file.id);
+                              setSelectedDropboxFiles(next);
+                              const d = new Set(libraryDraft);
+                              if (d.has(file.id)) d.delete(file.id); else d.add(file.id);
+                              setLibraryDraft(d);
+                            }}
+                            className={clsx(
+                              "flex items-center gap-3 border rounded-lg p-3 transition-colors cursor-pointer text-left w-full",
+                              isSelected ? "border-primary bg-primary/10" : "border-border bg-secondary/40 hover:border-primary/40"
+                            )}
+                          >
+                            <div className={clsx(
+                              "flex items-center justify-center w-5 h-5 rounded border flex-shrink-0 transition-colors",
+                              isSelected ? "bg-primary border-primary" : "bg-transparent border-muted-foreground/40"
+                            )}>
+                              {isSelected && <Check className="w-3 h-3 text-primary-foreground" />}
+                            </div>
+                            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-background border border-border flex-shrink-0">
+                              <Archive className="w-5 h-5 text-indigo-500" />
+                            </div>
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <p className="text-xs font-semibold text-foreground truncate">{file.name}</p>
+                              <p className="text-[10px] text-muted-foreground">{file.size} · {file.modified}</p>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="flex gap-2 pt-1">
-                <button
-                  onClick={() => setShowLibraryModal(false)}
-                  className="flex-1 py-2 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => { setSelectedLibraryItems(new Set(libraryDraft)); setShowLibraryModal(false); }}
-                  className="flex-1 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
-                >
-                  {libraryDraft.size > 0 ? `Add ${libraryDraft.size} file${libraryDraft.size > 1 ? 's' : ''}` : 'Confirm'}
-                </button>
-              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="flex-shrink-0 flex items-center justify-between border-t border-border bg-secondary/40 px-8 py-5">
+              <button
+                onClick={() => { setShowLibraryModal(false); setLibrarySource("library"); }}
+                className="text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => { setSelectedLibraryItems(new Set(libraryDraft)); setShowLibraryModal(false); }}
+                className={clsx(
+                  "inline-flex items-center justify-center rounded-lg px-6 py-2.5 text-sm font-bold text-primary-foreground transition-opacity",
+                  libraryDraft.size === 0 ? "bg-primary/40 cursor-not-allowed" : "bg-primary shadow-lg hover:opacity-90 cursor-pointer"
+                )}
+                disabled={libraryDraft.size === 0}
+              >
+                {libraryDraft.size > 0 ? `Add ${libraryDraft.size} Resource${libraryDraft.size > 1 ? 's' : ''}` : 'Add Resources'}
+              </button>
             </div>
           </div>
         </div>
