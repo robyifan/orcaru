@@ -669,6 +669,28 @@ function ConfigurationSection({ category, fields, setField }: {
   );
 }
 
+// ─── Platform icons ───────────────────────────────────────────────────────────
+
+function PlatformIcon({ platform }: { platform: string }) {
+  const icons: Record<string, { color: string; label: string }> = {
+    instagram: { color: "#E1306C", label: "IG" },
+    facebook: { color: "#1877F2", label: "FB" },
+    tiktok: { color: "#00f2ea", label: "TT" },
+    youtube: { color: "#FF0000", label: "YT" },
+    linkedin: { color: "#0A66C2", label: "LI" },
+    x: { color: "#fafafa", label: "X" },
+  };
+  const p = icons[platform] || { color: "#a1a1aa", label: platform.toUpperCase().slice(0, 2) };
+  return (
+    <span
+      className="inline-flex items-center justify-center rounded-[6px] text-[9px] font-bold px-[6px] py-[3px]"
+      style={{ backgroundColor: `${p.color}22`, color: p.color, border: `1px solid ${p.color}44` }}
+    >
+      {p.label}
+    </span>
+  );
+}
+
 // ─── Preview panel ─────────────────────────────────────────────────────────────
 
 function PreviewPanel({ category, fields }: {
@@ -677,6 +699,7 @@ function PreviewPanel({ category, fields }: {
 }) {
   const title = fields.title || "";
   const tags: string[] = fields.tags ?? [];
+  const platforms: string[] = fields.platforms ?? [];
 
   // Determine the body text to show based on content type
   const bodyText =
@@ -700,125 +723,255 @@ function PreviewPanel({ category, fields }: {
   const contentParas = paragraphs.filter((p: string) => !p.startsWith("#"));
   const hashtagLine = paragraphs.find((p: string) => p.startsWith("#")) || "";
 
+  // Default platforms if none set
+  const displayPlatforms = platforms.length > 0 ? platforms : ["instagram", "youtube"];
+
   return (
     <div className="bg-[rgba(10,10,10,0.2)] border-r border-[rgba(255,255,255,0.08)] self-stretch shrink-0 w-[320px] flex flex-col gap-[10px] pl-[24px] pr-[25px] py-[16px]">
-      <p className="font-bold text-[14px] text-white leading-5">Preview</p>
-
-      {/* Preview card */}
-      <div className="bg-[#0a0a0a] h-[392px] w-[271px] rounded-[8px] overflow-hidden shrink-0">
-
-        {/* ── Long form / Social post ── */}
-        {(category === "long-form" || category === "other") && (
-          <div className="size-full p-[16px] flex flex-col gap-[10px] overflow-hidden">
-            {/* Title */}
-            {title ? (
-              <p className="text-[#fafafa] text-[11px] font-bold leading-[15px] line-clamp-2 shrink-0">{title}</p>
-            ) : (
-              <div className="h-[10px] bg-[#222] rounded-full w-3/4 shrink-0" />
-            )}
-
-            {/* Body text */}
-            <div className="flex-1 overflow-hidden">
-              {contentParas.length > 0 ? (
-                <div className="flex flex-col gap-[8px]">
-                  {contentParas.slice(0, 8).map((para: string, i: number) => (
-                    <p
-                      key={i}
-                      className="text-[#a1a1aa] text-[9px] leading-[14px] line-clamp-3"
-                    >
-                      {para}
-                    </p>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col gap-[5px]">
-                  {[100, 90, 85, 70, 95, 60, 80, 75].map((w, i) => (
-                    <div key={i} className="h-[7px] bg-[#1a1a1a] rounded-full" style={{ width: `${w}%` }} />
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Hashtags */}
-            {(hashtagLine || tags.length > 0) && (
-              <div className="shrink-0 pt-[4px]">
-                {hashtagLine ? (
-                  <p className="text-[#10b981] text-[9px] leading-[14px] line-clamp-2">{hashtagLine}</p>
-                ) : (
-                  <p className="text-[#10b981] text-[9px] leading-[14px]">
-                    {tags.map((t) => `#${t}`).join(" ")}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── Quote card ── */}
-        {category === "quote-card" && (
-          <div className="size-full flex flex-col items-center justify-center p-[20px] bg-[#0f0f0f]">
-            <div className="text-[#10b981] text-[28px] leading-none font-black mb-[8px] self-start">"</div>
-            {bodyText ? (
-              <p className="text-[#fafafa] text-[11px] leading-[16px] italic text-center line-clamp-6">
-                {bodyText}
-              </p>
-            ) : (
-              <div className="flex flex-col gap-[5px] w-full">
-                {[80, 95, 70].map((w, i) => (
-                  <div key={i} className="h-[7px] bg-[#222] rounded-full mx-auto" style={{ width: `${w}%` }} />
-                ))}
-              </div>
-            )}
-            {(fields.author || tags.length > 0) && (
-              <div className="mt-[12px] text-center">
-                {fields.author && (
-                  <p className="text-[#a1a1aa] text-[10px] font-medium">— {fields.author}</p>
-                )}
-                {tags.length > 0 && (
-                  <p className="text-[#10b981] text-[9px] mt-[6px]">
-                    {tags.map((t) => `#${t}`).join(" ")}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* ── Short clip / Highlight / AI Video ── */}
-        {(category === "short-video" || category === "highlight" || category === "ai-video") && (
-          <div className="size-full flex flex-col px-[20px] py-[16px] gap-[12px]">
-            {/* Upload zone (top) */}
-            <div className="flex-1 w-full rounded-[16px] flex flex-col items-center justify-center gap-[8px]">
-              <UploadIcon />
-              <p className="text-[#10b981] text-[12px] font-medium">Upload Video</p>
-              <p className="text-[#a1a1aa] text-[10px] font-medium">Click to browse</p>
-            </div>
-
-            {/* Generate AI Video zone */}
-            <div className="w-full rounded-[16px] border border-dashed border-[#10b981] flex flex-col items-center justify-center gap-[6px] py-[12px] px-[14px] shrink-0">
-              <AIGenerateIcon />
-              <p className="text-[#fafafa] text-[12px] font-medium">Generate AI Video</p>
-              <p className="text-[#a1a1aa] text-[10px] font-medium text-center leading-[14px]">
-                This will create a video using the post details and references
-              </p>
-            </div>
-
-            {/* Caption / script preview */}
-            {bodyText && (
-              <div className="shrink-0">
-                <p className="text-[#a1a1aa] text-[9px] leading-[13px] line-clamp-3">{bodyText}</p>
-                {tags.length > 0 && (
-                  <p className="text-[#10b981] text-[9px] mt-[4px] line-clamp-1">
-                    {tags.map((t) => `#${t}`).join(" ")}
-                  </p>
-                )}
-              </div>
-            )}
+      <div className="flex items-center justify-between">
+        <p className="font-bold text-[14px] text-white leading-5">Preview</p>
+        {displayPlatforms.length > 0 && (
+          <div className="flex gap-[4px]">
+            {displayPlatforms.map((p) => (
+              <PlatformIcon key={p} platform={p} />
+            ))}
           </div>
         )}
       </div>
 
-      <p className="text-[12px] text-white leading-4 opacity-80">
+      {/* ── Long Form Preview ── */}
+      {category === "long-form" && (
+        <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
+          {/* Article header */}
+          <div className="p-[16px] pb-[12px] border-b border-[rgba(255,255,255,0.06)]">
+            {title ? (
+              <p className="text-[#fafafa] text-[13px] font-bold leading-[18px] line-clamp-2">{title}</p>
+            ) : (
+              <div className="h-[12px] bg-[#222] rounded-full w-3/4" />
+            )}
+            <div className="flex items-center gap-[6px] mt-[8px]">
+              <div className="size-[16px] rounded-full bg-[#222]" />
+              <div className="h-[8px] bg-[#222] rounded-full w-[60px]" />
+            </div>
+          </div>
+          {/* Article body */}
+          <div className="p-[16px] pt-[12px]">
+            {contentParas.length > 0 ? (
+              <div className="flex flex-col gap-[8px]">
+                {contentParas.slice(0, 6).map((para: string, i: number) => (
+                  <p key={i} className="text-[#a1a1aa] text-[10px] leading-[15px] line-clamp-3">{para}</p>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-[6px]">
+                {[100, 92, 88, 75, 95, 65, 82, 70].map((w, i) => (
+                  <div key={i} className="h-[8px] bg-[#1a1a1a] rounded-full" style={{ width: `${w}%` }} />
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Hashtags */}
+          {(hashtagLine || tags.length > 0) && (
+            <div className="px-[16px] pb-[12px]">
+              {hashtagLine ? (
+                <p className="text-[#10b981] text-[10px] leading-[14px] line-clamp-2">{hashtagLine}</p>
+              ) : (
+                <p className="text-[#10b981] text-[10px] leading-[14px]">
+                  {tags.map((t) => `#${t}`).join(" ")}
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── Short Video Preview (Vertical 9:16) ── */}
+      {category === "short-video" && (
+        <div className="bg-[#0a0a0a] w-[180px] rounded-[12px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)] mx-auto">
+          {/* Video area - vertical aspect ratio */}
+          <div className="w-full aspect-[9/16] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[8px] relative">
+            {/* Play button */}
+            <div className="size-[40px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center backdrop-blur-sm">
+              <svg fill="none" viewBox="0 0 16 16" className="size-[18px] ml-[2px]">
+                <path d="M4 2L14 8L4 14V2Z" fill="#fafafa" />
+              </svg>
+            </div>
+            <p className="text-[#a1a1aa] text-[9px]">Short Video Preview</p>
+            {/* Duration badge */}
+            <div className="absolute bottom-[8px] right-[8px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px]">
+              <span className="text-white text-[9px] font-medium">{fields.clipDuration || "30"}s</span>
+            </div>
+          </div>
+          {/* Caption area */}
+          <div className="p-[10px]">
+            {title && <p className="text-[#fafafa] text-[10px] font-bold leading-[14px] line-clamp-1 mb-[4px]">{title}</p>}
+            {bodyText && <p className="text-[#a1a1aa] text-[9px] leading-[13px] line-clamp-2">{bodyText}</p>}
+            {(hashtagLine || tags.length > 0) && (
+              <p className="text-[#10b981] text-[9px] mt-[4px] line-clamp-1">
+                {hashtagLine || tags.map((t) => `#${t}`).join(" ")}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── Highlight Reel Preview (Horizontal 16:9) ── */}
+      {category === "highlight" && (
+        <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
+          {/* Video area - horizontal aspect ratio */}
+          <div className="w-full aspect-[16/9] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[6px] relative">
+            {/* Play button */}
+            <div className="size-[36px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center backdrop-blur-sm">
+              <svg fill="none" viewBox="0 0 16 16" className="size-[16px] ml-[2px]">
+                <path d="M4 2L14 8L4 14V2Z" fill="#fafafa" />
+              </svg>
+            </div>
+            <p className="text-[#a1a1aa] text-[9px]">Highlight Reel Preview</p>
+            {/* Duration badge */}
+            <div className="absolute bottom-[6px] right-[6px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px]">
+              <span className="text-white text-[9px] font-medium">{fields.totalDuration || "90"}s</span>
+            </div>
+            {/* Clip count badge */}
+            <div className="absolute top-[6px] left-[6px] bg-[rgba(16,185,129,0.8)] rounded-[4px] px-[6px] py-[2px]">
+              <span className="text-white text-[9px] font-medium">{fields.numHighlights || "5"} clips</span>
+            </div>
+          </div>
+          {/* Info area */}
+          <div className="p-[12px]">
+            {title && <p className="text-[#fafafa] text-[11px] font-bold leading-[15px] line-clamp-1 mb-[4px]">{title}</p>}
+            {bodyText && <p className="text-[#a1a1aa] text-[9px] leading-[13px] line-clamp-2">{bodyText}</p>}
+          </div>
+        </div>
+      )}
+
+      {/* ─ Quote Card Preview ── */}
+      {category === "quote-card" && (
+        <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
+          <div className="w-full aspect-square bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0f0f0f] flex flex-col items-center justify-center p-[24px] relative">
+            {/* Decorative quote mark */}
+            <div className="text-[#10b981] text-[48px] leading-none font-black absolute top-[16px] left-[20px] opacity-30">"</div>
+            {/* Quote text */}
+            {bodyText ? (
+              <p className="text-[#fafafa] text-[13px] leading-[20px] italic text-center line-clamp-6 relative z-10">
+                {bodyText}
+              </p>
+            ) : (
+              <div className="flex flex-col gap-[6px] w-full relative z-10">
+                {[90, 100, 80].map((w, i) => (
+                  <div key={i} className="h-[8px] bg-[#222] rounded-full mx-auto" style={{ width: `${w}%` }} />
+                ))}
+              </div>
+            )}
+            {/* Author */}
+            {fields.author && (
+              <div className="mt-[16px] text-center relative z-10">
+                <div className="w-[24px] h-px bg-[#10b981] mx-auto mb-[6px]" />
+                <p className="text-[#a1a1aa] text-[10px] font-medium">— {fields.author}</p>
+              </div>
+            )}
+            {/* Tags */}
+            {tags.length > 0 && (
+              <p className="text-[#10b981] text-[9px] mt-[8px] text-center relative z-10">
+                {tags.map((t) => `#${t}`).join(" ")}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── AI Video Preview ── */}
+      {category === "ai-video" && (
+        <div className="bg-[#0a0a0a] w-[180px] rounded-[12px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)] mx-auto">
+          {/* Video area - vertical aspect ratio */}
+          <div className="w-full aspect-[9/16] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[8px] relative">
+            {/* AI sparkle icon */}
+            <div className="size-[40px] rounded-full bg-[rgba(16,185,129,0.15)] border border-[rgba(16,185,129,0.3)] flex items-center justify-center">
+              <AIGenerateIcon />
+            </div>
+            <p className="text-[#10b981] text-[10px] font-medium">AI-Generated Video</p>
+            <p className="text-[#a1a1aa] text-[8px] text-center px-[12px]">Will be generated from script and references</p>
+            {/* Duration badge */}
+            <div className="absolute bottom-[8px] right-[8px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px]">
+              <span className="text-white text-[9px] font-medium">{fields.videoDuration || "60"}s</span>
+            </div>
+            {/* AI badge */}
+            <div className="absolute top-[8px] left-[8px] bg-[rgba(139,92,246,0.8)] rounded-[4px] px-[6px] py-[2px]">
+              <span className="text-white text-[9px] font-medium">AI</span>
+            </div>
+          </div>
+          {/* Script preview */}
+          <div className="p-[10px]">
+            {title && <p className="text-[#fafafa] text-[10px] font-bold leading-[14px] line-clamp-1 mb-[4px]">{title}</p>}
+            {bodyText && <p className="text-[#a1a1aa] text-[9px] leading-[13px] line-clamp-3">{bodyText}</p>}
+          </div>
+        </div>
+      )}
+
+      {/* ── Social Post Preview (Other) ── */}
+      {category === "other" && (
+        <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
+          {/* Post header */}
+          <div className="flex items-center gap-[8px] p-[12px] pb-[8px]">
+            <div className="size-[24px] rounded-full bg-[#222]" />
+            <div className="flex-1">
+              <div className="h-[8px] bg-[#222] rounded-full w-[80px] mb-[4px]" />
+              <div className="h-[6px] bg-[#1a1a1a] rounded-full w-[50px]" />
+            </div>
+          </div>
+          {/* Post content */}
+          <div className="px-[12px] pb-[8px]">
+            {title && <p className="text-[#fafafa] text-[11px] font-bold leading-[15px] mb-[6px]">{title}</p>}
+            {contentParas.length > 0 ? (
+              <div className="flex flex-col gap-[6px]">
+                {contentParas.slice(0, 4).map((para: string, i: number) => (
+                  <p key={i} className="text-[#a1a1aa] text-[10px] leading-[14px] line-clamp-2">{para}</p>
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col gap-[5px]">
+                {[100, 90, 85, 70].map((w, i) => (
+                  <div key={i} className="h-[7px] bg-[#1a1a1a] rounded-full" style={{ width: `${w}%` }} />
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Hashtags */}
+          {(hashtagLine || tags.length > 0) && (
+            <div className="px-[12px] pb-[12px]">
+              {hashtagLine ? (
+                <p className="text-[#10b981] text-[10px] leading-[14px] line-clamp-2">{hashtagLine}</p>
+              ) : (
+                <p className="text-[#10b981] text-[10px] leading-[14px]">
+                  {tags.map((t) => `#${t}`).join(" ")}
+                </p>
+              )}
+            </div>
+          )}
+          {/* Engagement bar */}
+          <div className="border-t border-[rgba(255,255,255,0.06)] px-[12px] py-[8px] flex items-center gap-[16px]">
+            <div className="flex items-center gap-[4px]">
+              <svg fill="none" viewBox="0 0 12 12" className="size-[12px]">
+                <path d="M6 10.5L1.5 6C0.5 5 0.5 3.5 1.5 2.5C2.5 1.5 4 1.5 5 2.5L6 3.5L7 2.5C8 1.5 9.5 1.5 10.5 2.5C11.5 3.5 11.5 5 10.5 6L6 10.5Z" stroke="#a1a1aa" strokeWidth="1" />
+              </svg>
+              <span className="text-[#a1a1aa] text-[9px]">Like</span>
+            </div>
+            <div className="flex items-center gap-[4px]">
+              <svg fill="none" viewBox="0 0 12 12" className="size-[12px]">
+                <path d="M1 10V7C1 6.5 1.5 6 2 6H3.5L5 3H10C10.5 3 11 3.5 11 4V7.5C11 8.5 10.5 9.5 9.5 10H3C2 10 1 9.5 1 8.5V10Z" stroke="#a1a1aa" strokeWidth="1" />
+              </svg>
+              <span className="text-[#a1a1aa] text-[9px]">Comment</span>
+            </div>
+            <div className="flex items-center gap-[4px]">
+              <svg fill="none" viewBox="0 0 12 12" className="size-[12px]">
+                <path d="M1 6L6 1L11 6M6 1V11" stroke="#a1a1aa" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="text-[#a1a1aa] text-[9px]">Share</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <p className="text-[11px] text-[#a1a1aa] leading-4">
         This is an approximation of what your post will look like.
       </p>
     </div>
@@ -1115,6 +1268,7 @@ export function ContentEditModal({
   const [currentStatus, setCurrentStatus] = useState("Draft");
   const [showRejectionModal, setShowRejectionModal] = useState(false);
   const [rejectionReason, setRejectionReason] = useState("");
+  const [rejectionReasonDisplay, setRejectionReasonDisplay] = useState("");
   const [comments, setComments] = useState<Array<{
     id: number;
     author: string;
@@ -1161,6 +1315,7 @@ export function ContentEditModal({
     if (!rejectionReason.trim()) return;
     
     setCurrentStatus("Rejected");
+    setRejectionReasonDisplay(rejectionReason);
     setShowRejectionModal(false);
     setShowStatusDropdown(false);
     
@@ -1304,7 +1459,10 @@ export function ContentEditModal({
               </div>
               <div className="flex-1">
                 <p className="font-semibold text-[#ef4444] text-[13px] mb-[4px]">Post rejected</p>
-                <p className="text-[#d4d4d8] text-[12px] leading-[16px]">This post was rejected. Check the comments section for the rejection reason.</p>
+                {rejectionReasonDisplay && (
+                  <p className="text-[#d4d4d8] text-[12px] leading-[16px] mb-[4px]">{rejectionReasonDisplay}</p>
+                )}
+                <p className="text-[#a1a1aa] text-[11px] leading-[14px]">Check the comments section for more details.</p>
               </div>
             </div>
           </div>
