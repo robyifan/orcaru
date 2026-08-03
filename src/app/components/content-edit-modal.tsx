@@ -45,11 +45,11 @@ function categorize(ct: string): ContentCategory {
 }
 
 const CATEGORY_META: Record<ContentCategory, { sublabel: string; color: string }> = {
-  "long-form":   { sublabel: "Long Form Article",       color: "#60A5FA" },
-  "short-video": { sublabel: "Youtube Shorts Clip",     color: "#10B981" },
-  "highlight":   { sublabel: "Multi-Clip Compilation",  color: "#F59E0B" },
-  "quote-card":  { sublabel: "Template-Based Graphic",  color: "#A78BFA" },
-  "ai-video":    { sublabel: "AI-Generated Video",      color: "#10B981" },
+  "long-form":   { sublabel: "Long Form",       color: "#60A5FA" },
+  "short-video": { sublabel: "Short Clip",     color: "#10B981" },
+  "highlight":   { sublabel: "Highlight Reel",  color: "#F59E0B" },
+  "quote-card":  { sublabel: "Quote Card",  color: "#A78BFA" },
+  "ai-video":    { sublabel: "Text to AI Video",      color: "#10B981" },
   "other":       { sublabel: "Social Post",             color: "#60A5FA" },
 };
 
@@ -673,34 +673,50 @@ function ConfigurationSection({ category, fields, setField }: {
 // ─── Platform label ───────────────────────────────────────────────────────────
 
 function PlatformLabel({ platform }: { platform: string }) {
-  const icons: Record<string, { color: string; label: string }> = {
-    instagram: { color: "#E1306C", label: "Instagram" },
-    facebook: { color: "#1877F2", label: "Facebook" },
-    tiktok: { color: "#00f2ea", label: "TikTok" },
-    youtube: { color: "#FF0000", label: "YouTube" },
-    linkedin: { color: "#0A66C2", label: "LinkedIn" },
-    x: { color: "#fafafa", label: "X" },
+  const icons: Record<string, { color: string; label: string; icon: string }> = {
+    instagram: { color: "#E1306C", label: "Instagram", icon: "IG" },
+    facebook: { color: "#1877F2", label: "Facebook", icon: "FB" },
+    tiktok: { color: "#00f2ea", label: "TikTok", icon: "TT" },
+    youtube: { color: "#FF0000", label: "YouTube", icon: "YT" },
+    linkedin: { color: "#0A66C2", label: "LinkedIn", icon: "LI" },
+    x: { color: "#fafafa", label: "X", icon: "X" },
   };
-  const p = icons[platform] || { color: "#a1a1aa", label: platform };
+  const p = icons[platform.toLowerCase()] || { color: "#a1a1aa", label: platform, icon: platform.slice(0, 2).toUpperCase() };
   return (
-    <span
-      className="inline-flex items-center rounded-[6px] text-[10px] font-semibold px-[8px] py-[3px]"
-      style={{ backgroundColor: `${p.color}22`, color: p.color, border: `1px solid ${p.color}44` }}
-    >
-      {p.label}
-    </span>
+    <div className="flex items-center gap-[6px]">
+      <div
+        className="size-[24px] rounded-[6px] flex items-center justify-center text-[10px] font-bold"
+        style={{ backgroundColor: `${p.color}22`, color: p.color, border: `1px solid ${p.color}44` }}
+      >
+        {p.icon}
+      </div>
+      <span className="text-[#a1a1aa] text-[12px] font-medium">{p.label}</span>
+    </div>
   );
 }
 
 // ─── Preview panel ─────────────────────────────────────────────────────────────
 
-function PreviewPanel({ category, fields, platform }: {
+function PreviewPanel({ category, fields, platform, imageUrl }: {
   category: ContentCategory;
   fields: Record<string, any>;
   platform?: string;
+  imageUrl?: string;
 }) {
   const title = fields.title || "";
   const tags: string[] = fields.tags ?? [];
+  
+  // Placeholder images for different content types
+  const placeholderImages: Record<ContentCategory, string> = {
+    "long-form": "https://images.unsplash.com/photo-1499750311510-52f9f7b240b4?w=400&h=200&fit=crop",
+    "short-video": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=356&fit=crop",
+    "highlight": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=225&fit=crop",
+    "quote-card": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop",
+    "ai-video": "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=200&h=356&fit=crop",
+    "other": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=400&fit=crop",
+  };
+  
+  const displayImage = imageUrl || placeholderImages[category];
 
   // Determine the body text to show based on content type
   const bodyText =
@@ -734,6 +750,10 @@ function PreviewPanel({ category, fields, platform }: {
       {/* ── Long Form Preview ── */}
       {category === "long-form" && (
         <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
+          {/* Featured image */}
+          <div className="w-full h-[140px] bg-[#1a1a1a] relative overflow-hidden">
+            <img src={displayImage} alt="" className="w-full h-full object-cover" />
+          </div>
           {/* Article header */}
           <div className="p-[16px] pb-[12px] border-b border-[rgba(255,255,255,0.06)]">
             {title ? (
@@ -781,16 +801,18 @@ function PreviewPanel({ category, fields, platform }: {
       {category === "short-video" && (
         <div className="bg-[#0a0a0a] w-[180px] rounded-[12px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)] mx-auto">
           {/* Video area - vertical aspect ratio */}
-          <div className="w-full aspect-[9/16] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[8px] relative">
+          <div className="w-full aspect-[9/16] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[8px] relative overflow-hidden">
+            {/* Background image */}
+            <img src={displayImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
             {/* Play button */}
-            <div className="size-[40px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center backdrop-blur-sm">
+            <div className="size-[40px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center backdrop-blur-sm relative z-10">
               <svg fill="none" viewBox="0 0 16 16" className="size-[18px] ml-[2px]">
                 <path d="M4 2L14 8L4 14V2Z" fill="#fafafa" />
               </svg>
             </div>
-            <p className="text-[#a1a1aa] text-[9px]">Short Video Preview</p>
+            <p className="text-[#a1a1aa] text-[9px] relative z-10">Short Video Preview</p>
             {/* Duration badge */}
-            <div className="absolute bottom-[8px] right-[8px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px]">
+            <div className="absolute bottom-[8px] right-[8px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px] z-10">
               <span className="text-white text-[9px] font-medium">{fields.clipDuration || "30"}s</span>
             </div>
           </div>
@@ -811,20 +833,22 @@ function PreviewPanel({ category, fields, platform }: {
       {category === "highlight" && (
         <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
           {/* Video area - horizontal aspect ratio */}
-          <div className="w-full aspect-[16/9] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[6px] relative">
+          <div className="w-full aspect-[16/9] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[6px] relative overflow-hidden">
+            {/* Background image */}
+            <img src={displayImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" />
             {/* Play button */}
-            <div className="size-[36px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center backdrop-blur-sm">
+            <div className="size-[36px] rounded-full bg-[rgba(255,255,255,0.1)] flex items-center justify-center backdrop-blur-sm relative z-10">
               <svg fill="none" viewBox="0 0 16 16" className="size-[16px] ml-[2px]">
                 <path d="M4 2L14 8L4 14V2Z" fill="#fafafa" />
               </svg>
             </div>
-            <p className="text-[#a1a1aa] text-[9px]">Highlight Reel Preview</p>
+            <p className="text-[#a1a1aa] text-[9px] relative z-10">Highlight Reel Preview</p>
             {/* Duration badge */}
-            <div className="absolute bottom-[6px] right-[6px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px]">
+            <div className="absolute bottom-[6px] right-[6px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px] z-10">
               <span className="text-white text-[9px] font-medium">{fields.totalDuration || "90"}s</span>
             </div>
             {/* Clip count badge */}
-            <div className="absolute top-[6px] left-[6px] bg-[rgba(16,185,129,0.8)] rounded-[4px] px-[6px] py-[2px]">
+            <div className="absolute top-[6px] left-[6px] bg-[rgba(16,185,129,0.8)] rounded-[4px] px-[6px] py-[2px] z-10">
               <span className="text-white text-[9px] font-medium">{fields.numHighlights || "5"} clips</span>
             </div>
           </div>
@@ -839,9 +863,11 @@ function PreviewPanel({ category, fields, platform }: {
       {/* ─ Quote Card Preview ── */}
       {category === "quote-card" && (
         <div className="bg-[#0a0a0a] w-[271px] rounded-[8px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)]">
-          <div className="w-full aspect-square bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0f0f0f] flex flex-col items-center justify-center p-[24px] relative">
+          <div className="w-full aspect-square bg-gradient-to-br from-[#1a1a1a] via-[#141414] to-[#0f0f0f] flex flex-col items-center justify-center p-[24px] relative overflow-hidden">
+            {/* Background image */}
+            <img src={displayImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-20" />
             {/* Decorative quote mark */}
-            <div className="text-[#10b981] text-[48px] leading-none font-black absolute top-[16px] left-[20px] opacity-30">"</div>
+            <div className="text-[#10b981] text-[48px] leading-none font-black absolute top-[16px] left-[20px] opacity-30 z-10">"</div>
             {/* Quote text */}
             {bodyText ? (
               <p className="text-[#fafafa] text-[13px] leading-[20px] italic text-center line-clamp-6 relative z-10">
@@ -875,19 +901,21 @@ function PreviewPanel({ category, fields, platform }: {
       {category === "ai-video" && (
         <div className="bg-[#0a0a0a] w-[180px] rounded-[12px] overflow-hidden shrink-0 border border-[rgba(255,255,255,0.06)] mx-auto">
           {/* Video area - vertical aspect ratio */}
-          <div className="w-full aspect-[9/16] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[8px] relative">
+          <div className="w-full aspect-[9/16] bg-gradient-to-b from-[#1a1a1a] to-[#0f0f0f] flex flex-col items-center justify-center gap-[8px] relative overflow-hidden">
+            {/* Background image */}
+            <img src={displayImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-30" />
             {/* AI sparkle icon */}
-            <div className="size-[40px] rounded-full bg-[rgba(16,185,129,0.15)] border border-[rgba(16,185,129,0.3)] flex items-center justify-center">
+            <div className="size-[40px] rounded-full bg-[rgba(16,185,129,0.15)] border border-[rgba(16,185,129,0.3)] flex items-center justify-center relative z-10">
               <AIGenerateIcon />
             </div>
-            <p className="text-[#10b981] text-[10px] font-medium">AI-Generated Video</p>
-            <p className="text-[#a1a1aa] text-[8px] text-center px-[12px]">Will be generated from script and references</p>
+            <p className="text-[#10b981] text-[10px] font-medium relative z-10">AI-Generated Video</p>
+            <p className="text-[#a1a1aa] text-[8px] text-center px-[12px] relative z-10">Will be generated from script and references</p>
             {/* Duration badge */}
-            <div className="absolute bottom-[8px] right-[8px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px]">
+            <div className="absolute bottom-[8px] right-[8px] bg-[rgba(0,0,0,0.7)] rounded-[4px] px-[6px] py-[2px] z-10">
               <span className="text-white text-[9px] font-medium">{fields.videoDuration || "60"}s</span>
             </div>
             {/* AI badge */}
-            <div className="absolute top-[8px] left-[8px] bg-[rgba(139,92,246,0.8)] rounded-[4px] px-[6px] py-[2px]">
+            <div className="absolute top-[8px] left-[8px] bg-[rgba(139,92,246,0.8)] rounded-[4px] px-[6px] py-[2px] z-10">
               <span className="text-white text-[9px] font-medium">AI</span>
             </div>
           </div>
@@ -1480,7 +1508,7 @@ export function ContentEditModal({
         {/* ── Body: Preview + Form ── */}
         <div className="flex flex-1 min-h-0 overflow-hidden">
           {/* Preview panel (left, 320px) */}
-          <PreviewPanel category={category} fields={fields} platform={contentItem.platform} />
+          <PreviewPanel category={category} fields={fields} platform={contentItem.platform} imageUrl={(contentItem as any).imageUrl} />
 
           {/* Form panel (right, scrollable) */}
           <div className="flex-1 min-w-0 overflow-y-auto bg-[#0a0a0a]">
