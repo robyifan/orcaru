@@ -1007,10 +1007,14 @@ export function ContentEditModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-50 flex items-center justify-center p-0">
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-50 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
       <div
-        className="bg-[#0a0a0a] flex flex-col overflow-hidden w-full h-full"
-        style={{ maxWidth: 1200, maxHeight: "100vh" }}
+        className="bg-[#0a0a0a] flex flex-col overflow-hidden w-full rounded-[16px] border border-[rgba(255,255,255,0.08)]"
+        style={{ maxWidth: 1200, maxHeight: "90vh" }}
+        onClick={(e) => e.stopPropagation()}
       >
         {/* ── Header ── */}
         <div className="relative shrink-0 h-[84px]">
