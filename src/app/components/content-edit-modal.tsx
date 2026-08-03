@@ -240,6 +240,46 @@ function ConfigTextarea({ value, onChange, placeholder }: { value: string; onCha
   );
 }
 
+// ─── Read-only field primitives (for Approved mode) ───────────────────────────
+
+function ReadOnlyText({ value }: { value: string }) {
+  return (
+    <div className="py-[8px]">
+      <p className="text-[#fafafa] text-[14px] leading-[20px]">{value || <span className="text-[#a1a1aa] italic">Not provided</span>}</p>
+    </div>
+  );
+}
+
+function ReadOnlyTags({ tags }: { tags: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-[8px] py-[8px]">
+      {tags.length > 0 ? (
+        tags.map((t) => (
+          <span
+            key={t}
+            className="bg-[rgba(16,185,129,0.2)] border border-[rgba(16,185,129,0.3)] text-[#10b981] text-[12px] font-medium px-[10px] py-[5px] rounded-[8px] whitespace-nowrap"
+          >
+            #{t}
+          </span>
+        ))
+      ) : (
+        <span className="text-[#a1a1aa] italic text-[13px]">No tags</span>
+      )}
+    </div>
+  );
+}
+
+function ReadOnlySelect({ value, options }: { value: string; options: Record<string, string> }) {
+  const label = options[value] || value;
+  return (
+    <div className="py-[8px]">
+      <p className="text-[#fafafa] text-[14px] leading-[20px]">
+        {label || <span className="text-[#a1a1aa] italic">Not selected</span>}
+      </p>
+    </div>
+  );
+}
+
 // Date + Time row (matching Figma PublishDateTime)
 function PublishDateTimeRow({ date, time, onDate, onTime }: { date: string; time: string; onDate: (v: string) => void; onTime: (v: string) => void }) {
   return (
@@ -773,32 +813,41 @@ function PreviewPanel({ category, fields }: {
 
 // ─── Content-type form fields ─────────────────────────────────────────────────
 
-function LongFormFields({ fields, setField }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void }) {
+function LongFormFields({ fields, setField, isApproved }: { fields: Record<string, any>; setField: (k: string, v: string | string[]) => void; isApproved?: boolean }) {
   return (
     <>
       <div className="flex flex-col items-start pt-[16px] shrink-0 w-full">
         <FieldLabel>Title*</FieldLabel>
-        <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter article title" />
+        {isApproved ? (
+          <ReadOnlyText value={fields.title ?? ""} />
+        ) : (
+          <Input value={fields.title ?? ""} onChange={(v) => setField("title", v)} placeholder="Enter article title" />
+        )}
       </div>
 
       <PublishDateTimeRow
         date={fields.date ?? ""} time={fields.time ?? "09:00"}
         onDate={(v) => setField("date", v)} onTime={(v) => setField("time", v)}
+        isApproved={isApproved}
       />
 
       <div className="flex flex-col items-start pt-[20px] shrink-0 w-full">
         <FieldLabel>Post Content</FieldLabel>
-        <Textarea
-          value={fields.content ?? ""}
-          onChange={(v) => setField("content", v)}
-          placeholder="Write your article content here..."
-          minRows={8}
-        />
+        {isApproved ? (
+          <ReadOnlyText value={fields.content ?? ""} />
+        ) : (
+          <Textarea
+            value={fields.content ?? ""}
+            onChange={(v) => setField("content", v)}
+            placeholder="Write your article content here..."
+            minRows={8}
+          />
+        )}
       </div>
 
-      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} />
-      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} />
-      <ConfigurationSection category="long-form" fields={fields} setField={setField as any} />
+      <TagsSection tags={fields.tags ?? []} onChange={(v) => setField("tags", v as any)} isApproved={isApproved} />
+      <ResourcesSection linkValue={fields.sourceLink ?? ""} onLinkChange={(v) => setField("sourceLink", v)} isApproved={isApproved} />
+      <ConfigurationSection category="long-form" fields={fields} setField={setField as any} isApproved={isApproved} />
     </>
   );
 }
@@ -1001,8 +1050,70 @@ export function ContentEditModal({
   const [showVersionDropdown, setShowVersionDropdown] = useState(false);
   const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [currentStatus, setCurrentStatus] = useState("Draft");
+  const [showRejectionModal, setShowRejectionModal] = useState(false);
+  const [rejectionReason, setRejectionReason] = useState("");
+  const [comments, setComments] = useState<Array<{
+    id: number;
+    author: string;
+    initials: string;
+    color: string;
+    time: string;
+    text: string;
+    isSystem?: boolean;
+  }>>([
+    { id: 1, author: "Sarah Chen", initials: "SC", color: "#8b5cf6", time: "2h ago", text: "Should we adjust the hashtags to include #SummerFitness?" },
+    { id: 2, author: "Mike Torres", initials: "MT", color: "#f59e0b", time: "1h ago", text: "Good call, also the publish date might conflict with the campaign launch" },
+    { id: 3, author: "Sarah Chen", initials: "SC", color: "#8b5cf6", time: "30m ago", text: "Updated the tags, can you review?" },
+  ]);
 
   const setField = (k: string, v: any) => setFieldsRaw((prev) => ({ ...prev, [k]: v }));
+
+  const isApproved = currentStatus === "Approved";
+
+  const handleStatusChange = (newStatus: string) => {
+    if (newStatus === "Rejected") {
+      setShowRejectionModal(true);
+      setShowStatusDropdown(false);
+      return;
+    }
+    
+    const oldStatus = currentStatus;
+    setCurrentStatus(newStatus);
+    setShowStatusDropdown(false);
+    
+    // Add system comment for status change
+    const systemComment = {
+      id: Date.now(),
+      author: "System",
+      initials: "SY",
+      color: "#6b7280",
+      time: "just now",
+      text: `Status changed from ${oldStatus} to ${newStatus}`,
+      isSystem: true,
+    };
+    setComments(prev => [...prev, systemComment]);
+  };
+
+  const handleConfirmRejection = () => {
+    if (!rejectionReason.trim()) return;
+    
+    setCurrentStatus("Rejected");
+    setShowRejectionModal(false);
+    setShowStatusDropdown(false);
+    
+    // Add rejection reason as comment
+    const rejectionComment = {
+      id: Date.now(),
+      author: "System",
+      initials: "SY",
+      color: "#ef4444",
+      time: "just now",
+      text: `Post rejected: ${rejectionReason}`,
+      isSystem: true,
+    };
+    setComments(prev => [...prev, rejectionComment]);
+    setRejectionReason("");
+  };
 
   if (!isOpen) return null;
 
@@ -1076,10 +1187,10 @@ export function ContentEditModal({
                 </button>
                 {showStatusDropdown && (
                   <div className="absolute right-0 top-full mt-2 bg-[#1a1a1a] border border-[rgba(255,255,255,0.08)] rounded-[12px] shadow-xl py-2 min-w-[160px] z-50">
-                    {["Draft", "Generating", "Ready for Review", "Approved", "Published", "Rejected"].map((status) => (
+                    {["Draft", "Ready for Review", "Approved", "Rejected"].map((status) => (
                       <button
                         key={status}
-                        onClick={() => { setCurrentStatus(status); setShowStatusDropdown(false); }}
+                        onClick={() => handleStatusChange(status)}
                         className={`w-full px-4 py-2 text-left text-sm hover:bg-[#262626] transition-colors ${status === currentStatus ? 'text-[#10b981] font-medium' : 'text-[#fafafa]'}`}
                       >
                         {status}
@@ -1099,6 +1210,59 @@ export function ContentEditModal({
             </div>
           </div>
         </div>
+
+        {/* ── Alert Banners ── */}
+        {currentStatus === "Ready for Review" && (
+          <div className="bg-[rgba(245,158,11,0.1)] border-b border-[rgba(245,158,11,0.2)] px-[24px] py-[12px]">
+            <div className="flex items-start gap-[12px]">
+              <div className="bg-[rgba(245,158,11,0.2)] rounded-[8px] size-[24px] flex items-center justify-center shrink-0 mt-[2px]">
+                <svg fill="none" viewBox="0 0 16 16" className="size-[14px]">
+                  <path d="M8 1L15 14H1L8 1Z" stroke="#f59e0b" strokeWidth="1.5" strokeLinejoin="round" />
+                  <path d="M8 6V9" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
+                  <circle cx="8" cy="11" r="0.5" fill="#f59e0b" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-[#f59e0b] text-[13px] mb-[4px]">Post is under review</p>
+                <p className="text-[#d4d4d8] text-[12px] leading-[16px]">This post has been customized and may differ from project defaults. Review the fields below before approving.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentStatus === "Rejected" && (
+          <div className="bg-[rgba(239,68,68,0.1)] border-b border-[rgba(239,68,68,0.2)] px-[24px] py-[12px]">
+            <div className="flex items-start gap-[12px]">
+              <div className="bg-[rgba(239,68,68,0.2)] rounded-[8px] size-[24px] flex items-center justify-center shrink-0 mt-[2px]">
+                <svg fill="none" viewBox="0 0 16 16" className="size-[14px]">
+                  <circle cx="8" cy="8" r="7" stroke="#ef4444" strokeWidth="1.5" />
+                  <path d="M5 5L11 11M11 5L5 11" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-[#ef4444] text-[13px] mb-[4px]">Post rejected</p>
+                <p className="text-[#d4d4d8] text-[12px] leading-[16px]">This post was rejected. Check the comments section for the rejection reason.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentStatus === "Approved" && (
+          <div className="bg-[rgba(16,185,129,0.1)] border-b border-[rgba(16,185,129,0.2)] px-[24px] py-[12px]">
+            <div className="flex items-start gap-[12px]">
+              <div className="bg-[rgba(16,185,129,0.2)] rounded-[8px] size-[24px] flex items-center justify-center shrink-0 mt-[2px]">
+                <svg fill="none" viewBox="0 0 16 16" className="size-[14px]">
+                  <circle cx="8" cy="8" r="7" stroke="#10b981" strokeWidth="1.5" />
+                  <path d="M5 8L7 10L11 6" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-[#10b981] text-[13px] mb-[4px]">Post approved</p>
+                <p className="text-[#d4d4d8] text-[12px] leading-[16px]">This post has been approved and is ready for publishing.</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Body: Preview + Form ── */}
         <div className="flex flex-1 min-h-0 overflow-hidden">
@@ -1121,53 +1285,35 @@ export function ContentEditModal({
                 <div className="flex items-center gap-[8px] mb-[16px]">
                   <p className="font-bold text-[#fafafa] text-[15px]">Comments</p>
                   <div className="bg-[rgba(255,255,255,0.08)] rounded-[10px] px-[6px] py-[2px]">
-                    <span className="text-[#a1a1aa] text-[11px] font-semibold">3</span>
+                    <span className="text-[#a1a1aa] text-[11px] font-semibold">{comments.length}</span>
                   </div>
                 </div>
 
                 {/* Comment list */}
                 <div className="flex flex-col gap-[16px] mb-[16px]">
-                  {/* Comment 1 */}
-                  <div className="flex gap-[12px]">
-                    <div className="bg-[#8b5cf6] rounded-[14px] size-[28px] flex items-center justify-center shrink-0">
-                      <span className="text-white text-[11px] font-bold">SC</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-[8px] mb-[4px]">
-                        <span className="font-bold text-[#fafafa] text-[13px]">Sarah Chen</span>
-                        <span className="text-[#a1a1aa] text-[11px]">2h ago</span>
+                  {comments.map((comment) => (
+                    <div key={comment.id} className="flex gap-[12px]">
+                      <div
+                        className={`rounded-[14px] size-[28px] flex items-center justify-center shrink-0 ${
+                          comment.isSystem ? 'bg-[#374151]' : ''
+                        }`}
+                        style={!comment.isSystem ? { backgroundColor: comment.color } : {}}
+                      >
+                        <span className="text-white text-[11px] font-bold">{comment.initials}</span>
                       </div>
-                      <p className="text-[#d4d4d8] text-[13px] leading-[18px]">Should we adjust the hashtags to include #SummerFitness?</p>
-                    </div>
-                  </div>
-
-                  {/* Comment 2 */}
-                  <div className="flex gap-[12px]">
-                    <div className="bg-[#f59e0b] rounded-[14px] size-[28px] flex items-center justify-center shrink-0">
-                      <span className="text-white text-[11px] font-bold">MT</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-[8px] mb-[4px]">
-                        <span className="font-bold text-[#fafafa] text-[13px]">Mike Torres</span>
-                        <span className="text-[#a1a1aa] text-[11px]">1h ago</span>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-[8px] mb-[4px]">
+                          <span className={`text-[13px] ${comment.isSystem ? 'text-[#9ca3af] italic' : 'font-bold text-[#fafafa]'}`}>
+                            {comment.isSystem ? 'System' : comment.author}
+                          </span>
+                          <span className="text-[#a1a1aa] text-[11px]">{comment.time}</span>
+                        </div>
+                        <p className={`text-[13px] leading-[18px] ${comment.isSystem ? 'text-[#9ca3af] italic' : 'text-[#d4d4d8]'}`}>
+                          {comment.text}
+                        </p>
                       </div>
-                      <p className="text-[#d4d4d8] text-[13px] leading-[18px]">Good call, also the publish date might conflict with the campaign launch</p>
                     </div>
-                  </div>
-
-                  {/* Comment 3 */}
-                  <div className="flex gap-[12px]">
-                    <div className="bg-[#8b5cf6] rounded-[14px] size-[28px] flex items-center justify-center shrink-0">
-                      <span className="text-white text-[11px] font-bold">SC</span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-[8px] mb-[4px]">
-                        <span className="font-bold text-[#fafafa] text-[13px]">Sarah Chen</span>
-                        <span className="text-[#a1a1aa] text-[11px]">30m ago</span>
-                      </div>
-                      <p className="text-[#d4d4d8] text-[13px] leading-[18px]">Updated the tags, can you review?</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
 
                 {/* Comment composer */}
@@ -1204,6 +1350,54 @@ export function ContentEditModal({
           </button>
         </div>
       </div>
+
+      {/* ── Rejection Modal ── */}
+      {showRejectionModal && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" onClick={() => setShowRejectionModal(false)}>
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div
+            className="relative bg-[#1a1a1a] rounded-[16px] border border-[rgba(255,255,255,0.12)] p-[24px] w-full max-w-[480px]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center gap-[12px] mb-[16px]">
+              <div className="bg-[rgba(239,68,68,0.2)] rounded-[12px] size-[40px] flex items-center justify-center shrink-0">
+                <svg fill="none" viewBox="0 0 20 20" className="size-[20px]">
+                  <circle cx="10" cy="10" r="9" stroke="#ef4444" strokeWidth="1.5" />
+                  <path d="M7 7L13 13M13 7L7 13" stroke="#ef4444" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              </div>
+              <div>
+                <p className="font-bold text-[#fafafa] text-[16px]">Reject post</p>
+                <p className="text-[#a1a1aa] text-[13px]">Please provide a reason for rejection</p>
+              </div>
+            </div>
+
+            <textarea
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+              placeholder="Describe why this post is being rejected..."
+              rows={4}
+              className="w-full bg-[#0a0a0a] border border-[rgba(255,255,255,0.12)] rounded-[12px] px-[16px] py-[12px] text-[14px] text-[#fafafa] placeholder-[rgba(161,161,170,0.4)] outline-none resize-none mb-[20px]"
+            />
+
+            <div className="flex justify-end gap-[12px]">
+              <button
+                onClick={() => { setShowRejectionModal(false); setRejectionReason(""); }}
+                className="px-[20px] py-[10px] rounded-[12px] bg-[#262626] border border-[rgba(255,255,255,0.08)] text-[#a1a1aa] text-[14px] font-medium hover:bg-[#333] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmRejection}
+                disabled={!rejectionReason.trim()}
+                className="px-[20px] py-[10px] rounded-[12px] bg-[#ef4444] text-white text-[14px] font-medium hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Confirm Rejection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
