@@ -17,10 +17,39 @@ interface Endpoint {
   authRequired: boolean;
   parameters?: Parameter[];
   requestBody?: any;
+  recommendedRequestBody?: any;
+  requestBodyMapping?: FieldMapping[];
+  requestBodyFields?: FieldSpec[];
+  recommendedRequestBodyFields?: FieldSpec[];
   currentResponse?: any;
   requiredResponse?: any;
   fieldMapping?: FieldMapping[];
+  statusCodes?: StatusCode[];
+  errorResponses?: ErrorResponse[];
+  webAppGuidance?: string;
   notes?: string;
+}
+
+interface FieldSpec {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string;
+  validation?: string;
+  default?: string;
+  example?: string;
+}
+
+interface StatusCode {
+  code: number;
+  status: string;
+  description: string;
+}
+
+interface ErrorResponse {
+  code: number;
+  message: string;
+  example: any;
 }
 
 interface Parameter {
@@ -270,6 +299,9 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
       description: 'Get a single project by ID',
       availability: 'available',
       authRequired: true,
+      parameters: [
+        { name: 'id', type: 'integer', required: true, description: 'Project ID', example: '136' }
+      ],
       currentResponse: {
         project: {
           id: 136,
@@ -315,11 +347,68 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
       availability: 'available',
       authRequired: true,
       requestBody: {
-        name: 'New Project',
-        domain: 'example.com',
-        context: 'Project description',
+        profile_name: 'New Project',
+        project_url: 'example.com',
+        project_context: 'Project description',
         target_audience: 'Target audience description'
       },
+      recommendedRequestBody: {
+        name: 'New Project',
+        client: 'New Project',
+        description: 'Project description',
+        targetAudience: 'Target audience description',
+        website: 'example.com',
+        status: 'active',
+        accentColor: '#3B82F6'
+      },
+      requestBodyMapping: [
+        { field: 'name', currentSource: 'requestBody.profile_name', requiredSource: 'requestBody.name', status: 'rename', note: 'profile_name → name' },
+        { field: 'client', currentSource: null, requiredSource: 'requestBody.client', status: 'missing', note: 'New field required by platform' },
+        { field: 'description', currentSource: 'requestBody.project_context', requiredSource: 'requestBody.description', status: 'rename', note: 'project_context → description' },
+        { field: 'targetAudience', currentSource: 'requestBody.target_audience', requiredSource: 'requestBody.targetAudience', status: 'rename', note: 'target_audience → targetAudience' },
+        { field: 'website', currentSource: 'requestBody.project_url', requiredSource: 'requestBody.website', status: 'rename', note: 'project_url → website' },
+        { field: 'status', currentSource: null, requiredSource: 'requestBody.status', status: 'missing', note: 'New field required by platform' },
+        { field: 'accentColor', currentSource: null, requiredSource: 'requestBody.accentColor', status: 'missing', note: 'New field required by platform' }
+      ],
+      requestBodyFields: [
+        { name: 'profile_name', type: 'string', required: true, description: 'Project display name', validation: '1-100 characters', example: 'New Project' },
+        { name: 'project_url', type: 'string', required: false, description: 'Project website URL', validation: 'Valid URL format', example: 'example.com' },
+        { name: 'project_context', type: 'string', required: false, description: 'Project description and context', validation: 'Max 1000 characters', example: 'Project description' },
+        { name: 'target_audience', type: 'string', required: false, description: 'Target audience description', validation: 'Max 500 characters', example: 'Target audience description' }
+      ],
+      recommendedRequestBodyFields: [
+        { name: 'name', type: 'string', required: true, description: 'Project display name', validation: '1-100 characters', example: 'New Project' },
+        { name: 'client', type: 'string', required: true, description: 'Client or organization name', validation: '1-100 characters', example: 'New Project' },
+        { name: 'description', type: 'string', required: false, description: 'Project description', validation: 'Max 1000 characters', example: 'Project description' },
+        { name: 'targetAudience', type: 'string', required: false, description: 'Target audience description', validation: 'Max 500 characters', example: 'Target audience description' },
+        { name: 'website', type: 'string', required: false, description: 'Project website URL', validation: 'Valid URL format', example: 'example.com' },
+        { name: 'status', type: 'string', required: false, description: 'Project status', validation: 'active | paused | completed', default: 'active', example: 'active' },
+        { name: 'accentColor', type: 'string', required: false, description: 'Brand accent color', validation: 'Hex color format (#RRGGBB)', default: '#3B82F6', example: '#3B82F6' }
+      ],
+      statusCodes: [
+        { code: 201, status: 'Created', description: 'Project successfully created' },
+        { code: 400, status: 'Bad Request', description: 'Invalid request body or validation failed' },
+        { code: 401, status: 'Unauthorized', description: 'Missing or invalid authentication token' },
+        { code: 422, status: 'Unprocessable Entity', description: 'Validation errors (e.g., duplicate project name)' },
+        { code: 500, status: 'Internal Server Error', description: 'Server error during project creation' }
+      ],
+      errorResponses: [
+        {
+          code: 400,
+          message: 'Validation failed',
+          example: { errors: { profile_name: ["can't be blank"] } }
+        },
+        {
+          code: 401,
+          message: 'Unauthorized',
+          example: { error: 'Invalid token' }
+        },
+        {
+          code: 422,
+          message: 'Unprocessable Entity',
+          example: { errors: { profile_name: ['has already been taken'] } }
+        }
+      ],
       currentResponse: {
         project: {
           id: 137,
@@ -351,6 +440,7 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
         { field: 'status', currentSource: null, requiredSource: 'project.status', status: 'missing' },
         { field: 'accentColor', currentSource: null, requiredSource: 'project.accentColor', status: 'missing' }
       ],
+      webAppGuidance: 'Update form inputs to collect client name and accent color. Implement client-side validation for URL format and color picker. Map form fields to recommended request body structure. Display success message with project details on 201 response. Show validation errors inline with form fields on 400/422 responses.',
       notes: 'Create works but response needs transformation. Consider adding client, status, color fields to projects table.'
     },
     {
@@ -359,10 +449,27 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
       description: 'Update an existing project',
       availability: 'available',
       authRequired: true,
+      parameters: [
+        { name: 'id', type: 'integer', required: true, description: 'Project ID', example: '136' }
+      ],
       requestBody: {
-        name: 'Updated Project Name',
-        context: 'Updated context'
+        profile_name: 'Updated Project Name',
+        project_context: 'Updated context'
       },
+      recommendedRequestBody: {
+        name: 'Updated Project Name',
+        description: 'Updated context',
+        client: 'Amrit Yoga',
+        status: 'active',
+        accentColor: '#D946EF'
+      },
+      requestBodyMapping: [
+        { field: 'name', currentSource: 'requestBody.profile_name', requiredSource: 'requestBody.name', status: 'rename', note: 'profile_name → name' },
+        { field: 'description', currentSource: 'requestBody.project_context', requiredSource: 'requestBody.description', status: 'rename', note: 'project_context → description' },
+        { field: 'client', currentSource: null, requiredSource: 'requestBody.client', status: 'missing', note: 'New field required by platform' },
+        { field: 'status', currentSource: null, requiredSource: 'requestBody.status', status: 'missing', note: 'New field required by platform' },
+        { field: 'accentColor', currentSource: null, requiredSource: 'requestBody.accentColor', status: 'missing', note: 'New field required by platform' }
+      ],
       currentResponse: {
         project: {
           id: 136,
@@ -400,6 +507,9 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
       description: 'Delete a project',
       availability: 'available',
       authRequired: true,
+      parameters: [
+        { name: 'id', type: 'integer', required: true, description: 'Project ID', example: '136' }
+      ],
       currentResponse: { message: 'Project deleted successfully' },
       requiredResponse: { message: 'Project deleted successfully' },
       fieldMapping: [
@@ -469,6 +579,9 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
       description: 'Get a single resource by ID',
       availability: 'available',
       authRequired: true,
+      parameters: [
+        { name: 'id', type: 'integer', required: true, description: 'Resource ID', example: '1' }
+      ],
       currentResponse: {
         resource: {
           id: 1,
@@ -516,6 +629,18 @@ const API_ENDPOINTS: Record<string, Endpoint[]> = {
         clip_count: 5,
         clip_duration: 60
       },
+      recommendedRequestBody: {
+        clipCount: 5,
+        clipDuration: 60,
+        contentType: 'short-clips',
+        funnelStage: 'top'
+      },
+      requestBodyMapping: [
+        { field: 'clipCount', currentSource: 'requestBody.clip_count', requiredSource: 'requestBody.clipCount', status: 'rename', note: 'clip_count → clipCount' },
+        { field: 'clipDuration', currentSource: 'requestBody.clip_duration', requiredSource: 'requestBody.clipDuration', status: 'rename', note: 'clip_duration → clipDuration' },
+        { field: 'contentType', currentSource: null, requiredSource: 'requestBody.contentType', status: 'missing', note: 'New field required by platform' },
+        { field: 'funnelStage', currentSource: null, requiredSource: 'requestBody.funnelStage', status: 'missing', note: 'New field required by platform' }
+      ],
       currentResponse: {
         clips: [
           { id: 1, title: 'Clip 1', start_time: 0, end_time: 60, status: 'processing' }
@@ -1081,32 +1206,294 @@ function MethodBadge({ method }: { method: string }) {
   );
 }
 
-function FieldMappingRow({ mapping }: { mapping: FieldMapping }) {
-  const statusConfig = {
-    match: { color: 'text-emerald-400', bg: 'bg-emerald-500/10', label: 'Match', icon: CheckCircle2 },
-    rename: { color: 'text-amber-400', bg: 'bg-amber-500/10', label: 'Rename', icon: ArrowLeftRight },
-    compute: { color: 'text-blue-400', bg: 'bg-blue-500/10', label: 'Compute', icon: Zap },
-    missing: { color: 'text-red-400', bg: 'bg-red-500/10', label: 'Missing', icon: XCircle }
+function AnnotatedJsonViewer({ 
+  currentData, 
+  requiredData, 
+  fieldMapping,
+  label,
+  currentLabel = "Current API Response",
+  requiredLabel = "Recommended Response"
+}: { 
+  currentData: any; 
+  requiredData: any; 
+  fieldMapping?: FieldMapping[];
+  label: string;
+  currentLabel?: string;
+  requiredLabel?: string;
+}) {
+  const [copiedCurrent, setCopiedCurrent] = useState(false);
+  const [copiedRequired, setCopiedRequired] = useState(false);
+  
+  // Build maps for field status and notes
+  const fieldStatusMap = new Map<string, FieldMapping['status']>();
+  const fieldNoteMap = new Map<string, string>();
+  const fieldSourceMap = new Map<string, string>();
+  
+  if (fieldMapping) {
+    fieldMapping.forEach(m => {
+      fieldStatusMap.set(m.field, m.status);
+      if (m.note) fieldNoteMap.set(m.field, m.note);
+      if (m.currentSource) fieldSourceMap.set(m.field, m.currentSource);
+    });
+  }
+
+  const getFieldColor = (path: string): string => {
+    const status = fieldStatusMap.get(path);
+    if (!status) return 'text-foreground';
+    
+    switch (status) {
+      case 'match': return 'text-emerald-400';
+      case 'rename': return 'text-amber-400';
+      case 'compute': return 'text-blue-400';
+      case 'missing': return 'text-red-400';
+      default: return 'text-foreground';
+    }
   };
-  const s = statusConfig[mapping.status];
-  const Icon = s.icon;
+
+  const getFieldBgColor = (path: string): string => {
+    const status = fieldStatusMap.get(path);
+    if (!status) return '';
+    
+    switch (status) {
+      case 'match': return 'bg-emerald-500/10';
+      case 'rename': return 'bg-amber-500/10';
+      case 'compute': return 'bg-blue-500/10';
+      case 'missing': return 'bg-red-500/10';
+      default: return '';
+    }
+  };
+
+  const getFieldNote = (path: string): string | undefined => {
+    return fieldNoteMap.get(path);
+  };
+
+  const getFieldSource = (path: string): string | undefined => {
+    return fieldSourceMap.get(path);
+  };
+
+  // Render current JSON with color coding based on mapping status
+  const renderCurrentJson = (data: any, path: string = '', indent: number = 0): React.ReactNode[] => {
+    const indentStr = '  '.repeat(indent);
+    const elements: React.ReactNode[] = [];
+    
+    if (data === null) {
+      elements.push(<span key="null" className="text-purple-400">null</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'string') {
+      elements.push(<span key="str" className="text-green-400">"{data}"</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'number') {
+      elements.push(<span key="num" className="text-blue-400">{data}</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'boolean') {
+      elements.push(<span key="bool" className="text-blue-400">{data.toString()}</span>);
+      return elements;
+    }
+    
+    if (Array.isArray(data)) {
+      if (data.length === 0) {
+        elements.push(<span key="empty-arr" className="text-foreground">[]</span>);
+        return elements;
+      }
+      
+      elements.push(<span key="arr-open" className="text-foreground">[{'\n'}</span>);
+      data.forEach((item, idx) => {
+        const itemPath = `${path}[${idx}]`;
+        elements.push(
+          <span key={`item-${idx}`}>
+            {indentStr}  {renderCurrentJson(item, itemPath, indent + 1)}
+            {idx < data.length - 1 ? ',' : ''}
+            {'\n'}
+          </span>
+        );
+      });
+      elements.push(<span key="arr-close">{indentStr}]</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'object') {
+      const keys = Object.keys(data);
+      if (keys.length === 0) {
+        elements.push(<span key="empty-obj" className="text-foreground">{'{}'}</span>);
+        return elements;
+      }
+      
+      elements.push(<span key="obj-open" className="text-foreground">{'{'}</span>);
+      elements.push(<span key="obj-newline">{'\n'}</span>);
+      keys.forEach((key, idx) => {
+        const fieldPath = path ? `${path}.${key}` : key;
+        // Check if this field maps to a recommended field
+        const mappedField = Array.from(fieldStatusMap.keys()).find(k => k.endsWith(`.${key}`) || k === key);
+        const status = mappedField ? fieldStatusMap.get(mappedField) : undefined;
+        
+        let colorClass = 'text-foreground';
+        let bgColor = '';
+        
+        if (status === 'match') {
+          colorClass = 'text-emerald-400';
+          bgColor = 'bg-emerald-500/10';
+        } else if (status === 'rename') {
+          colorClass = 'text-amber-400';
+          bgColor = 'bg-amber-500/10';
+        }
+        
+        elements.push(
+          <span key={`field-${key}`} className={cn('inline-block px-1 rounded', bgColor)}>
+            {indentStr}  <span className="text-foreground">"{key}"</span>
+            <span className="text-foreground">: </span>
+            <span className={colorClass}>
+              {renderCurrentJson(data[key], fieldPath, indent + 1)}
+            </span>
+          </span>
+        );
+        elements.push(<span key={`comma-${idx}`}>{idx < keys.length - 1 ? ',' : ''}{'\n'}</span>);
+      });
+      elements.push(<span key="obj-close">{indentStr}{'}'}</span>);
+      return elements;
+    }
+    
+    elements.push(<span key="default">{String(data)}</span>);
+    return elements;
+  };
+
+  // Render recommended JSON with annotations
+  const renderRequiredJson = (data: any, path: string = '', indent: number = 0): React.ReactNode[] => {
+    const indentStr = '  '.repeat(indent);
+    const elements: React.ReactNode[] = [];
+    
+    if (data === null) {
+      elements.push(<span key="null" className="text-purple-400">null</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'string') {
+      elements.push(<span key="str" className="text-green-400">"{data}"</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'number') {
+      elements.push(<span key="num" className="text-blue-400">{data}</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'boolean') {
+      elements.push(<span key="bool" className="text-blue-400">{data.toString()}</span>);
+      return elements;
+    }
+    
+    if (Array.isArray(data)) {
+      if (data.length === 0) {
+        elements.push(<span key="empty-arr" className="text-foreground">[]</span>);
+        return elements;
+      }
+      
+      elements.push(<span key="arr-open" className="text-foreground">[{'\n'}</span>);
+      data.forEach((item, idx) => {
+        const itemPath = `${path}[${idx}]`;
+        elements.push(
+          <span key={`item-${idx}`}>
+            {indentStr}  {renderRequiredJson(item, itemPath, indent + 1)}
+            {idx < data.length - 1 ? ',' : ''}
+            {'\n'}
+          </span>
+        );
+      });
+      elements.push(<span key="arr-close">{indentStr}]</span>);
+      return elements;
+    }
+    
+    if (typeof data === 'object') {
+      const keys = Object.keys(data);
+      if (keys.length === 0) {
+        elements.push(<span key="empty-obj" className="text-foreground">{'{}'}</span>);
+        return elements;
+      }
+      
+      elements.push(<span key="obj-open" className="text-foreground">{'{'}</span>);
+      elements.push(<span key="obj-newline">{'\n'}</span>);
+      keys.forEach((key, idx) => {
+        const fieldPath = path ? `${path}.${key}` : key;
+        const colorClass = getFieldColor(fieldPath);
+        const bgColor = getFieldBgColor(fieldPath);
+        const note = getFieldNote(fieldPath);
+        const source = getFieldSource(fieldPath);
+        
+        elements.push(
+          <span key={`field-${key}`} className={cn('inline-block px-1 rounded', bgColor)}>
+            {indentStr}  <span className="text-foreground">"{key}"</span>
+            <span className="text-foreground">: </span>
+            <span className={colorClass}>
+              {renderRequiredJson(data[key], fieldPath, indent + 1)}
+            </span>
+            {note && (
+              <span className="text-xs text-muted-foreground ml-2">
+                {' // '}{note}
+                {source && <span className="text-amber-400/70"> ← {source.split('.').pop()}</span>}
+              </span>
+            )}
+            {!note && source && (
+              <span className="text-xs text-amber-400/70 ml-2">
+                {' // ← '}{source.split('.').pop()}
+              </span>
+            )}
+          </span>
+        );
+        elements.push(<span key={`comma-${idx}`}>{idx < keys.length - 1 ? ',' : ''}{'\n'}</span>);
+      });
+      elements.push(<span key="obj-close">{indentStr}{'}'}</span>);
+      return elements;
+    }
+    
+    elements.push(<span key="default">{String(data)}</span>);
+    return elements;
+  };
+
+  const handleCopyCurrent = () => {
+    navigator.clipboard.writeText(JSON.stringify(currentData, null, 2));
+    setCopiedCurrent(true);
+    setTimeout(() => setCopiedCurrent(false), 2000);
+  };
+
+  const handleCopyRequired = () => {
+    navigator.clipboard.writeText(JSON.stringify(requiredData, null, 2));
+    setCopiedRequired(true);
+    setTimeout(() => setCopiedRequired(false), 2000);
+  };
 
   return (
-    <div className="flex items-start gap-3 py-2 border-b border-border/50 last:border-0">
-      <div className="flex items-center gap-1.5 shrink-0 mt-0.5">
-        <Icon className={cn('w-3.5 h-3.5', s.color)} />
-        <span className={cn('text-xs font-medium px-1.5 py-0.5 rounded', s.bg, s.color)}>{s.label}</span>
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="text-sm font-mono text-foreground">{mapping.field}</div>
-        <div className="text-xs text-muted-foreground mt-0.5">
-          {mapping.currentSource ? (
-            <span>From: <code className="text-emerald-400">{mapping.currentSource}</code></span>
-          ) : (
-            <span className="text-red-400">Not in current API</span>
-          )}
-          {mapping.note && <span className="ml-2 text-muted-foreground">— {mapping.note}</span>}
+    <div className="grid grid-cols-2 gap-4">
+      {/* Current API Response */}
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-medium text-muted-foreground">{currentLabel}</span>
+          <button onClick={handleCopyCurrent} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+            {copiedCurrent ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+            {copiedCurrent ? 'Copied' : 'Copy'}
+          </button>
         </div>
+        <pre className="text-xs font-mono bg-background/50 border border-border rounded-lg p-3 overflow-x-auto max-h-64 overflow-y-auto">
+          {renderCurrentJson(currentData)}
+        </pre>
+      </div>
+
+      {/* Recommended Response with Annotations */}
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-medium text-muted-foreground">{requiredLabel}</span>
+          <button onClick={handleCopyRequired} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors">
+            {copiedRequired ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+            {copiedRequired ? 'Copied' : 'Copy'}
+          </button>
+        </div>
+        <pre className="text-xs font-mono bg-background/50 border border-border rounded-lg p-3 overflow-x-auto max-h-64 overflow-y-auto">
+          {renderRequiredJson(requiredData)}
+        </pre>
       </div>
     </div>
   );
@@ -1556,57 +1943,224 @@ export default function ApiDocumentation() {
                             )}
 
                             {/* Request Body */}
-                            {endpoint.requestBody && (
+                            {endpoint.requestBody && !endpoint.recommendedRequestBody && (
                               <div>
                                 <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Request Body</h4>
                                 <JsonViewer data={endpoint.requestBody} label="Request" />
                               </div>
                             )}
 
-                            {/* Response Comparison */}
+                            {/* Request Body Comparison with Annotations */}
+                            {endpoint.requestBody && endpoint.recommendedRequestBody && (
+                              <div>
+                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Request Body Comparison</h4>
+                                <div className="space-y-3">
+                                  {/* Legend */}
+                                  <div className="flex items-center gap-4 text-xs">
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-emerald-500/20 border border-emerald-500/40"></div>
+                                      <span className="text-emerald-400">Match</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-amber-500/20 border border-amber-500/40"></div>
+                                      <span className="text-amber-400">Rename</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-blue-500/20 border border-blue-500/40"></div>
+                                      <span className="text-blue-400">Compute</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-red-500/20 border border-red-500/40"></div>
+                                      <span className="text-red-400">Missing</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Annotated JSON Comparison */}
+                                  <AnnotatedJsonViewer
+                                    currentData={endpoint.requestBody}
+                                    requiredData={endpoint.recommendedRequestBody}
+                                    fieldMapping={endpoint.requestBodyMapping}
+                                    label="Request Body Comparison"
+                                    currentLabel="Current Request Body"
+                                    requiredLabel="Recommended Request Body"
+                                  />
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Request Body Field Specifications */}
+                            {endpoint.requestBodyFields && (
+                              <div>
+                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Current Request Fields</h4>
+                                <div className="space-y-2">
+                                  {endpoint.requestBodyFields.map((field, i) => (
+                                    <div key={i} className="p-3 rounded-lg bg-card border border-border">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <code className="text-xs font-mono text-primary">{field.name}</code>
+                                        <span className="text-xs text-muted-foreground">{field.type}</span>
+                                        {field.required && <span className="text-xs text-red-400">required</span>}
+                                      </div>
+                                      <p className="text-xs text-muted-foreground mb-1">{field.description}</p>
+                                      {field.validation && (
+                                        <p className="text-xs text-muted-foreground">
+                                          <span className="text-foreground">Validation:</span> {field.validation}
+                                        </p>
+                                      )}
+                                      {field.default && (
+                                        <p className="text-xs text-muted-foreground">
+                                          <span className="text-foreground">Default:</span> <code className="text-xs font-mono">{field.default}</code>
+                                        </p>
+                                      )}
+                                      {field.example && (
+                                        <p className="text-xs text-muted-foreground">
+                                          <span className="text-foreground">Example:</span> <code className="text-xs font-mono text-green-400">"{field.example}"</code>
+                                        </p>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Recommended Request Body Field Specifications */}
+                            {endpoint.recommendedRequestBodyFields && (
+                              <div>
+                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Recommended Request Fields</h4>
+                                <div className="space-y-2">
+                                  {endpoint.recommendedRequestBodyFields.map((field, i) => (
+                                    <div key={i} className="p-3 rounded-lg bg-card border border-border">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <code className="text-xs font-mono text-primary">{field.name}</code>
+                                        <span className="text-xs text-muted-foreground">{field.type}</span>
+                                        {field.required && <span className="text-xs text-red-400">required</span>}
+                                      </div>
+                                      <p className="text-xs text-muted-foreground mb-1">{field.description}</p>
+                                      {field.validation && (
+                                        <p className="text-xs text-muted-foreground">
+                                          <span className="text-foreground">Validation:</span> {field.validation}
+                                        </p>
+                                      )}
+                                      {field.default && (
+                                        <p className="text-xs text-muted-foreground">
+                                          <span className="text-foreground">Default:</span> <code className="text-xs font-mono">{field.default}</code>
+                                        </p>
+                                      )}
+                                      {field.example && (
+                                        <p className="text-xs text-muted-foreground">
+                                          <span className="text-foreground">Example:</span> <code className="text-xs font-mono text-green-400">"{field.example}"</code>
+                                        </p>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Status Codes */}
+                            {endpoint.statusCodes && (
+                              <div>
+                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Status Codes</h4>
+                                <div className="space-y-1">
+                                  {endpoint.statusCodes.map((sc, i) => (
+                                    <div key={i} className="flex items-center gap-2 text-sm">
+                                      <code className={cn(
+                                        'text-xs font-mono px-2 py-0.5 rounded',
+                                        sc.code < 300 ? 'bg-emerald-500/10 text-emerald-400' :
+                                        sc.code < 400 ? 'bg-blue-500/10 text-blue-400' :
+                                        sc.code < 500 ? 'bg-amber-500/10 text-amber-400' :
+                                        'bg-red-500/10 text-red-400'
+                                      )}>
+                                        {sc.code} {sc.status}
+                                      </code>
+                                      <span className="text-xs text-muted-foreground">— {sc.description}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Error Responses */}
+                            {endpoint.errorResponses && (
+                              <div>
+                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Error Response Examples</h4>
+                                <div className="space-y-2">
+                                  {endpoint.errorResponses.map((err, i) => (
+                                    <div key={i} className="p-3 rounded-lg bg-red-500/5 border border-red-500/20">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <code className="text-xs font-mono text-red-400">{err.code}</code>
+                                        <span className="text-xs text-muted-foreground">{err.message}</span>
+                                      </div>
+                                      <pre className="text-xs font-mono bg-background/50 border border-border rounded p-2 overflow-x-auto">
+                                        {JSON.stringify(err.example, null, 2)}
+                                      </pre>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                            {/* Response Comparison with Annotations */}
                             {endpoint.currentResponse || endpoint.requiredResponse ? (
                               <div>
-                                <div className="flex items-center justify-between mb-2">
-                                  <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Response Comparison</h4>
-                                  <button
-                                    onClick={() => cycleResponseView(endpointKey)}
-                                    className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                                  >
-                                    {view === 'current' && <><Eye className="w-3 h-3" /> Current API</>}
-                                    {view === 'required' && <><Eye className="w-3 h-3" /> Platform Required</>}
-                                    {view === 'both' && <><Eye className="w-3 h-3" /> Side by Side</>}
-                                  </button>
+                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Response Comparison</h4>
+                                <div className="space-y-3">
+                                  {/* Legend */}
+                                  <div className="flex items-center gap-4 text-xs">
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-emerald-500/20 border border-emerald-500/40"></div>
+                                      <span className="text-emerald-400">Match</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-amber-500/20 border border-amber-500/40"></div>
+                                      <span className="text-amber-400">Rename</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-blue-500/20 border border-blue-500/40"></div>
+                                      <span className="text-blue-400">Compute</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                      <div className="w-3 h-3 rounded bg-red-500/20 border border-red-500/40"></div>
+                                      <span className="text-red-400">Missing</span>
+                                    </div>
+                                  </div>
+
+                                  {/* Annotated JSON Comparison */}
+                                  {endpoint.currentResponse && endpoint.requiredResponse ? (
+                                    <AnnotatedJsonViewer
+                                      currentData={endpoint.currentResponse}
+                                      requiredData={endpoint.requiredResponse}
+                                      fieldMapping={endpoint.fieldMapping}
+                                      label="Response Comparison"
+                                    />
+                                  ) : (
+                                    <>
+                                      {endpoint.currentResponse && (
+                                        <div>
+                                          <JsonViewer data={endpoint.currentResponse} label="Current API Response" />
+                                        </div>
+                                      )}
+                                      {endpoint.requiredResponse && (
+                                        <div>
+                                          <JsonViewer data={endpoint.requiredResponse} label="Platform Required Response" />
+                                        </div>
+                                      )}
+                                    </>
+                                  )}
+
+                                  {!endpoint.currentResponse && (
+                                    <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                                      <p className="text-sm text-red-400">This endpoint is not implemented. No current response available.</p>
+                                    </div>
+                                  )}
                                 </div>
-
-                                {(view === 'current' || view === 'both') && endpoint.currentResponse && (
-                                  <div className={view === 'both' ? 'mb-3' : ''}>
-                                    <JsonViewer data={endpoint.currentResponse} label="Current API Response" />
-                                  </div>
-                                )}
-
-                                {(view === 'required' || view === 'both') && endpoint.requiredResponse && (
-                                  <div className={view === 'both' ? '' : ''}>
-                                    <JsonViewer data={endpoint.requiredResponse} label="Platform Required Response" />
-                                  </div>
-                                )}
-
-                                {view === 'current' && !endpoint.currentResponse && (
-                                  <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                                    <p className="text-sm text-red-400">This endpoint is not implemented. No current response available.</p>
-                                  </div>
-                                )}
                               </div>
                             ) : null}
 
-                            {/* Field Mapping */}
-                            {endpoint.fieldMapping && endpoint.fieldMapping.length > 0 && (
-                              <div>
-                                <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Field Mapping</h4>
-                                <div className="bg-background/50 border border-border rounded-lg p-3">
-                                  {endpoint.fieldMapping.map((mapping, i) => (
-                                    <FieldMappingRow key={i} mapping={mapping} />
-                                  ))}
-                                </div>
+                            {/* Web App Guidance */}
+                            {endpoint.webAppGuidance && (
+                              <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                                <h4 className="text-xs font-semibold text-purple-400 uppercase tracking-wider mb-2">Web App Implementation Guidance</h4>
+                                <p className="text-xs text-muted-foreground">{endpoint.webAppGuidance}</p>
                               </div>
                             )}
 
