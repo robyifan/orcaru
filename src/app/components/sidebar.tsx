@@ -9,6 +9,7 @@ import {
   Library,
   LayoutTemplate,
   BarChart3,
+  FileJson,
 } from "lucide-react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { clsx } from "clsx";
@@ -26,6 +27,7 @@ const NAV_ITEMS = [
   { id: "writer-profiles", label: "Writer Profiles", icon: UserCircle },
   { id: "resources", label: "Resources", icon: Library },
   { id: "templates", label: "Templates", icon: LayoutTemplate },
+  { id: "api-docs", label: "API Docs", icon: FileJson },
   { id: "settings", label: "Settings", icon: Settings },
 ];
 

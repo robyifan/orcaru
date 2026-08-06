@@ -21,6 +21,7 @@ import { AuditResults } from './components/audit-results';
 import { ActionHub } from './components/action-hub';
 import { AuditAssetProvider } from './data/audit-asset-store';
 import type { Platform } from './data/audit-data';
+import ApiDocumentation from './components/api-documentation';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -192,6 +193,8 @@ export default function App() {
             <ProfileView />
           </>
         );
+      case 'api-docs':
+        return <ApiDocumentation />;
       case 'audits':
         return (
           <>
