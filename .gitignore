@@ -36,3 +36,6 @@ pnpm-debug.log*
 
 # Netlify
 .netlify
+
+# Temporary analysis files (Lovable prototype reference)
+temp-analysis/

@@ -9,6 +9,7 @@ import {
   Library,
   LayoutTemplate,
   BarChart3,
+  FileJson,
 } from "lucide-react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { clsx } from "clsx";
